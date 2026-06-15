@@ -1,0 +1,247 @@
+{
+    "accounts": [
+        {
+            "name": "Demo",
+            "broker": "Exness",
+            "account": 435464034,
+            "server": "Exness-MT5Trial9",
+            "pairs": [
+                "EURUSD", "GBPUSD", "USDJPY", "AUDUSD", "USDCAD", "USDCHF", "NZDUSD",
+                "XAGUSD", "XAUUSD", "USDSGD"
+            ],
+            "min_confidence": 0.5,
+            "risk_percent": 0.1,
+            "max_daily_trades": 8,
+            "max_daily_loss_percent": 5.0,
+            "trail_drawdown_percent": 5.0,
+            "trail_atr_mult": 1.0,
+            "loss_streak_reduce_enabled": true,
+            "loss_streak_threshold": 3,
+            "loss_streak_risk_multiplier": 0.5,
+            "hedge_mode_enabled": true,
+            "hedge_mode_threshold": 3,
+            "hedge_mode_direction": "opposite",
+            "break_even_atr_mult": 1.0,
+            "enable_partial_close": true,
+            "partial_close_rr_mult": 1.0,
+            "partial_close_fraction": 0.5,
+            "enabled": true,
+            "atr_min_non_jpy": 0.0001,
+            "atr_max_non_jpy": 0.05,
+            "atr_min_jpy": 0.01,
+            "atr_max_jpy": 5.0
+        },
+        {
+            "name": "Demo2",
+            "broker": "Exness",
+            "account": REDACTED_DEMO_ACCOUNT,
+            "server": "Exness-MT5Trial9",
+            "pairs": [
+                "EURUSD", "GBPUSD", "USDJPY", "AUDUSD", "USDCAD", "USDCHF", "NZDUSD", "USDSGD"
+            ],
+            "min_confidence": 0.50,
+            "risk_percent": 0.3,
+            "max_daily_trades": 8,
+            "max_daily_loss_percent": 5.0,
+            "trail_drawdown_percent": 5.0,
+            "loss_streak_reduce_enabled": true,
+            "loss_streak_threshold": 3,
+            "loss_streak_risk_multiplier": 0.5,
+            "hedge_mode_enabled": true,
+            "hedge_mode_threshold": 3,
+            "hedge_mode_direction": "opposite",
+            "trail_atr_mult": 1.0,
+            "break_even_atr_mult": 1.0,
+            "enable_partial_close": true,
+            "partial_close_rr_mult": 1.0,
+            "partial_close_fraction": 0.5,
+            "enabled": true,
+            "atr_min_non_jpy": 0.0001,
+            "atr_max_non_jpy": 0.05,
+            "atr_min_jpy": 0.01,
+            "atr_max_jpy": 5.0
+        },
+        {
+            "name": "Live",
+            "broker": "Exness",
+            "account": REDACTED_LIVE_ACCOUNT,
+            "server": "Exness-MT5Real10",
+            "pairs": [
+                "EURUSD", "GBPUSD", "USDJPY", "AUDUSD", "USDCAD", "USDCHF", "NZDUSD", "USDSGD",
+                "XAGUSD", "XAUUSD"
+            ],
+            "min_confidence": 0.7,
+            "risk_percent": 0.3,
+            "max_daily_trades": 4,
+            "max_daily_loss_percent": 5.0,
+            "trail_drawdown_percent": 5.0,
+            "trail_atr_mult": 1.5,
+            "loss_streak_reduce_enabled": true,
+            "loss_streak_threshold": 2,
+            "loss_streak_risk_multiplier": 0.5,
+            "hedge_mode_enabled": true,
+            "hedge_mode_threshold": 2,
+            "hedge_mode_direction": "opposite",
+            "break_even_atr_mult": 1.5,
+            "enable_partial_close": false,
+            "partial_close_rr_mult": 1.0,
+            "partial_close_fraction": 0.5,
+            "enabled": true,
+            "atr_min_non_jpy": 0.0001,
+            "atr_max_non_jpy": 0.05,
+            "atr_min_jpy": 0.01,
+            "atr_max_jpy": 5.0,
+            "regime_params": {
+                "global": {
+                    "trending": {
+                        "min_confidence": 0.6,
+                        "risk_percent": 0.25,
+                        "atr_min_non_jpy": 0.0005,
+                        "atr_max_non_jpy": 0.0035,
+                        "atr_min_jpy": 0.08,
+                        "atr_max_jpy": 0.2,
+                        "sl_atr_mult": 2.6,
+                        "tp_atr_mult": 3.4
+                    },
+                    "ranging": {
+                        "min_confidence": 0.56,
+                        "risk_percent": 0.15,
+                        "atr_min_non_jpy": 0.0005,
+                        "atr_max_non_jpy": 0.0045,
+                        "atr_min_jpy": 0.08,
+                        "atr_max_jpy": 0.2,
+                        "sl_atr_mult": 3.3,
+                        "tp_atr_mult": 2.8
+                    },
+                    "volatile": {
+                        "min_confidence": 0.56,
+                        "risk_percent": 0.25,
+                        "atr_min_non_jpy": 0.0011,
+                        "atr_max_non_jpy": 0.006,
+                        "atr_min_jpy": 0.08,
+                        "atr_max_jpy": 0.4,
+                        "sl_atr_mult": 3.5,
+                        "tp_atr_mult": 3.8
+                    }
+                },
+                "EURUSD": {
+                    "trending": { "min_confidence": 0.52, "risk_percent": 0.15, "atr_min_non_jpy": 0.0007, "atr_max_non_jpy": 0.005, "atr_min_jpy": 0.08, "atr_max_jpy": 0.5, "sl_atr_mult": 3.0, "tp_atr_mult": 3.0 },
+                    "ranging":  { "min_confidence": 0.52, "risk_percent": 0.2,  "atr_min_non_jpy": 0.0011, "atr_max_non_jpy": 0.003, "atr_min_jpy": 0.05, "atr_max_jpy": 0.25, "sl_atr_mult": 2.2, "tp_atr_mult": 2.4 },
+                    "volatile": { "min_confidence": 0.5,  "risk_percent": 0.1,  "atr_min_non_jpy": 0.0014, "atr_max_non_jpy": 0.0075, "atr_min_jpy": 0.08, "atr_max_jpy": 0.2, "sl_atr_mult": 3.0, "tp_atr_mult": 3.5 }
+                },
+                "GBPUSD": {
+                    "trending": { "min_confidence": 0.52, "risk_percent": 0.25, "atr_min_non_jpy": 0.0005, "atr_max_non_jpy": 0.005, "atr_min_jpy": 0.1, "atr_max_jpy": 0.3, "sl_atr_mult": 2.4, "tp_atr_mult": 4.2 },
+                    "ranging":  { "min_confidence": 0.5,  "risk_percent": 0.1,  "atr_min_non_jpy": 0.0014, "atr_max_non_jpy": 0.0035, "atr_min_jpy": 0.07, "atr_max_jpy": 0.25, "sl_atr_mult": 3.1, "tp_atr_mult": 4.0 },
+                    "volatile": { "min_confidence": 0.5,  "risk_percent": 0.15, "atr_min_non_jpy": 0.0013, "atr_max_non_jpy": 0.0045, "atr_min_jpy": 0.07, "atr_max_jpy": 0.5, "sl_atr_mult": 1.5, "tp_atr_mult": 1.5 }
+                },
+                "USDJPY": {
+                    "trending": { "min_confidence": 0.52, "risk_percent": 0.15, "atr_min_non_jpy": 0.0007, "atr_max_non_jpy": 0.0025, "atr_min_jpy": 0.08, "atr_max_jpy": 0.3, "sl_atr_mult": 2.8, "tp_atr_mult": 4.4 },
+                    "ranging":  { "min_confidence": 0.52, "risk_percent": 0.1,  "atr_min_non_jpy": 0.0011, "atr_max_non_jpy": 0.003, "atr_min_jpy": 0.06, "atr_max_jpy": 0.4, "sl_atr_mult": 2.5, "tp_atr_mult": 3.0 },
+                    "volatile": { "min_confidence": 0.54, "risk_percent": 0.25, "atr_min_non_jpy": 0.0012, "atr_max_non_jpy": 0.0025, "atr_min_jpy": 0.06, "atr_max_jpy": 0.45, "sl_atr_mult": 2.7, "tp_atr_mult": 3.7 }
+                },
+                "AUDUSD": {
+                    "trending": { "min_confidence": 0.5,  "risk_percent": 0.15, "atr_min_non_jpy": 0.0015, "atr_max_non_jpy": 0.0025, "atr_min_jpy": 0.07, "atr_max_jpy": 0.3, "sl_atr_mult": 2.2, "tp_atr_mult": 4.2 },
+                    "ranging":  { "min_confidence": 0.5,  "risk_percent": 0.3,  "atr_min_non_jpy": 0.0013, "atr_max_non_jpy": 0.004, "atr_min_jpy": 0.04, "atr_max_jpy": 0.5, "sl_atr_mult": 2.8, "tp_atr_mult": 3.3 },
+                    "volatile": { "min_confidence": 0.62, "risk_percent": 0.15, "atr_min_non_jpy": 0.0004, "atr_max_non_jpy": 0.005, "atr_min_jpy": 0.09, "atr_max_jpy": 0.2, "sl_atr_mult": 2.9, "tp_atr_mult": 3.0 }
+                },
+                "USDCAD": {
+                    "trending": { "min_confidence": 0.52, "risk_percent": 0.1,  "atr_min_non_jpy": 0.0009, "atr_max_non_jpy": 0.004, "atr_min_jpy": 0.05, "atr_max_jpy": 0.2, "sl_atr_mult": 3.0, "tp_atr_mult": 4.2 },
+                    "ranging":  { "min_confidence": 0.52, "risk_percent": 0.15, "atr_min_non_jpy": 0.0005, "atr_max_non_jpy": 0.007, "atr_min_jpy": 0.07, "atr_max_jpy": 0.35, "sl_atr_mult": 3.2, "tp_atr_mult": 3.9 },
+                    "volatile": { "min_confidence": 0.52, "risk_percent": 0.25, "atr_min_non_jpy": 0.0004, "atr_max_non_jpy": 0.005, "atr_min_jpy": 0.08, "atr_max_jpy": 0.35, "sl_atr_mult": 3.3, "tp_atr_mult": 3.8 }
+                },
+                "USDCHF": {
+                    "trending": { "min_confidence": 0.5,  "risk_percent": 0.2,  "atr_min_non_jpy": 0.0004, "atr_max_non_jpy": 0.006, "atr_min_jpy": 0.07, "atr_max_jpy": 0.5, "sl_atr_mult": 3.1, "tp_atr_mult": 4.2 },
+                    "ranging":  { "min_confidence": 0.52, "risk_percent": 0.2,  "atr_min_non_jpy": 0.0007, "atr_max_non_jpy": 0.0045, "atr_min_jpy": 0.07, "atr_max_jpy": 0.45, "sl_atr_mult": 2.7, "tp_atr_mult": 3.9 },
+                    "volatile": { "min_confidence": 0.5,  "risk_percent": 0.25, "atr_min_non_jpy": 0.0012, "atr_max_non_jpy": 0.008, "atr_min_jpy": 0.1, "atr_max_jpy": 0.2, "sl_atr_mult": 2.5, "tp_atr_mult": 2.9 }
+                },
+                "NZDUSD": {
+                    "trending": { "min_confidence": 0.52, "risk_percent": 0.15, "atr_min_non_jpy": 0.0004, "atr_max_non_jpy": 0.0065, "atr_min_jpy": 0.06, "atr_max_jpy": 0.45, "sl_atr_mult": 2.9, "tp_atr_mult": 4.4 },
+                    "ranging":  { "min_confidence": 0.5,  "risk_percent": 0.15, "atr_min_non_jpy": 0.0012, "atr_max_non_jpy": 0.002, "atr_min_jpy": 0.11, "atr_max_jpy": 0.25, "sl_atr_mult": 3.5, "tp_atr_mult": 3.3 },
+                    "volatile": { "min_confidence": 0.52, "risk_percent": 0.3,  "atr_min_non_jpy": 0.0013, "atr_max_non_jpy": 0.0075, "atr_min_jpy": 0.05, "atr_max_jpy": 0.25, "sl_atr_mult": 1.5, "tp_atr_mult": 1.9 }
+                },
+                "USDSGD": {
+                    "trending": { "min_confidence": 0.5,  "risk_percent": 0.15, "atr_min_non_jpy": 0.0008, "atr_max_non_jpy": 0.007, "atr_min_jpy": 0.08, "atr_max_jpy": 0.2, "sl_atr_mult": 2.6, "tp_atr_mult": 3.2 },
+                    "ranging":  { "min_confidence": 0.52, "risk_percent": 0.3,  "atr_min_non_jpy": 0.0005, "atr_max_non_jpy": 0.0035, "atr_min_jpy": 0.08, "atr_max_jpy": 0.45, "sl_atr_mult": 3.2, "tp_atr_mult": 1.8 },
+                    "volatile": { "min_confidence": 0.52, "risk_percent": 0.1,  "atr_min_non_jpy": 0.0007, "atr_max_non_jpy": 0.006, "atr_min_jpy": 0.04, "atr_max_jpy": 0.5, "sl_atr_mult": 2.9, "tp_atr_mult": 3.1 }
+                }
+            }
+        },
+        {
+            "name": "ICMarkets_Demo",
+            "broker": "ICMarkets",
+            "account": 52892804,
+            "server": "ICMarketsSC-Demo",
+            "pairs": [
+                "EURUSD","GBPUSD","USDJPY","AUDUSD","USDCAD","USDCHF","NZDUSD","USDSGD",
+                "USDSEK","USDMXN","USDZAR","USDBRL","EURTRY","GBPZAR","USDPLN","USDCLP","XAGUSD","XAUUSD"
+            ],
+            "min_confidence": 0.55,
+            "risk_percent": 0.2,
+            "max_daily_trades": 5,
+            "max_daily_loss_percent": 5.0,
+            "trail_drawdown_percent": 5.0,
+            "trail_atr_mult": 1.0,
+            "loss_streak_reduce_enabled": true,
+            "loss_streak_threshold": 3,
+            "loss_streak_risk_multiplier": 0.5,
+            "hedge_mode_enabled": false,
+            "hedge_mode_threshold": 3,
+            "hedge_mode_direction": "opposite",
+            "break_even_atr_mult": 1.0,
+            "enable_partial_close": false,
+            "partial_close_rr_mult": 1.0,
+            "partial_close_fraction": 0.5,
+            "enabled": true,
+            "atr_min_non_jpy": 0.0001,
+            "atr_max_non_jpy": 0.05,
+            "atr_min_jpy": 0.01,
+            "atr_max_jpy": 5.0
+        }
+    ],
+    "atr_min_non_jpy": 0.0001,
+    "atr_max_non_jpy": 0.05,
+    "atr_min_jpy": 0.01,
+    "atr_max_jpy": 5.0,
+    "use_filters": true,
+    "telegram_enabled": true,
+    "news_filter_blackout_minutes": 15,
+    "trailing_stop_type": "adaptive",
+    "adaptive_trail_lookback": 20,
+    "backtest_spread_non_jpy": 0.0002,
+    "backtest_spread_jpy": 0.02,
+    "backtest_commission_per_lot": 7.0,
+    "news_filter_impact_levels": ["high"],
+    "session_hours": {
+        "EURUSD": [[0,24]],
+        "GBPUSD": [[0,24]],
+        "USDJPY": [[0,24]],
+        "AUDUSD": [[0,24]],
+        "USDCAD": [[0,24]],
+        "USDCHF": [[0,24]],
+        "NZDUSD": [[0,24]],
+        "USDSGD": [[0,24]],
+        "USDSEK": [[0,24]],
+        "USDMXN": [[0,24]],
+        "USDZAR": [[0,24]],
+        "USDBRL": [[0,24]],
+        "EURTRY": [[0,24]],
+        "GBPZAR": [[0,24]],
+        "USDPLN": [[0,24]],
+        "USDCLP": [[0,24]],
+        "XAGUSD": [[0,24]],
+        "XAUUSD": [[0,24]]
+    },
+    "correlated_pairs": {
+        "EURUSD": ["GBPUSD","USDCHF"],
+        "GBPUSD": ["EURUSD"],
+        "USDCHF": ["EURUSD","USDCAD"],
+        "AUDUSD": ["NZDUSD"],
+        "NZDUSD": ["AUDUSD"],
+        "USDCAD": ["USDCHF"],
+        "USDSGD": []
+    },
+    "report_days": 30,
+    "min_confidence": 0.6,
+    "risk_percent": 0.7,
+    "trail_atr_mult": 1.0
+}
