@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  ai-service:
+    build:
+      context: ./ai-service
+      dockerfile: Dockerfile
+    volumes:
+      - ./ai-service:/app
+      - ./models:/app/models
+      - ./data:/app/data
+    environment:
+      - PYTHONUNBUFFERED=1
+    networks:
+      - forex-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+      - "8080:8080"
+    depends_on:
+      - ai-service
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+      - WS_PORT=8080
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    networks:
+      - forex-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    environment:
+      - REACT_APP_API_URL=http://backend:3001
+      - REACT_APP_WS_URL=ws://backend:8080
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - forex-network
+
+networks:
+  forex-network:
+    driver: bridge

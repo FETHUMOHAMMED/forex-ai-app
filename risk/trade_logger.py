@@ -1,0 +1,230 @@
+"""
+TRADE PERFORMANCE TRACKER – production version
+Logs entry, exit, regime, ticket, volume.
+Includes drift detection queries and regime performance.
+"""
+
+import sqlite3
+from datetime import datetime, timedelta
+import pandas as pd
+
+class TradeLogger:
+    def __init__(self, db_path="trades.db"):
+        self.conn = sqlite3.connect(db_path, check_same_thread=False)
+        self.cursor = self.conn.cursor()
+        self._migrate()
+    
+    def _migrate(self):
+        """Create table if not exists, add missing columns, and ensure indexes exist."""
+        # 1. Create the base table
+        self.cursor.execute('''
+            CREATE TABLE IF NOT EXISTS trades (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                timestamp TEXT,
+                pair TEXT,
+                signal TEXT,
+                confidence REAL,
+                entry REAL,
+                stop_loss REAL,
+                take_profit REAL,
+                exit_price REAL,
+                exit_time TEXT,
+                pnl REAL,
+                pnl_percent REAL,
+                result TEXT,
+                volume REAL,
+                ticket INTEGER,
+                regime TEXT,
+                reason TEXT
+            )
+        ''')
+
+        # 2. Add any missing columns (safe to run every startup)
+        for col, col_type in [
+            ('exit_time', 'TEXT'), ('volume', 'REAL'), ('ticket', 'INTEGER'),
+            ('regime', 'TEXT'), ('reason', 'TEXT'), ('account', 'TEXT')
+        ]:
+            try:
+                self.cursor.execute(f"ALTER TABLE trades ADD COLUMN {col} {col_type}")
+            except:
+                pass   # column already exists – ignore
+
+        # 3. Create performance indexes (runs every startup, harmless)
+        self.cursor.execute("CREATE INDEX IF NOT EXISTS idx_ticket ON trades(ticket)")
+        self.cursor.execute("CREATE INDEX IF NOT EXISTS idx_pair ON trades(pair)")
+        self.cursor.execute("CREATE INDEX IF NOT EXISTS idx_exit_time ON trades(exit_time)")
+        self.cursor.execute("CREATE INDEX IF NOT EXISTS idx_account ON trades(account)")
+        self.cursor.execute("CREATE INDEX IF NOT EXISTS idx_regime ON trades(regime)")
+
+        self.conn.commit()    
+
+    # -----------------------------------------------------------------
+    # TRADE ENTRY / EXIT
+    # -----------------------------------------------------------------
+    def log_trade_entry(self, signal, volume=None, ticket=None, regime=None, account=None):
+        now_iso = datetime.now().isoformat()
+        self.cursor.execute(
+            """INSERT INTO trades 
+               (timestamp, pair, signal, confidence, entry, stop_loss, take_profit, volume, ticket, regime, account)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+            (now_iso, signal['pair'], signal['signal'], signal['confidence'],
+             signal['entry'], signal['stop_loss'], signal['take_profit'],
+             volume, ticket, regime, account)
+        )
+        self.conn.commit()
+        return self.cursor.lastrowid
+
+    def log_trade_exit(self, ticket, exit_price, exit_time, pnl, reason=""):
+        """Update the trade with exit details. Computes pnl_percent correctly."""
+        try:
+            # Fetch the entry price for this trade
+            self.cursor.execute("SELECT entry FROM trades WHERE ticket=? AND exit_time IS NULL", (ticket,))
+            row = self.cursor.fetchone()
+            if row:
+                entry_price = row[0]
+                if entry_price and entry_price != 0:
+                    pnl_percent = (pnl / entry_price) * 100.0   # e.g., 0.15% move
+                else:
+                    pnl_percent = 0.0
+                result = 'WIN' if pnl > 0 else 'LOSS' if pnl < 0 else ''
+                self.cursor.execute(
+                    "UPDATE trades SET exit_price=?, exit_time=?, pnl=?, pnl_percent=?, result=?, reason=? WHERE ticket=?",
+                    (exit_price, exit_time.isoformat(), pnl, pnl_percent, result, reason, ticket)
+                )
+                self.conn.commit()
+        except Exception as e:
+            print(f"   ⚠️ DB update failed: {e}")
+
+    # -----------------------------------------------------------------
+    # QUERIES FOR DRIFT / MONTE CARLO / ALLOCATION
+    # -----------------------------------------------------------------
+    def get_recent_pnls(self, limit=100):
+        """Return list of PnL values for the most recent closed trades."""
+        self.cursor.execute(
+            "SELECT pnl FROM trades WHERE exit_time IS NOT NULL AND pnl IS NOT NULL ORDER BY exit_time DESC LIMIT ?",
+            (limit,)
+        )
+        return [r[0] for r in self.cursor.fetchall()]
+
+    def get_recent_trade_stats(self, days=30, account=None):
+        """
+        Return (total_closed, wins, win_rate) for the last `days`.
+        If `account` is provided, only include trades for that account.
+        """
+        cutoff = (datetime.now() - timedelta(days=days)).isoformat()
+        if account:
+            self.cursor.execute(
+                "SELECT pnl FROM trades WHERE exit_time >= ? AND pnl IS NOT NULL AND account = ?",
+                (cutoff, account)
+            )
+        else:
+            self.cursor.execute(
+                "SELECT pnl FROM trades WHERE exit_time >= ? AND pnl IS NOT NULL",
+                (cutoff,)
+            )
+        rows = self.cursor.fetchall()
+        if not rows:
+            return 0, 0, 0.0
+        pnls = [r[0] for r in rows]
+        wins = sum(1 for p in pnls if p > 0)
+        total = len(pnls)
+        return total, wins, (wins / total * 100) if total > 0 else 0.0
+
+    def get_regime_performance(self, days=30):
+        """Return dict of per‑regime metrics for the last `days`."""
+        cutoff = (datetime.now() - timedelta(days=days)).isoformat()
+        self.cursor.execute(
+            "SELECT regime, pnl FROM trades WHERE exit_time >= ? AND pnl IS NOT NULL AND regime IS NOT NULL",
+            (cutoff,)
+        )
+        regimes = {}
+        for regime, pnl in self.cursor.fetchall():
+            if regime not in regimes:
+                regimes[regime] = {'trades': 0, 'wins': 0, 'gross_profit': 0.0, 'gross_loss': 0.0}
+            regimes[regime]['trades'] += 1
+            if pnl > 0:
+                regimes[regime]['wins'] += 1
+                regimes[regime]['gross_profit'] += pnl
+            else:
+                regimes[regime]['gross_loss'] += abs(pnl)
+        for data in regimes.values():
+            total = data['trades']
+            data['win_rate'] = data['wins'] / total if total > 0 else 0
+            data['expectancy'] = (data['gross_profit'] - data['gross_loss']) / total if total > 0 else 0
+            pf = data['gross_profit'] / data['gross_loss'] if data['gross_loss'] > 0 else (10.0 if data['gross_profit'] > 0 else 0.0)
+            data['profit_factor'] = min(pf, 5.0)
+        return regimes
+
+    def get_pair_performance(self, days=30):
+        """
+        Return a dict with performance metrics for each pair.
+        { 'EURUSD': { 'trades': N, 'wins': W, 'profit_factor': PF }, ... }
+        """
+        cutoff = (datetime.now() - timedelta(days=days)).isoformat()
+        self.cursor.execute(
+            "SELECT pair, pnl FROM trades WHERE exit_time >= ? AND pnl IS NOT NULL",
+            (cutoff,)
+        )
+        pairs = {}
+        for pair, pnl in self.cursor.fetchall():
+            if pair not in pairs:
+                pairs[pair] = {'trades': 0, 'wins': 0, 'gross_profit': 0.0, 'gross_loss': 0.0}
+            pairs[pair]['trades'] += 1
+            if pnl > 0:
+                pairs[pair]['wins'] += 1
+                pairs[pair]['gross_profit'] += pnl
+            else:
+                pairs[pair]['gross_loss'] += abs(pnl)
+        for data in pairs.values():
+            total = data['trades']
+            data['win_rate'] = data['wins'] / total if total > 0 else 0
+            pf = data['gross_profit'] / data['gross_loss'] if data['gross_loss'] > 0 else (10.0 if data['gross_profit'] > 0 else 0.0)
+            data['profit_factor'] = min(pf, 5.0)
+        return pairs
+
+    # -----------------------------------------------------------------
+    # MISC
+    # -----------------------------------------------------------------
+    def get_daily_stats(self, date=None):
+        if date is None:
+            date = datetime.now().strftime('%Y-%m-%d')
+        self.cursor.execute(
+            "SELECT COUNT(*), SUM(CASE WHEN result='WIN' THEN 1 ELSE 0 END), SUM(pnl) FROM trades WHERE date(timestamp)=?",
+            (date,)
+        )
+        row = self.cursor.fetchone()
+        if row and row[0] > 0:
+            total, wins, pnl = row
+            win_rate = (wins / total) * 100 if total > 0 else 0
+            return {'date': date, 'total_trades': total, 'winning_trades': wins, 'total_pnl': pnl, 'win_rate': win_rate}
+        return None
+
+    def get_performance_stats(self):
+        df = pd.read_sql_query("SELECT * FROM trades", self.conn)
+        if df.empty:
+            return {"message": "No trades yet"}
+        total_trades = len(df)
+        winning_trades = len(df[df['result'] == 'WIN'])
+        losing_trades = len(df[df['result'] == 'LOSS'])
+        win_rate = (winning_trades / total_trades) * 100 if total_trades > 0 else 0
+        total_pnl = df['pnl'].sum() if 'pnl' in df.columns else 0
+        avg_confidence = df['confidence'].mean()
+        return {
+            'total_trades': total_trades,
+            'winning_trades': winning_trades,
+            'losing_trades': losing_trades,
+            'win_rate': f"{win_rate:.1f}%",
+            'total_pnl': f"${total_pnl:.2f}",
+            'avg_confidence': f"{avg_confidence:.1%}",
+            'best_trade': f"${df['pnl'].max():.2f}" if 'pnl' in df.columns else "N/A",
+            'worst_trade': f"${df['pnl'].min():.2f}" if 'pnl' in df.columns else "N/A"
+        }
+
+    def print_summary(self):
+        stats = self.get_performance_stats()
+        print("\n" + "=" * 50)
+        print("📊 TRADING PERFORMANCE SUMMARY")
+        print("=" * 50)
+        for key, value in stats.items():
+            print(f"{key.replace('_',' ').title()}: {value}")
+        print("=" * 50)
