@@ -15,23 +15,23 @@ function App() {
     let timeoutId = null;
 
     const connectWebSocket = () => {
-      const socket = new WebSocket('ws://localhost:8080');
+    const socket = new WebSocket('ws://localhost:8080?token=REDACTED_WS_TOKEN');
       
       socket.onopen = () => {
-        console.log('✅ WebSocket connected!');
+        console.log(' WebSocket connected!');
         setConnected(true);
       };
       
       socket.onmessage = (event) => {
-        console.log('📨 Received message:', event.data);
+        console.log(' Received message:', event.data);
         try {
           const data = JSON.parse(event.data);
           if (data.type === 'signals') {
-            console.log('📊 Got signals:', data.data);
+            console.log(' Got signals:', data.data);
             setSignals(data.data);
             setLastUpdate(data.timestamp);
           } else if (data.type === 'connected') {
-            console.log('🔌 Connected to server:', data.message);
+            console.log(' Connected to server:', data.message);
           }
         } catch (e) {
           console.error('Parse error:', e);
@@ -39,11 +39,11 @@ function App() {
       };
       
       socket.onerror = (error) => {
-        console.error('❌ WebSocket error:', error);
+        console.error(' WebSocket error:', error);
       };
       
       socket.onclose = () => {
-        console.log('🔌 WebSocket disconnected');
+        console.log(' WebSocket disconnected');
         setConnected(false);
       };
       
@@ -119,7 +119,7 @@ function App() {
           <div className="flex justify-between items-center">
             <div>
               <h1 className="text-3xl font-bold text-white flex items-center gap-2">
-                <span>🤖</span> FOREX AI TRADING
+                <span></span> FOREX AI TRADING
               </h1>
               <p className="text-gray-400 text-sm mt-1">
                 ICT + SMC + XGBoost Ensemble | Live Signals
@@ -145,7 +145,7 @@ function App() {
         {/* Performance Statistics Dashboard */}
         {stats && (
           <div className="mb-8">
-            <h2 className="text-white text-lg font-semibold mb-3">📊 Trading Performance</h2>
+            <h2 className="text-white text-lg font-semibold mb-3"> Trading Performance</h2>
             
             {/* Basic Metrics Row */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
@@ -206,7 +206,7 @@ function App() {
             {/* Equity Curve Chart */}
             {equityCurve.length > 0 && (
               <div className="mt-6 bg-gray-800/50 backdrop-blur-sm rounded-lg p-4 border border-gray-700">
-                <h3 className="text-white text-base font-semibold mb-3">📈 Equity Curve (Cumulative Balance)</h3>
+                <h3 className="text-white text-base font-semibold mb-3"> Equity Curve (Cumulative Balance)</h3>
                 <ResponsiveContainer width="100%" height={300}>
                   <AreaChart data={equityCurve} margin={{ top: 5, right: 20, left: 20, bottom: 5 }}>
                     <defs>
@@ -250,7 +250,7 @@ function App() {
         {/* Signals Grid */}
         {signals.length === 0 ? (
           <div className="text-center py-16">
-            <div className="text-6xl mb-4">📡</div>
+            <div className="text-6xl mb-4"></div>
             <p className="text-gray-400 text-lg">Waiting for AI signals...</p>
             <p className="text-gray-500 text-sm mt-2">
               {connected ? 'Analyzing markets...' : 'Connecting to server...'}
@@ -265,7 +265,7 @@ function App() {
           <>
             <div className="mb-4 flex justify-between items-center">
               <span className="text-green-400 text-sm">
-                ✅ {signals.length} active signals
+                 {signals.length} active signals
               </span>
             </div>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -296,7 +296,7 @@ function App() {
                       />
                     </div>
                     {signal.confidence >= 0.70 && (
-                      <div className="text-xs text-green-400 mt-1">✓ Meets confidence threshold</div>
+                      <div className="text-xs text-green-400 mt-1"> Meets confidence threshold</div>
                     )}
                   </div>
 
@@ -323,7 +323,7 @@ function App() {
                   {/* Risk Warning */}
                   {signal.risk_reward < 1.5 && (
                     <div className="mb-3 text-xs text-yellow-400 bg-yellow-400/10 p-2 rounded">
-                      ⚠️ Low risk:reward ratio
+                       Low risk:reward ratio
                     </div>
                   )}
 
@@ -332,11 +332,11 @@ function App() {
                     onClick={() => {
                       const text = `${signal.signal} ${signal.pair}\nEntry: ${signal.entry}\nSL: ${signal.stop_loss}\nTP: ${signal.take_profit}\nR:R 1:${signal.risk_reward}\nConfidence: ${(signal.confidence * 100).toFixed(0)}%`;
                       navigator.clipboard.writeText(text);
-                      alert('✅ Trade details copied to clipboard!');
+                      alert(' Trade details copied to clipboard!');
                     }}
                     className="w-full bg-white/10 hover:bg-white/20 py-2 rounded-lg transition font-medium text-sm"
                   >
-                    📋 Copy Trade Details
+                     Copy Trade Details
                   </button>
                 </div>
               ))}
@@ -346,10 +346,10 @@ function App() {
       </main>
     
       <footer className="border-t border-gray-800 mt-12 py-6 text-center text-gray-500 text-sm">
-        <p>⚠️ For educational purposes only. Trade at your own risk.</p>
+        <p> For educational purposes only. Trade at your own risk.</p>
         <p className="mt-1">ICT + SMC Strategy | XGBoost ML | Real-time WebSocket</p>
         <p className="mt-1 text-xs">
-          Status: {connected ? '🟢 Connected to signal server' : '🔴 Disconnected'}
+          Status: {connected ? ' Connected to signal server' : ' Disconnected'}
         </p>
       </footer>
     </div>

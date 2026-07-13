@@ -5,7 +5,7 @@ Uses the official ForexFactory weekly XML feed (no scraping required).
 
 import logging
 import xml.etree.ElementTree as ET
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import requests
 
 logger = logging.getLogger(__name__)
@@ -88,7 +88,10 @@ class NewsFilter:
 
     def _get_events(self):
         """Return cached events, refreshing if necessary."""
-        now = datetime.now()
+        now = datetime.now(timezone.utc)
+        # Make blackout_start and blackout_end offset-aware
+        blackout_start = now
+        blackout_end = now + timedelta(minutes=self.blackout_minutes)
         if (self.cached_events is None or 
             self.last_fetch_time is None or 
             now - self.last_fetch_time > self.cache_duration):
@@ -111,7 +114,7 @@ class NewsFilter:
         else:
             currencies_to_check = {pair[:3], pair[3:6]}
         
-        now = datetime.now()
+        now = datetime.now(timezone.utc)
         blackout_start = now
         blackout_end = now + timedelta(minutes=self.blackout_minutes)
         
@@ -126,8 +129,11 @@ class NewsFilter:
             
             # Check time proximity
             event_time = event['datetime']
+            # Ensure timezone consistency
+            if event_time.tzinfo is None:
+                event_time = event_time.replace(tzinfo=timezone.utc)
             if blackout_start <= event_time <= blackout_end:
-                logger.info(f"⛔ High-impact news nearby: {event['event']} ({event['currency']}) at {event_time}")
+                logger.info(f" High-impact news nearby: {event['event']} ({event['currency']}) at {event_time}")
                 return True
         
         return False

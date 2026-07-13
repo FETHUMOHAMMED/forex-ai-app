@@ -9,6 +9,7 @@ Reads from trades.db and prints performance by:
 Also identifies top 3 and bottom 3 pairs by profit factor.
 """
 
+import os
 import sqlite3
 from datetime import datetime
 from collections import defaultdict
@@ -76,7 +77,7 @@ def group_stats(groups, label_name):
         print(f"{name:<20} {t:>7} {wr:>6.1f}% {total:>10.2f} {pf_str:>8} {exp:>10.2f}")
 
 def main():
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(os.path.join(os.path.dirname(__file__), '..', 'ai-service', 'trades.db'))
     cursor = conn.cursor()
 
     # Fetch closed trades

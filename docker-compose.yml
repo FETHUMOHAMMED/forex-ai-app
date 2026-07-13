@@ -11,8 +11,12 @@ services:
       - ./data:/app/data
     environment:
       - PYTHONUNBUFFERED=1
+      - AI_SERVICE_PORT=8001
+    ports:
+      - "8001:8001"
     networks:
       - forex-network
+    restart: unless-stopped
 
   backend:
     build:
@@ -22,7 +26,8 @@ services:
       - "3001:3001"
       - "8080:8080"
     depends_on:
-      - ai-service
+      ai-service:
+        condition: service_healthy
     environment:
       - NODE_ENV=development
       - PORT=3001
@@ -32,6 +37,7 @@ services:
       - /app/node_modules
     networks:
       - forex-network
+    restart: unless-stopped
 
   frontend:
     build:
@@ -49,6 +55,7 @@ services:
       - /app/node_modules
     networks:
       - forex-network
+    restart: unless-stopped
 
 networks:
   forex-network:

@@ -1,6 +1,46 @@
 {
-  "signals": [],
-  "version": 3546,
-  "last_update": "2026-07-04T21:35:38.876994+00:00",
-  "saved_at": "2026-07-04T21:35:38.877027+00:00"
+  "signals": [
+    {
+      "pair": "NZDUSD",
+      "signal": "SELL",
+      "confidence": 0.457,
+      "strength": "MEDIUM",
+      "entry": 0.57483,
+      "stop_loss": 0.57546,
+      "take_profit": 0.57357,
+      "atr": 0.000419,
+      "risk_reward": 2.0,
+      "timestamp": "2026-07-13T22:30:45.031206",
+      "regime": "volatile"
+    },
+    {
+      "pair": "USDCAD",
+      "signal": "BUY",
+      "confidence": 0.479,
+      "strength": "MEDIUM",
+      "entry": 1.41575,
+      "stop_loss": 1.41509,
+      "take_profit": 1.41707,
+      "atr": 0.000439,
+      "risk_reward": 2.0,
+      "timestamp": "2026-07-13T22:30:44.743954",
+      "regime": "volatile"
+    },
+    {
+      "pair": "EURUSD",
+      "signal": "SELL",
+      "confidence": 0.534,
+      "strength": "MEDIUM",
+      "entry": 1.13828,
+      "stop_loss": 1.13902,
+      "take_profit": 1.1368,
+      "atr": 0.000494,
+      "risk_reward": 2.0,
+      "timestamp": "2026-07-13T22:30:44.065966",
+      "regime": "volatile"
+    }
+  ],
+  "version": 5057,
+  "last_update": "2026-07-13T19:30:45.031956+00:00",
+  "saved_at": "2026-07-13T19:30:45.031997+00:00"
 }

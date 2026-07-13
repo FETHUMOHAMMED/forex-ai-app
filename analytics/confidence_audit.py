@@ -3,6 +3,7 @@ Confidence Calibration Audit
 Reads closed trades from trades.db and prints performance by confidence bucket.
 """
 
+import os
 import sqlite3
 from collections import defaultdict
 
@@ -43,7 +44,7 @@ def compute_metrics(pnls):
     return (trades, wins, win_rate, total_pnl, profit_factor, expectancy)
 
 def main():
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(os.path.join(os.path.dirname(__file__), '..', 'ai-service', 'trades.db'))
     cursor = conn.cursor()
 
     # Fetch closed trades that have a confidence value

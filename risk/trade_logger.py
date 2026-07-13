@@ -42,7 +42,12 @@ class TradeLogger:
         # 2. Add any missing columns (safe to run every startup)
         for col, col_type in [
             ('exit_time', 'TEXT'), ('volume', 'REAL'), ('ticket', 'INTEGER'),
-            ('regime', 'TEXT'), ('reason', 'TEXT'), ('account', 'TEXT')
+            ('regime', 'TEXT'), ('reason', 'TEXT'), ('account', 'TEXT'),
+            ('institutional_bias', 'TEXT'),
+            ('institutional_score', 'REAL'),
+            ('dealer_pressure', 'TEXT'),
+            ('liquidity_state', 'TEXT'),
+            ('continuation_prob', 'REAL')
         ]:
             try:
                 self.cursor.execute(f"ALTER TABLE trades ADD COLUMN {col} {col_type}")
@@ -64,12 +69,18 @@ class TradeLogger:
     def log_trade_entry(self, signal, volume=None, ticket=None, regime=None, account=None):
         now_iso = datetime.now().isoformat()
         self.cursor.execute(
-            """INSERT INTO trades 
-               (timestamp, pair, signal, confidence, entry, stop_loss, take_profit, volume, ticket, regime, account)
-               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+            """INSERT INTO trades
+               (timestamp, pair, signal, confidence, entry, stop_loss, take_profit, volume, ticket, regime, account,
+                institutional_bias, institutional_score, dealer_pressure, liquidity_state, continuation_prob)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
             (now_iso, signal['pair'], signal['signal'], signal['confidence'],
              signal['entry'], signal['stop_loss'], signal['take_profit'],
-             volume, ticket, regime, account)
+             volume, ticket, regime, account,
+             signal.get('institutional_bias', 'NEUTRAL'),
+             signal.get('institutional_score', 0),
+             signal.get('dealer_pressure', 'NEUTRAL'),
+             signal.get('liquidity_state', 'NO_EVENT'),
+             signal.get('continuation_prob', 0.50))
         )
         self.conn.commit()
         return self.cursor.lastrowid

@@ -16,6 +16,7 @@ from datetime import datetime, timezone
 from concurrent.futures import ThreadPoolExecutor, wait, TimeoutError
 from typing import List, Dict, Optional, Tuple
 from pathlib import Path
+from fastapi import Request, HTTPException
 
 # FastAPI imports
 from fastapi import FastAPI, HTTPException
@@ -75,7 +76,7 @@ class SignalService:
         # Load cached signals on startup
         self._load_cache()
         
-        logger.info(f"🚀 AI Signal Service initialized (laptop-optimized)")
+        logger.info(f"[START] AI Signal Service initialized (laptop-optimized)")
         logger.info(f"   Refresh: {refresh_interval}s | Workers: {MAX_WORKERS} | Timeout: {PAIR_TIMEOUT}s")
         if self.signals:
             logger.info(f"   Loaded {len(self.signals)} cached signals (v{self.signal_version})")
@@ -89,9 +90,9 @@ class SignalService:
                     self.signals = cache.get('signals', [])
                     self.signal_version = cache.get('version', 0)
                     self.last_update = cache.get('last_update')
-                    logger.info(f"📂 Cache loaded: {len(self.signals)} signals")
+                    logger.info(f"[CACHE] Cache loaded: {len(self.signals)} signals")
         except Exception as e:
-            logger.warning(f"⚠️ Failed to load cache: {e}")
+            logger.warning(f"[WARN] Failed to load cache: {e}")
     
     def _save_cache(self):
         """Save current signals to cache file"""
@@ -110,7 +111,7 @@ class SignalService:
             temp_file.replace(CACHE_FILE)
             
         except Exception as e:
-            logger.error(f"❌ Failed to save cache: {e}")
+            logger.error(f"[ERROR] Failed to save cache: {e}")
     
     def analyze_pair(self, pair: str) -> Optional[Dict]:
         """
@@ -122,7 +123,7 @@ class SignalService:
             result = self.service.get_signal(pair)
             return result
         except Exception as e:
-            logger.error(f"❌ Error analyzing {pair}: {e}")
+            logger.error(f"[ERROR] Error analyzing {pair}: {e}")
             return None
     
     def update_signals(self) -> bool:
@@ -154,7 +155,7 @@ class SignalService:
                     if signal:
                         new_signals.append(signal)
                 except Exception as e:
-                    logger.error(f"❌ Error processing {pair}: {e}")
+                    logger.error(f"[ERROR] Error processing {pair}: {e}")
             
             # Handle timed-out futures
             # Note: cancel() only works if execution hasn't started
@@ -163,53 +164,59 @@ class SignalService:
                 pair = future_to_pair[future]
                 cancelled = future.cancel()
                 if cancelled:
-                    logger.warning(f"⏰ Cancelled {pair} before execution")
+                    logger.warning(f"[TIMEOUT] Cancelled {pair} before execution")
                 else:
-                    logger.warning(f"⏰ Timeout {pair} - already executing (will complete in background)")
+                    logger.warning(f"[TIMEOUT] Timeout {pair} - already executing (will complete in background)")
                 self.timeout_count += 1
             
             if not_done:
                 timed_pairs = [future_to_pair[f] for f in not_done]
-                logger.warning(f"⚠️ {len(not_done)} pairs timed out: {timed_pairs}")
+                logger.warning(f"[WARN] {len(not_done)} pairs timed out: {timed_pairs}")
+            
             
             # Thread-safe update - only increment version if signals changed
             with self.lock:
                 old_count = len(self.signals)
-                
-                # Compare only pair + signal + rounded confidence (ignore prices)
+
+                # Compare only pair + signal + rounded confidence
                 old_snapshot = sorted(
                     (s.get('pair', ''), s.get('signal', ''), round(s.get('confidence', 0), 2))
                     for s in self.signals
                 )
-                new_snapshot = sorted(
-                    (s.get('pair', ''), s.get('signal', ''), round(s.get('confidence', 0), 2))
-                    for s in new_signals
-                )
+
+                # Keep previous signals if new cycle produces 0
+                if len(new_signals) > 0:
+                    self.signals = new_signals
                 
-                # Always update signals, only increment version if changed
-                self.signals = new_signals
                 self.last_update = datetime.now(timezone.utc).isoformat()
-                
-                if old_snapshot != new_snapshot:
+
+                # Only increment version if the CACHED signals changed
+                cached_snapshot = sorted(
+                    (s.get('pair', ''), s.get('signal', ''), round(s.get('confidence', 0), 2))
+                    for s in self.signals
+                )
+                if old_snapshot != cached_snapshot:
                     self.signal_version += 1
-                    logger.info(f"📈 Signals changed → v{self.signal_version}")
+                    logger.info(f"[SIGNAL] Signals changed -> v{self.signal_version}")
                 else:
-                    logger.debug(f"⏸️ No signal changes (v{self.signal_version})")
+                    logger.debug(f"[SKIP] No signal changes (v{self.signal_version})")
+
+                self.total_updates += 1
                 
                 self.total_updates += 1
             
             self._save_cache()
             
-            logger.info(f"✅ v{self.signal_version}: {len(new_signals)} signals ({old_count}→{len(new_signals)}, timed out: {len(not_done)})")
+            logger.info(f"[OK] v{self.signal_version}: {len(new_signals)} signals ({old_count}->{len(new_signals)}, timed out: {len(not_done)})")
             
             cycle_time = time.time() - cycle_start
             if cycle_time > 5.0:
-                logger.warning(f"⏰ Slow cycle: {cycle_time:.2f}s")
+                logger.warning(f"[TIMEOUT] Slow cycle: {cycle_time:.2f}s")
             
             return True
             
         except Exception as e:
-            logger.error(f"❌ Signal generation failed: {e}")
+            logger.error(f"[ERROR] Signal generation failed: {e}")
             self.failed_updates += 1
             return False
     
@@ -243,7 +250,7 @@ class SignalService:
     
     def run_forever(self):
         """Main loop with precise timing"""
-        logger.info("🔄 Starting continuous signal generation...")
+        logger.info("[LOOP] Starting continuous signal generation...")
         
         self.update_signals()  # Initial update
         
@@ -261,15 +268,15 @@ class SignalService:
             if sleep_time > 0:
                 time.sleep(sleep_time)
             else:
-                logger.warning(f"⚠️ Update took {elapsed:.1f}s (interval: {self.refresh_interval}s)")
+                logger.warning(f"[WARN] Update took {elapsed:.1f}s (interval: {self.refresh_interval}s)")
     
     def shutdown(self):
         """Graceful shutdown"""
-        logger.info("🛑 Shutting down...")
+        logger.info("[STOP] Shutting down...")
         self.running = False
         self._save_cache()
         self.executor.shutdown(wait=True)
-        logger.info("✅ Service stopped")
+        logger.info("[OK] Service stopped")
 
 
 # --- FastAPI Application ---
@@ -281,13 +288,25 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://localhost:3000", "http://localhost:3001"],
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET"],
     allow_headers=["*"],
 )
 
 signal_service: Optional[SignalService] = None
+
+AI_API_KEY = os.getenv("AI_API_KEY", "REDACTED_API_KEY")
+
+# Auth middleware disabled for localhost-only operation
+# @app.middleware("http")
+# async def auth_middleware(request: Request, call_next):
+#     if request.url.path.startswith("/health"):
+#         return await call_next(request)
+#     key = request.headers.get("x-api-key")
+#     if key != AI_API_KEY:
+#         raise HTTPException(status_code=401, detail="Unauthorized")
+#     return await call_next(request)
 
 
 @app.get("/signals")
@@ -357,14 +376,14 @@ async def get_version():
 def main():
     global signal_service
     
-    logger.info("═" * 50)
-    logger.info("🚀 Forex AI Signal Service v2.0.3")
+    logger.info("=" * 50)
+    logger.info("[START] Forex AI Signal Service v2.0.3")
     logger.info(f"   Optimized for: HP EliteBook 840 G3 (i5/8GB)")
     logger.info(f"   Port: {SERVICE_PORT}")
     logger.info(f"   Refresh: {REFRESH_INTERVAL}s")
     logger.info(f"   Workers: {MAX_WORKERS}")
     logger.info(f"   Timeout: {PAIR_TIMEOUT}s")
-    logger.info("═" * 50)
+    logger.info("=" * 50)
     
     signal_service = SignalService(refresh_interval=REFRESH_INTERVAL)
     
@@ -384,10 +403,10 @@ def main():
             access_log=False
         )
     except KeyboardInterrupt:
-        logger.info("🛑 Shutdown requested...")
+        logger.info("[STOP] Shutdown requested...")
         signal_service.shutdown()
     except Exception as e:
-        logger.error(f"❌ Server error: {e}")
+        logger.error(f"[ERROR] Server error: {e}")
         signal_service.shutdown()
 
 
