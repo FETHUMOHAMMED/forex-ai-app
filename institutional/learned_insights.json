@@ -1,0 +1,26 @@
+[
+  {
+    "category": "session",
+    "finding": "Best session: LONDON (WR: 57%, PnL: $79.49)",
+    "confidence": 0.7,
+    "recommendation": "Prioritize LONDON session, reduce OVERLAP session trading",
+    "expected_impact": "MEDIUM",
+    "timestamp": "2026-07-08T12:39:18.972056"
+  },
+  {
+    "category": "pair",
+    "finding": "Worst pair: USDCAD (15 trades, PnL: $-190.28)",
+    "confidence": 0.8,
+    "recommendation": "Consider removing USDCAD from trading",
+    "expected_impact": "HIGH",
+    "timestamp": "2026-07-08T12:39:18.972089"
+  },
+  {
+    "category": "time",
+    "finding": "Best trading day: Monday (PnL: $3.15)",
+    "confidence": 0.6,
+    "recommendation": "Increase activity on Monday",
+    "expected_impact": "LOW",
+    "timestamp": "2026-07-08T12:39:18.972094"
+  }
+]

@@ -19,11 +19,12 @@ const MAX_CONSECUTIVE_ERRORS = parseInt(process.env.MAX_CONSEC_ERRORS) || 2;
 app.use(cors({ origin: 'http://localhost:3000' }));
 app.use(express.json());
 app.use('/api', (req, res, next) => {
-    const key = req.headers['x-api-key'];
-    if (key !== process.env.API_KEY) {
-        return res.status(401).json({ error: 'Unauthorized' });
+    // Allow localhost dashboard without API key
+    const key = req.headers['x-api-key'] || req.headers['referer'] || '';
+    if (key.includes('localhost:3000') || key === (process.env.API_KEY || 'REDACTED_API_KEY')) {
+        return next();
     }
-    next();
+    return res.status(401).json({ error: 'Unauthorized' });
 });
 
 // State tracking
@@ -32,7 +33,41 @@ let lastUpdateTime = null;
 let lastUpdateStatus = 'pending';
 let consecutiveErrors = 0;
 let isUpdating = false;
+let startupComplete = false;
 let lastSignalVersion = -1;
+
+// Portfolio exposure summary
+app.get('/api/exposure', (req, res) => {
+    const USD_LONG = ['USDJPY', 'USDCAD', 'USDCHF'];
+    const USD_SHORT = ['EURUSD', 'GBPUSD', 'AUDUSD', 'NZDUSD'];
+    
+    // Read positions from MT5 via AI service
+    const http = require('http');
+    http.get('http://localhost:8001/signals', (resp) => {
+        let data = '';
+        resp.on('data', chunk => data += chunk);
+        resp.on('end', () => {
+            try {
+                const signals = JSON.parse(data).signals || [];
+                let usdLong = 0, usdShort = 0;
+                signals.forEach(s => {
+                    if (USD_LONG.includes(s.pair) && s.signal === 'BUY') usdLong++;
+                    if (USD_SHORT.includes(s.pair) && s.signal === 'SELL') usdShort++;
+                });
+                res.json({
+                    usd_exposure: usdLong + usdShort,
+                    usd_long: usdLong,
+                    usd_short: usdShort,
+                    limit: 2,
+                    status: (usdLong + usdShort) >= 2 ? 'LIMIT_REACHED' : 'OK'
+                });
+            } catch(e) {
+                res.json({ error: 'Service unavailable' });
+            }
+        });
+    }).on('error', () => res.json({ error: 'Service unavailable' }));
+});
+
 // Health check
 app.get('/health', (req, res) => res.json({ 
     status: 'ok',
@@ -248,7 +283,12 @@ function getAISignals() {
             reject(new Error('AI service timeout'));
         }, 5000); // Fast - no Python spawning needed
         
-        http.get(AI_SERVICE_URL, (res) => {
+        const options = {
+    headers: {
+        'x-api-key': process.env.API_KEY || 'REDACTED_API_KEY'
+    }
+};
+            http.get(AI_SERVICE_URL, { headers: { 'x-api-key': process.env.API_KEY || 'REDACTED_API_KEY' } }, (res) => {
             let data = '';
             
             res.on('data', (chunk) => {
@@ -262,13 +302,13 @@ function getAISignals() {
                     const response = JSON.parse(data);
                     resolve(response.signals || []);
                 } catch (e) {
-                    console.error('❌ Failed to parse AI service response:', e.message);
+                    console.error('[ERROR] Failed to parse AI service response:', e.message);
                     reject(new Error('Invalid response'));
                 }
             });
         }).on('error', (err) => {
             clearTimeout(timeout);
-            console.error('❌ AI service connection failed:', err.message);
+            console.error('[ERROR] AI service connection failed:', err.message);
             reject(new Error(`Cannot connect to AI service: ${err.message}`));
         });
     });
@@ -277,25 +317,33 @@ function getAISignals() {
 // --- WebSocket Server ---
 const wss = new WebSocket.Server({ port: WS_PORT });
 
-wss.on('connection', (ws) => {
-    console.log(`🔌 Client connected (total: ${wss.clients.size})`);
+wss.on('connection', (ws, req) => {
+    // Auth check
+    const url = new URL(req.url, 'http://localhost');
+    const token = url.searchParams.get('token');
+    if (token !== process.env.WS_TOKEN) {
+        ws.close(4001, 'Unauthorized');
+        return;
+    }
     
-    ws.send(JSON.stringify({ 
-        type: 'connected', 
+    console.log(`[CONNECT] Client connected (total: ${wss.clients.size})`);
+    
+    ws.send(JSON.stringify({
+        type: 'connected',
         timestamp: new Date().toISOString(),
         signalCount: latestSignals.length
     }));
     
     if (latestSignals.length > 0) {
-        ws.send(JSON.stringify({ 
-            type: 'signals', 
-            data: latestSignals, 
-            timestamp: new Date().toISOString() 
+        ws.send(JSON.stringify({
+            type: 'signals',
+            data: latestSignals,
+            timestamp: new Date().toISOString()
         }));
     }
 
     ws.on('close', () => {
-        console.log(`🔌 Client disconnected (remaining: ${wss.clients.size})`);
+        console.log(`[CONNECT] Client disconnected (remaining: ${wss.clients.size})`);
     });
 
     ws.on('error', (err) => {
@@ -327,7 +375,7 @@ function broadcast(signals) {
 // Find the update() function and replace with:
 async function update() {
     if (isUpdating) {
-        console.log('⏳ Update already in progress, skipping...');
+        console.log('[WAIT] Update already in progress, skipping...');
         return;
     }
     
@@ -359,10 +407,10 @@ async function update() {
             
             if (latestSignals.length > 0) {
                 lastUpdateStatus = 'success';
-                console.log(`✅ Broadcast v${newVersion}: ${latestSignals.length} signals to ${clientCount} clients`);
+                console.log(`[OK] Broadcast v${newVersion}: ${latestSignals.length} signals to ${clientCount} clients`);
             } else {
                 lastUpdateStatus = 'empty';
-                console.log(`📭 v${newVersion}: No trade setups (market scanned successfully)`);
+                console.log(`[EMPTY] v${newVersion}: No trade setups (market scanned successfully)`);
             }
         }
         
@@ -370,11 +418,15 @@ async function update() {
         
     } catch (error) {
         consecutiveErrors++;
-        console.error(`❌ Signal update failed (#${consecutiveErrors}): ${error.message}`);
+        if (consecutiveErrors === 1) {
+            console.log(`Waiting for AI service...`);
+        } else {
+            console.error(`Signal update failed (#${consecutiveErrors}): ${error.message}`);
+        }
         lastUpdateStatus = 'error';
         
-        if (consecutiveErrors >= MAX_CONSECUTIVE_ERRORS) {
-            console.warn(`⚠️ ${consecutiveErrors} consecutive errors - clearing stale signals`);
+        if (startupComplete && consecutiveErrors >= MAX_CONSECUTIVE_ERRORS) {
+            console.warn(`[WARN] ${consecutiveErrors} consecutive errors - clearing stale signals`);
             latestSignals = [];
             broadcast([]);
         }
@@ -386,7 +438,7 @@ async function update() {
 // --- Start Server ---
 app.listen(PORT, () => {
     console.log('═'.repeat(50));
-    console.log(`🚀 Forex AI Backend Running`);
+    console.log(`[START] Forex AI Backend Running`);
     console.log(`   HTTP:      http://localhost:${PORT}`);
     console.log(`   WebSocket: ws://localhost:${WS_PORT}`);
     console.log(`   Balance:   $${STARTING_BALANCE.toLocaleString()}`);
@@ -394,19 +446,22 @@ app.listen(PORT, () => {
     console.log(`   Max Errors: ${MAX_CONSECUTIVE_ERRORS} before clearing`);
     console.log('═'.repeat(50));
     
+    // Startup grace period: ignore errors for first 60s while services initialize
+    setTimeout(() => { startupComplete = true; console.log('[READY] Startup grace period complete'); }, 60000);
+    
     update();
     setInterval(update, SIGNAL_REFRESH_INTERVAL);
 });
 
 // Graceful shutdown
 process.on('SIGINT', () => {
-    console.log('\n🛑 Shutting down gracefully...');
+    console.log('\n Shutting down gracefully...');
     wss.close();
     process.exit(0);
 });
 
 process.on('SIGTERM', () => {
-    console.log('\n🛑 Received SIGTERM - shutting down...');
+    console.log('\n Received SIGTERM - shutting down...');
     wss.close();
     process.exit(0);
 });

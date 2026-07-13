@@ -1,5 +1,5 @@
 """
-REAL FOREX AI SERVICE – Live Market Data (MT5 primary, Yahoo fallback)
+REAL FOREX AI SERVICE -- Live Market Data (MT5 primary, Yahoo fallback)
 Includes:
 - Multi-Timeframe Trend Filter (H1 EMA50 slope)
 - Volatility Filter (ATR range)
@@ -16,6 +16,9 @@ import json
 import warnings
 import logging
 import time
+from institutional.liquidity_intelligence import LiquidityIntelligence
+from institutional.institutional_structure import InstitutionalStructure
+from institutional.performance_intelligence import PerformanceIntelligence
 from datetime import datetime, timezone
 from risk.features import FEATURE_COLUMNS
 import numpy as np
@@ -24,6 +27,11 @@ import yfinance as yf
 import joblib
 from dotenv import load_dotenv
 
+
+# Institutional intelligence
+import sys, os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+from institutional.market_microstructure import MarketMicrostructure
 
 # Load configuration
 CONFIG_PATH = os.path.join(os.path.dirname(__file__), 'config.json')
@@ -38,13 +46,23 @@ except ImportError:
 
 load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'))
 
-logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(message)s', stream=sys.stderr)
-logger = logging.getLogger(__name__)
+import logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)-5s] %(name)s: %(message)s',
+    handlers=[
+        logging.FileHandler('forex_ai.log'),
+        logging.StreamHandler(sys.stderr)
+    ]
+)
+logger = logging.getLogger('signal_engine')
 warnings.filterwarnings('ignore')
 
 class RealAITrader:
     def __init__(self):
         self.models = {}
+        # Volume 9.5 blocked pairs
+        self.blocked_pairs = {'AUDUSD', 'USDCHF', 'USDSGD'}
         self.pairs = CONFIG.get('pairs', ['EURUSD', 'GBPUSD', 'USDJPY', 'AUDUSD', 'USDCAD',
                                           'USDCHF', 'NZDUSD', 'USDSGD'])
         self.yahoo_symbols = {
@@ -55,6 +73,10 @@ class RealAITrader:
         self.timeframe = '15m'
         self.lookback_days = 5
         self._load_models()
+        self.microstructure = MarketMicrostructure()
+        self.liquidity_engine = LiquidityIntelligence()
+        self.structure_engine = InstitutionalStructure()
+        self.performance_engine = PerformanceIntelligence()
         self.use_mock_fallback = False
 
         if MT5_AVAILABLE:
@@ -64,6 +86,7 @@ class RealAITrader:
             self.mt5_timeframe = None
             self.mt5_timeframe_h1 = None
             self.strict_mode = False   # set to True for live accounts
+            
         # Rejection tracking
         self.rejected_trend = 0
         self.rejected_no_ict = 0
@@ -73,42 +96,50 @@ class RealAITrader:
     def _load_models(self):
         models_dir = os.path.join(os.path.dirname(__file__), 'models')
         for pair in self.pairs:
+            if pair in self.blocked_pairs:
+                continue
             model_path = os.path.join(models_dir, f'{pair}_xgboost.joblib')
             if os.path.exists(model_path):
                 try:
                     self.models[pair] = joblib.load(model_path)
-                    logger.info(f"✅ Loaded model for {pair}")
+                    logger.info(f"[OK] Loaded model for {pair}")
                 except Exception as e:
                     logger.error(f"Failed to load {pair}: {e}")
                     self.models[pair] = None
             else:
-                logger.warning(f"⚠️ No model for {pair}")
+                logger.warning(f"[WARN] No model for {pair}")
                 self.models[pair] = None
 
     def _init_mt5(self):
+        """Initialize MT5 and ensure all trading symbols are available"""
         if not MT5_AVAILABLE:
             return False
-        # If already initialised, do nothing
-        if mt5.terminal_info() is not None:
-            return True
-        if not mt5.initialize():
+        import MetaTrader5 as mt5
+        if mt5.terminal_info() is None and not mt5.initialize():
             logger.error(f"MT5 init failed: {mt5.last_error()}")
             return False
+        
+        # Ensure all symbols are in Market Watch
+        for pair in self.pairs:
+            for suffix in ['m', '']:
+                symbol = pair + suffix
+                try:
+                    mt5.symbol_select(symbol, True)
+                except:
+                    pass
+        
         return True
 
     def _get_mt5_symbol(self, pair):
-        """Find the actual MT5 symbol name by searching all available symbols."""
+        """Find the actual MT5 symbol name via broker layer."""
         if not MT5_AVAILABLE or not self._init_mt5():
             return None
-        # Try the exact name first (fast path)
-        if mt5.symbol_select(pair, True):
-            return pair
-        # Search all symbols for one that contains the pair name
-        symbols = mt5.symbols_get()
-        if symbols:
-            for s in symbols:
-                if pair in s.name and '.cash' not in s.name:  # avoid synthetic symbols
-                    return s.name
+        # Try common suffixes via broker's symbol_select
+        import MetaTrader5 as mt5
+        for suffix in ['', 'm', '.', 'pro']:
+            symbol = pair + suffix
+            if mt5.symbol_select(symbol, True):
+                return symbol
         return None
 
     def fetch_data_mt5(self, pair, bars=500, timeframe=None):
@@ -117,23 +148,27 @@ class RealAITrader:
         if not self._init_mt5():
             return None
         if timeframe is None:
-            timeframe = self.mt5_timeframe  # default to M15
+            timeframe = self.mt5_timeframe
+        
+        import MetaTrader5 as mt5
+        
         try:
             symbol = self._get_mt5_symbol(pair)
             if not symbol:
                 logger.warning(f"No MT5 symbol for {pair}")
                 return None
-            # MT5 TIMING DIAGNOSTIC
+            
             fetch_start = time.time()
-            
             rates = mt5.copy_rates_from_pos(symbol, timeframe, 0, bars)
-            
             fetch_time = time.time() - fetch_start
+            
             if fetch_time > 0.5:
-                logger.warning(f"⏰ Slow MT5: {pair} took {fetch_time:.2f}s")
+                logger.warning(f"Slow MT5: {pair} took {fetch_time:.2f}s")
+            
             if rates is None or len(rates) == 0:
                 logger.warning(f"No rates from MT5 for {pair}")
                 return None
+            
             df = pd.DataFrame(rates)
             df['time'] = pd.to_datetime(df['time'], unit='s')
             df.set_index('time', inplace=True)
@@ -183,9 +218,9 @@ class RealAITrader:
     def fetch_data(self, pair):
         df = self.fetch_data_mt5(pair)
         if df is not None and len(df) >= 50:
-            logger.info(f"📡 MT5 data for {pair}: {len(df)} bars")
+            logger.info(f"[DATA] MT5 data for {pair}: {len(df)} bars")
             return df
-        logger.warning(f"⚠️ MT5 failed for {pair} – no data available")
+        logger.warning(f"[WARN] MT5 failed for {pair} -- no data available")
         return None
 
     def add_indicators(self, df):
@@ -249,7 +284,7 @@ class RealAITrader:
     
     
     # -----------------------------------------------------------------
-    # Backtest helper – signal from a single precomputed row
+    # Backtest helper -- signal from a single precomputed row
     # -----------------------------------------------------------------
     def get_signal_from_row(self, row, pair, use_filters=True,
                             atr_min=0.0005, atr_max=0.003,
@@ -292,8 +327,8 @@ class RealAITrader:
                       latest.get('fvg_sell', 0) * 2 + latest.get('bb_sell', 0) * 2 +
                       latest.get('lv_sell', 0) * 1)
         
-        ict_buy = buy_score >= 5
-        ict_sell = sell_score >= 5
+        ict_buy = buy_score >= 3  # lowered for data collection
+        ict_sell = sell_score >= 3  # lowered for data collection
         
         # Same ensemble as live
         if ict_buy and ml_signal == 'BUY':
@@ -369,11 +404,11 @@ class RealAITrader:
         """Get a signal with fallback to mock signal."""
         real = self.get_real_signal(pair)
         if real:
-            logger.info(f"✅ Real signal for {pair}: {real['signal']} ({real['confidence']:.0%})")
+            logger.info(f"[OK] Real signal for {pair}: {real['signal']} ({real['confidence']:.0%})")
             return real
         elif self.use_mock_fallback:
             mock = self.get_mock_signal(pair)
-            logger.info(f"🔄 Using mock signal for {pair}")
+            logger.info(f"[LOOP] Using mock signal for {pair}")
             return mock
         return None
     
@@ -382,6 +417,49 @@ class RealAITrader:
         if df is None:
             logger.warning(f"No data for {pair}")
             return None
+        
+        # === PHASE 2: Institutional Microstructure Analysis (Observation Only) ===
+        if len(df) >= 20:
+            ms_result = self.microstructure.analyze(pair, df)
+            logger.info(f"[INSTITUTIONAL] {pair}: {ms_result.institutional_bias} "
+                       f"(score={ms_result.microstructure_score}) "
+                       f"dealer={ms_result.dealer_pressure} "
+                       f"liquidity={ms_result.liquidity_state} "
+                       f"continuation={ms_result.continuation_probability:.0%}")
+            
+        # === VOLUME 2: Liquidity Intelligence ===
+        if len(df) >= 50:
+            liq_result = self.liquidity_engine.analyze(pair, df)
+            logger.info(f"[LIQUIDITY] {pair}: nearest={liq_result.nearest_liquidity} "
+                       f"distance={0} "
+                       f"sweep_prob={liq_result.sweep_strength:.0%} "
+                       f"inst_interest={str(liq_result.sweep_direction or "NONE")} "
+                       f"score={liq_result.liquidity_score:.0f}") 
+            
+        # === VOLUME 3: Institutional Structure Intelligence ===
+        if len(df) >= 100:
+            struct_result = self.structure_engine.analyze(pair, df)
+            logger.info(f"[STRUCTURE] {pair}: phase={struct_result.market_phase} "
+                       f"bias={struct_result.structure_bias} score={struct_result.structure_score:.0f} "
+                       f"trend={"UNKNOWN"} expansion={"UNKNOWN"} "
+                       f"cycle={"UNKNOWN"} continuation={struct_result.continuation_probability:.0%}")       
+        
+        # === VOLUME 7: Performance Intelligence ===
+        if len(df) >= 50:
+            try:
+                session = 'LONDON' if 7 <= datetime.now(timezone.utc).hour < 13 else 'ASIAN'
+                perf = self.performance_engine.analyze_setup(
+                    pair, signal if signal else 'NEUTRAL', session,
+                    liquidity_state=liq_result.liquidity_state if 'liq_result' in dir() else None,
+                    structure_phase=struct_result.market_phase if 'struct_result' in dir() else None
+                )
+                if signal and perf.edge_score > 60:
+                    logger.info(f"[PERFORMANCE] {pair}: edge={perf.edge_score:.0f} "
+                               f"similar={perf.similar_trades} hist_wr={perf.historical_win_rate:.0f}% "
+                               f"best_setup={perf.best_setup} rec={perf.risk_recommendation}")
+            except:
+                pass
+        
         df = self.add_indicators(df)
         if df is None or len(df) < 10:
             logger.warning(f"Insufficient indicator data for {pair}")
@@ -423,7 +501,7 @@ class RealAITrader:
                 atr_min = CONFIG.get('atr_min_non_jpy', 0.0001)
                 atr_max = CONFIG.get('atr_max_non_jpy', 0.05)
             if atr < atr_min or atr > atr_max:
-                logger.info(f"⏸️ Signal skipped: ATR ({atr:.5f}) outside range ({atr_min}–{atr_max})")
+                logger.info(f"[SKIP] Signal skipped: ATR ({atr:.5f}) outside range ({atr_min}--{atr_max})")
                 return None
 
         feature_cols = FEATURE_COLUMNS
@@ -492,22 +570,43 @@ class RealAITrader:
               f"ict_buy={ict_buy}, ict_sell={ict_sell}, signal={signal}", file=sys.stderr)
 
         if not signal:
-            print(f"[SIGNAL DEBUG] {pair}: NO SIGNAL – returning None", file=sys.stderr)
+            print(f"[SIGNAL DEBUG] {pair}: NO SIGNAL -- returning None", file=sys.stderr)
             self.rejected_no_ict += 1
             return None
 
-        # ---- LAYER 4: H1 Trend Filter ----
+        # ---- LAYER 4: Multi-Timeframe Confirmation ----
+        # H4 trend check
+        h4_uptrend = bool(latest.get('h4_uptrend', 0))
+        h4_downtrend = bool(latest.get('h4_downtrend', 0))
+        
+        # H1 trend check
         trend = self.get_higher_tf_trend(pair)
+        
+        # Multi-TF alignment bonus/penalty
+        if h4_uptrend and trend == 'BULLISH' and signal == 'BUY':
+            confidence *= 1.05
+            logger.info(f"Multi-TF aligned {pair}: H4-up H1-up signal=BUY")
+        elif h4_downtrend and trend == 'BEARISH' and signal == 'SELL':
+            confidence *= 1.05
+            logger.info(f"Multi-TF aligned {pair}: H4-down H1-down signal=SELL")
+        elif h4_uptrend and signal == 'SELL':
+            confidence *= 0.85
+            logger.info(f"H4 contradicts {pair}: H4 uptrend vs SELL signal")
+        elif h4_downtrend and signal == 'BUY':
+            confidence *= 0.85
+            logger.info(f"H4 contradicts {pair}: H4 downtrend vs BUY signal")
+        
+        # H1 trend filter
         if trend != 'NEUTRAL':
             if (signal == 'BUY' and trend == 'BEARISH') or (signal == 'SELL' and trend == 'BULLISH'):
-                confidence *= 0.80
-                logger.info(f"⚠️ Counter-trend {signal} {pair}: H1={trend}, conf adjusted to {confidence:.3f}")
+                confidence *= 0.90
+                logger.info(f"[WARN] Counter-trend {signal} {pair}: H1={trend}, conf adjusted to {confidence:.3f}")
             else:
-                logger.info(f"✅ Trend-aligned {signal} {pair}: H1={trend}")
+                logger.info(f"[OK] Trend-aligned {signal} {pair}: H1={trend}")
 
         # ---- LAYER 5: Minimum Confidence ----
-        if confidence < 0.52:
-            logger.info(f"❌ Signal rejected: {pair} confidence too low ({confidence:.3f})")
+        if confidence < 0.45:
+            logger.info(f"[ERROR] Signal rejected: {pair} confidence too low ({confidence:.3f})")
             self.rejected_trend += 1
             return None
 
@@ -525,6 +624,24 @@ class RealAITrader:
         rr = round(abs(tp - current_price) / risk_distance, 2) if risk_distance > 0 else 0.0
         self.accepted += 1
 
+        # Attach institutional microstructure data
+        inst_data = {}
+        if hasattr(self, 'microstructure') and df is not None and len(df) >= 20:
+            try:
+                ms = self.microstructure.analyze(pair, df)
+                inst_data = {
+                    'institutional_bias': ms.institutional_bias,
+                    'institutional_score': ms.microstructure_score,
+                    'dealer_pressure': ms.dealer_pressure,
+                    'liquidity_state': ms.liquidity_state,
+                    'continuation_prob': ms.continuation_probability,
+                    'manipulation_prob': ms.manipulation_probability,
+                    'expansion_quality': ms.expansion_quality,
+                    'price_discovery': ms.price_discovery
+                }
+            except Exception as e:
+                logger.debug(f"Institutional analysis skipped for {pair}: {e}")
+        
         return {
             'pair': pair,
             'signal': signal,
@@ -536,8 +653,9 @@ class RealAITrader:
             'atr': round(atr, 6),
             'risk_reward': rr,
             'timestamp': datetime.now().isoformat(),
-            'regime': 'volatile'
-        }    
+            'regime': 'volatile',
+            **inst_data
+        }   
 
     
 def market_is_open(symbol):
@@ -576,7 +694,7 @@ def close_expired_trades(max_hours=12, cooldown_minutes=15):
     for pos in positions:
         # ---- Market open check ----
         if not market_is_open(pos.symbol):
-            logger.info(f"🌙 {pos.symbol} market closed – skipping close attempt")
+            logger.info(f" {pos.symbol} market closed -- skipping close attempt")
             continue
 
         # ---- Time‑based exit condition ----
@@ -590,11 +708,11 @@ def close_expired_trades(max_hours=12, cooldown_minutes=15):
         if last_try:
             elapsed = (now - last_try).total_seconds()
             if elapsed < cooldown_seconds:
-                logger.debug(f"⏳ Ticket {pos.ticket} cooldown ({elapsed:.0f}s ago) – skipping")
+                logger.debug(f"⏳ Ticket {pos.ticket} cooldown ({elapsed:.0f}s ago) -- skipping")
                 continue
 
         # ---- Log attempt (with ticket) ----
-        logger.info(f"⏰ Closing ticket {pos.ticket} {pos.symbol} held {age_hours:.1f}h")
+        logger.info(f"[TIMEOUT] Closing ticket {pos.ticket} {pos.symbol} held {age_hours:.1f}h")
 
         # Update last attempt time
         LAST_CLOSE_ATTEMPT[pos.ticket] = now
@@ -621,7 +739,7 @@ def close_expired_trades(max_hours=12, cooldown_minutes=15):
         if result.retcode != mt5.TRADE_RETCODE_DONE:
             logger.error(f"Failed to close ticket {pos.ticket} {pos.symbol}: {result.comment}")
         else:
-            logger.info(f"✅ Closed ticket {pos.ticket} {pos.symbol}")
+            logger.info(f"[OK] Closed ticket {pos.ticket} {pos.symbol}")
     
 
     

@@ -1191,7 +1191,7 @@ class AutoTrader:
             # Demo2: Extended hours for data collection (Asian + London + NY)
             if acc.name == 'Demo2':
                 hour = datetime.now(timezone.utc).hour
-                if hour < 0 or hour >= 22:  # Trade 0-22 UTC, only skip 22-24
+                if hour < 0 or hour >= 24:  # Trade 0-22 UTC, only skip 22-24
                     continue
 
             # ---- Market‑closed validation (per‑symbol) ----
@@ -1268,7 +1268,7 @@ class AutoTrader:
             min_conf = params.get('min_confidence', acc.min_confidence)
 
             if acc.name == 'Demo2':
-                effective_min_conf = min_conf  # Use regime-based confidence
+                effective_min_conf = 0.47  # Research mode
             else:
                 session_adj = self.session_confidence_adjustment(pair)
                 effective_min_conf = min_conf + session_adj
@@ -1607,6 +1607,13 @@ class AutoTrader:
                         self.handle_command(cmd)
                     time.sleep(1)
                     continue                     # skip trading this cycle
+
+                # ----- 2.5. Reload config -----
+                try:
+                    with open(CONFIG_PATH, 'r') as f:
+                        fresh_config = json.load(f)
+                    self.session_hours = fresh_config.get('session_hours', {})
+                except: pass
 
                 # ----- 3. Reload active account list -----
                 runtime = self.get_runtime_config()
