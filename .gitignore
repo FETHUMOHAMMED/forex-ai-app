@@ -30,3 +30,7 @@ analytics/reports/
 
 # Logs
 *.log
+
+# Runtime trading data
+ai-service/signals_cache.json
+institutional/performance_history.json
