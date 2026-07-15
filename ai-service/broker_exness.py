@@ -214,6 +214,22 @@ class MT5Broker:
             return account.margin_free >= margin
         except:
             return False
+    
+    def fetch_rates(self, symbol, timeframe, bars=500):
+        """Centralized MT5 data fetch - use this instead of direct mt5.copy_rates_from_pos"""
+        if not self.connected:
+            self.connect()
+        if not self.connected:
+            return None
+        try:
+            # Ensure symbol is selected
+            if not mt5.symbol_select(symbol, True):
+                return None
+            rates = mt5.copy_rates_from_pos(symbol, timeframe, 0, bars)
+            return rates
+        except Exception as e:
+            print(f"MT5 fetch error for {symbol}: {e}")
+            return None
         
     def shutdown(self):
         mt5.shutdown()

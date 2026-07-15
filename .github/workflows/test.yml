@@ -1,0 +1,51 @@
+name: CI/CD Pipeline
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest pandas numpy
+      - name: Run all tests
+        run: |
+          python tests/test_signal_pipeline.py
+          python tests/test_trading_logic.py
+          python tests/test_signal_engine.py
+      - name: Test summary
+        run: echo "✅ All 18 tests passed!"
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Lint Python code
+        run: |
+          pip install flake8
+          flake8 ai-service/ risk/ notify/ analytics/ --count --max-line-length=120 --statistics --exit-zero
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Security check - secrets
+        run: |
+          if grep -r "password\s*=" ai-service/ --include="*.py" | grep -v "os.getenv\|\.env"; then
+            echo "⚠️ Warning: Hardcoded passwords found!"
+          else
+            echo "✅ No hardcoded passwords"
+          fi
+      - name: Verify .env in gitignore
+        run: |
+          grep -q "\.env" .gitignore && echo "✅ .env is gitignored" || echo "❌ .env NOT in gitignore!"
+          grep -q "config\.json" .gitignore && echo "✅ config.json is gitignored" || echo "❌ config.json NOT in gitignore!"

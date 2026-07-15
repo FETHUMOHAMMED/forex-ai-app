@@ -1,465 +1,5 @@
 [
   {
-    "timestamp": "2026-07-10T02:30:46.416174",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T02:30:59.414342",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T02:43:27.472228",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T02:43:47.379469",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T02:49:22.285698",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T02:49:43.432533",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T02:56:04.005498",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T02:56:39.609006",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T04:29:51.101936",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T04:30:26.705546",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T04:32:18.561949",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T04:32:32.834460",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T04:56:37.996536",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T04:56:48.093346",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T04:59:07.320514",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T04:59:20.220780",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T05:01:04.435534",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T05:01:17.363593",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T05:07:34.860884",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T05:08:10.335294",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T05:12:25.339743",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T05:12:38.235535",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T14:04:24.407442",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T14:04:37.299851",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T14:14:28.960027",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T14:15:04.609447",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T14:45:28.199970",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T14:45:39.456351",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T15:45:28.235645",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T15:45:39.496851",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T16:45:28.256733",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T16:45:39.518171",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T17:27:32.697232",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T17:28:41.052171",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T17:36:16.307654",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T17:36:29.704771",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T22:07:31.317009",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T22:07:59.715693",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T22:08:47.221122",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T22:09:06.439794",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T22:57:57.347628",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T23:03:20.518452",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T23:57:35.977462",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-10T23:58:10.286824",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-11T00:12:10.721646",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
-    "timestamp": "2026-07-11T00:12:22.240726",
-    "total_trades": 45,
-    "with_inst_data": 45,
-    "win_rate": 28.888888888888886,
-    "profit_factor": 0.5355954713836498,
-    "net_pnl": -713.33,
-    "bullish_win_rate": 0.0,
-    "bearish_win_rate": 100.0
-  },
-  {
     "timestamp": "2026-07-11T00:35:52.707548",
     "total_trades": 45,
     "with_inst_data": 45,
@@ -996,6 +536,466 @@
     "win_rate": 28.888888888888886,
     "profit_factor": 0.5355954713836498,
     "net_pnl": -713.33,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-13T22:38:08.209649",
+    "total_trades": 45,
+    "with_inst_data": 45,
+    "win_rate": 28.888888888888886,
+    "profit_factor": 0.5355954713836498,
+    "net_pnl": -713.33,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-13T22:38:42.078237",
+    "total_trades": 45,
+    "with_inst_data": 45,
+    "win_rate": 28.888888888888886,
+    "profit_factor": 0.5355954713836498,
+    "net_pnl": -713.33,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-13T22:40:52.480714",
+    "total_trades": 45,
+    "with_inst_data": 45,
+    "win_rate": 28.888888888888886,
+    "profit_factor": 0.5355954713836498,
+    "net_pnl": -713.33,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-13T22:41:24.046496",
+    "total_trades": 45,
+    "with_inst_data": 45,
+    "win_rate": 28.888888888888886,
+    "profit_factor": 0.5355954713836498,
+    "net_pnl": -713.33,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-14T00:42:26.380752",
+    "total_trades": 46,
+    "with_inst_data": 46,
+    "win_rate": 28.26086956521739,
+    "profit_factor": 0.5197558787480573,
+    "net_pnl": -760.14,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-14T00:42:57.943013",
+    "total_trades": 46,
+    "with_inst_data": 46,
+    "win_rate": 28.26086956521739,
+    "profit_factor": 0.5197558787480573,
+    "net_pnl": -760.14,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-14T01:42:27.145866",
+    "total_trades": 48,
+    "with_inst_data": 48,
+    "win_rate": 27.083333333333332,
+    "profit_factor": 0.48277642806004484,
+    "net_pnl": -881.38,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-14T01:42:58.001300",
+    "total_trades": 48,
+    "with_inst_data": 48,
+    "win_rate": 27.083333333333332,
+    "profit_factor": 0.48277642806004484,
+    "net_pnl": -881.38,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-14T08:15:51.535199",
+    "total_trades": 52,
+    "with_inst_data": 52,
+    "win_rate": 25.0,
+    "profit_factor": 0.42316753253433464,
+    "net_pnl": -1121.42,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-14T08:16:22.376392",
+    "total_trades": 52,
+    "with_inst_data": 52,
+    "win_rate": 25.0,
+    "profit_factor": 0.42316753253433464,
+    "net_pnl": -1121.42,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-14T12:23:23.278100",
+    "total_trades": 59,
+    "with_inst_data": 59,
+    "win_rate": 25.423728813559322,
+    "profit_factor": 0.43637646675653424,
+    "net_pnl": -1245.98,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-14T12:24:25.226010",
+    "total_trades": 59,
+    "with_inst_data": 59,
+    "win_rate": 25.423728813559322,
+    "profit_factor": 0.43637646675653424,
+    "net_pnl": -1245.98,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-14T12:25:20.794219",
+    "total_trades": 59,
+    "with_inst_data": 59,
+    "win_rate": 25.423728813559322,
+    "profit_factor": 0.43637646675653424,
+    "net_pnl": -1245.98,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-14T12:57:24.168827",
+    "total_trades": 60,
+    "with_inst_data": 60,
+    "win_rate": 26.666666666666668,
+    "profit_factor": 0.4874924230772711,
+    "net_pnl": -1132.98,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-14T13:25:20.836877",
+    "total_trades": 60,
+    "with_inst_data": 60,
+    "win_rate": 26.666666666666668,
+    "profit_factor": 0.4874924230772711,
+    "net_pnl": -1132.98,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-14T13:57:24.214728",
+    "total_trades": 60,
+    "with_inst_data": 60,
+    "win_rate": 26.666666666666668,
+    "profit_factor": 0.4874924230772711,
+    "net_pnl": -1132.98,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-14T19:39:52.104147",
+    "total_trades": 63,
+    "with_inst_data": 63,
+    "win_rate": 26.984126984126984,
+    "profit_factor": 0.47807457232480677,
+    "net_pnl": -1291.16,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-14T20:23:52.420649",
+    "total_trades": 63,
+    "with_inst_data": 63,
+    "win_rate": 26.984126984126984,
+    "profit_factor": 0.47807457232480677,
+    "net_pnl": -1291.16,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-14T21:06:00.267872",
+    "total_trades": 63,
+    "with_inst_data": 63,
+    "win_rate": 26.984126984126984,
+    "profit_factor": 0.47807457232480677,
+    "net_pnl": -1291.16,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-14T21:19:49.498561",
+    "total_trades": 63,
+    "with_inst_data": 63,
+    "win_rate": 26.984126984126984,
+    "profit_factor": 0.47807457232480677,
+    "net_pnl": -1291.16,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-14T22:39:51.856392",
+    "total_trades": 63,
+    "with_inst_data": 63,
+    "win_rate": 26.984126984126984,
+    "profit_factor": 0.47807457232480677,
+    "net_pnl": -1291.16,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-14T23:16:56.948470",
+    "total_trades": 63,
+    "with_inst_data": 63,
+    "win_rate": 26.984126984126984,
+    "profit_factor": 0.47807457232480677,
+    "net_pnl": -1291.16,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-14T23:54:06.431566",
+    "total_trades": 63,
+    "with_inst_data": 63,
+    "win_rate": 26.984126984126984,
+    "profit_factor": 0.47807457232480677,
+    "net_pnl": -1291.16,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-15T00:16:57.057978",
+    "total_trades": 63,
+    "with_inst_data": 63,
+    "win_rate": 26.984126984126984,
+    "profit_factor": 0.47807457232480677,
+    "net_pnl": -1291.16,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-15T00:54:06.479937",
+    "total_trades": 63,
+    "with_inst_data": 63,
+    "win_rate": 26.984126984126984,
+    "profit_factor": 0.47807457232480677,
+    "net_pnl": -1291.16,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-15T01:16:57.114385",
+    "total_trades": 63,
+    "with_inst_data": 63,
+    "win_rate": 26.984126984126984,
+    "profit_factor": 0.47807457232480677,
+    "net_pnl": -1291.16,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-15T09:16:00.414436",
+    "total_trades": 63,
+    "with_inst_data": 63,
+    "win_rate": 26.984126984126984,
+    "profit_factor": 0.47807457232480677,
+    "net_pnl": -1291.16,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-15T09:38:50.733022",
+    "total_trades": 63,
+    "with_inst_data": 63,
+    "win_rate": 26.984126984126984,
+    "profit_factor": 0.47807457232480677,
+    "net_pnl": -1291.16,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-15T10:16:00.454687",
+    "total_trades": 63,
+    "with_inst_data": 63,
+    "win_rate": 26.984126984126984,
+    "profit_factor": 0.47807457232480677,
+    "net_pnl": -1291.16,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-15T10:38:50.757689",
+    "total_trades": 63,
+    "with_inst_data": 63,
+    "win_rate": 26.984126984126984,
+    "profit_factor": 0.47807457232480677,
+    "net_pnl": -1291.16,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-15T18:16:58.009793",
+    "total_trades": 63,
+    "with_inst_data": 63,
+    "win_rate": 26.984126984126984,
+    "profit_factor": 0.47807457232480677,
+    "net_pnl": -1291.16,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-15T18:18:00.468583",
+    "total_trades": 63,
+    "with_inst_data": 63,
+    "win_rate": 26.984126984126984,
+    "profit_factor": 0.47807457232480677,
+    "net_pnl": -1291.16,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-15T18:34:43.397197",
+    "total_trades": 63,
+    "with_inst_data": 63,
+    "win_rate": 26.984126984126984,
+    "profit_factor": 0.47807457232480677,
+    "net_pnl": -1291.16,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-15T19:14:15.296344",
+    "total_trades": 63,
+    "with_inst_data": 63,
+    "win_rate": 26.984126984126984,
+    "profit_factor": 0.47807457232480677,
+    "net_pnl": -1291.16,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-15T19:14:37.690657",
+    "total_trades": 63,
+    "with_inst_data": 63,
+    "win_rate": 26.984126984126984,
+    "profit_factor": 0.47807457232480677,
+    "net_pnl": -1291.16,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-15T19:16:58.493464",
+    "total_trades": 63,
+    "with_inst_data": 63,
+    "win_rate": 26.984126984126984,
+    "profit_factor": 0.47807457232480677,
+    "net_pnl": -1291.16,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-15T21:32:07.994678",
+    "total_trades": 63,
+    "with_inst_data": 63,
+    "win_rate": 26.984126984126984,
+    "profit_factor": 0.47807457232480677,
+    "net_pnl": -1291.16,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-15T21:39:03.015492",
+    "total_trades": 63,
+    "with_inst_data": 63,
+    "win_rate": 26.984126984126984,
+    "profit_factor": 0.47807457232480677,
+    "net_pnl": -1291.16,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-15T22:06:01.321643",
+    "total_trades": 63,
+    "with_inst_data": 63,
+    "win_rate": 26.984126984126984,
+    "profit_factor": 0.47807457232480677,
+    "net_pnl": -1291.16,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-15T22:06:44.298676",
+    "total_trades": 63,
+    "with_inst_data": 63,
+    "win_rate": 26.984126984126984,
+    "profit_factor": 0.47807457232480677,
+    "net_pnl": -1291.16,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-15T22:39:27.320976",
+    "total_trades": 63,
+    "with_inst_data": 63,
+    "win_rate": 26.984126984126984,
+    "profit_factor": 0.47807457232480677,
+    "net_pnl": -1291.16,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-16T00:23:44.477015",
+    "total_trades": 64,
+    "with_inst_data": 64,
+    "win_rate": 26.5625,
+    "profit_factor": 0.4630642553141506,
+    "net_pnl": -1371.35,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-16T00:56:03.269962",
+    "total_trades": 64,
+    "with_inst_data": 64,
+    "win_rate": 26.5625,
+    "profit_factor": 0.4630642553141506,
+    "net_pnl": -1371.35,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-16T01:00:48.392381",
+    "total_trades": 64,
+    "with_inst_data": 64,
+    "win_rate": 26.5625,
+    "profit_factor": 0.4630642553141506,
+    "net_pnl": -1371.35,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-16T01:03:20.064804",
+    "total_trades": 64,
+    "with_inst_data": 64,
+    "win_rate": 26.5625,
+    "profit_factor": 0.4630642553141506,
+    "net_pnl": -1371.35,
+    "bullish_win_rate": 0.0,
+    "bearish_win_rate": 100.0
+  },
+  {
+    "timestamp": "2026-07-16T01:23:44.529337",
+    "total_trades": 64,
+    "with_inst_data": 64,
+    "win_rate": 26.5625,
+    "profit_factor": 0.4630642553141506,
+    "net_pnl": -1371.35,
     "bullish_win_rate": 0.0,
     "bearish_win_rate": 100.0
   }

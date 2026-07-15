@@ -1,0 +1,10 @@
+import sqlite3
+conn = sqlite3.connect('ai-service/trades.db')
+c = conn.cursor()
+c.execute("SELECT COUNT(*) FROM decision_memory")
+print("Decisions logged: " + str(c.fetchone()[0]))
+c.execute("SELECT COUNT(*) FROM trades WHERE pnl IS NOT NULL")
+print("Total closed trades: " + str(c.fetchone()[0]))
+c.execute("SELECT COUNT(*) FROM trades WHERE exit_price IS NULL AND pnl IS NULL")
+print("Open positions: " + str(c.fetchone()[0]))
+conn.close()

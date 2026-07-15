@@ -1,0 +1,11 @@
+{
+  "version": "v0-historical",
+  "date": "2026-07-02",
+  "description": "Old database before reset - various settings during tuning",
+  "metrics": {
+    "total_trades": 71,
+    "open_trades": 8,
+    "closed_trades": 63,
+    "note": "Full PnL data lost, but had both v1_old_system (-876.61, 45 trades) and v2_optimized (+213.20, 11 trades)"
+  }
+}

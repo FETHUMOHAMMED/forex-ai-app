@@ -1268,7 +1268,7 @@ class AutoTrader:
             min_conf = params.get('min_confidence', acc.min_confidence)
 
             if acc.name == 'Demo2':
-                effective_min_conf = 0.47  # Research mode
+                effective_min_conf = min_conf  # Use config value
             else:
                 session_adj = self.session_confidence_adjustment(pair)
                 effective_min_conf = min_conf + session_adj
@@ -1281,6 +1281,18 @@ class AutoTrader:
                 continue
 
             direction = signal['signal']
+            regime = signal.get('regime', 'volatile')
+
+            # RULE 2: Reject counter-trend
+            if regime == 'BULLISH' and direction == 'SELL':
+                logger.info(f"[TREND REJECT] {pair}: H1 bullish, rejecting SELL")
+                continue
+            if regime == 'BEARISH' and direction == 'BUY':
+                logger.info(f"[TREND REJECT] {pair}: H1 bearish, rejecting BUY")
+                continue
+
+# RULE 4: Removed - expanded pairs for data collection
+            regime = signal.get('regime', 'volatile')  # Default regime
 
             if acc.hedge.active and not acc.hedge.allow_signal(direction):
                 continue
@@ -1413,9 +1425,18 @@ class AutoTrader:
                 elif direction == 'SELL' and (sl - entry_price) < min_sl_distance:
                     sl = entry_price + min_sl_distance    
 
+            # Rule 2: Reject counter-trend trades
+            h1_bias = signal.get('regime', 'volatile')
+            if h1_bias == 'BULLISH' and direction == 'SELL':
+                logger.info(f"[TREND REJECT] {pair}: H1 bullish, rejecting SELL")
+                continue
+            if h1_bias == 'BEARISH' and direction == 'BUY':
+                logger.info(f"[TREND REJECT] {pair}: H1 bearish, rejecting BUY")
+                continue
+
             # Phase 2: regime prediction risk adjustment
             if hasattr(self, 'regime_predictor') and self.regime_predictor is not None:
-                next_regime = self.predict_next_regime(pair, regime)
+                next_regime = self.predict_next_regime(pair, signal.get("regime", "volatile"))
                 if next_regime == 'volatile':
                     risk_pct *= 0.7
                     if self.notifier and random.random() < 0.05:

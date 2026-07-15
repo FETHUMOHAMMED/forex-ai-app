@@ -1,0 +1,20 @@
+{
+  "version": "v1.0-baseline",
+  "date": "2026-07-07T17:14:19.485942",
+  "description": "Before fixes: 0.52 min conf, 2.0 ATR trail, 50 max trades",
+  "metrics": {
+    "total_trades": 29,
+    "wins": 12,
+    "losses": 16,
+    "win_rate": 41.4,
+    "net_pnl": -262.27,
+    "avg_win": 63.12,
+    "avg_loss": 63.73,
+    "profit_factor": 0.74
+  },
+  "settings": {
+    "min_confidence": 0.52,
+    "trail_atr_mult": 2.0,
+    "max_daily_trades": 50
+  }
+}

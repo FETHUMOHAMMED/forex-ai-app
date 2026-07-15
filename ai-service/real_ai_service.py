@@ -62,7 +62,7 @@ class RealAITrader:
     def __init__(self):
         self.models = {}
         # Volume 9.5 blocked pairs
-        self.blocked_pairs = {'AUDUSD', 'USDCHF', 'USDSGD'}
+        self.blocked_pairs = {'AUDUSD'}
         self.pairs = CONFIG.get('pairs', ['EURUSD', 'GBPUSD', 'USDJPY', 'AUDUSD', 'USDCAD',
                                           'USDCHF', 'NZDUSD', 'USDSGD'])
         self.yahoo_symbols = {
@@ -605,7 +605,7 @@ class RealAITrader:
                 logger.info(f"[OK] Trend-aligned {signal} {pair}: H1={trend}")
 
         # ---- LAYER 5: Minimum Confidence ----
-        if confidence < 0.45:
+        if confidence < 0.50:
             logger.info(f"[ERROR] Signal rejected: {pair} confidence too low ({confidence:.3f})")
             self.rejected_trend += 1
             return None
@@ -642,6 +642,16 @@ class RealAITrader:
             except Exception as e:
                 logger.debug(f"Institutional analysis skipped for {pair}: {e}")
         
+        # RULE: Reject if institutional score < 55
+        inst_score_check = inst_data.get('institutional_score', 0) if inst_data else 0
+        if inst_score_check and inst_score_check < 55:
+            return None
+
+        # RULE: Reject if institutional score < 55
+        inst_score_check = inst_data.get('institutional_score', 0) if inst_data else 0
+        if inst_score_check and inst_score_check < 55:
+            return None
+
         return {
             'pair': pair,
             'signal': signal,

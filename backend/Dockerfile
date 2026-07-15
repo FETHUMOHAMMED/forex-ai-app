@@ -1,0 +1,8 @@
+FROM node:18-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 CMD wget -qO- http://localhost:3001/health || exit 1
+EXPOSE 3001 8080
+CMD ["npm", "run", "dev"]
