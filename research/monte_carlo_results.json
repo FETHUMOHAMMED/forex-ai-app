@@ -1,0 +1,46 @@
+{
+  "trade_order": {
+    "mean_max_dd": 7.543645091854452,
+    "p50_max_dd": 7.0,
+    "p90_max_dd": 10.235905939101585,
+    "p95_max_dd": 11.5,
+    "p99_max_dd": 13.71176775531363,
+    "prob_profit": 100.0
+  },
+  "slippage": {
+    "mean_max_dd": 8.46251152195973,
+    "p95_max_dd": 8.630297564297212,
+    "p99_max_dd": 8.731058560291965,
+    "prob_profit": 100.0
+  },
+  "spread": {
+    "mean_max_dd": 9.309590705676534,
+    "p95_max_dd": 9.565980662726295,
+    "p99_max_dd": 9.662911169698505,
+    "prob_profit": 100.0
+  },
+  "missed_trades": {
+    "mean_max_dd": 8.124671421815696,
+    "p95_max_dd": 10.5,
+    "p99_max_dd": 11.501153846153871,
+    "prob_profit": 100.0
+  },
+  "delayed_execution": {
+    "mean_max_dd": 9.740467240709046,
+    "p95_max_dd": 9.997461738932468,
+    "p99_max_dd": 10.106567211312349,
+    "prob_profit": 100.0
+  },
+  "parameter_perturbation": {
+    "mean_max_dd": 8.113705240927432,
+    "p95_max_dd": 9.951620199760868,
+    "p99_max_dd": 10.101535648826042,
+    "prob_profit": 100.0
+  },
+  "losing_streaks": {
+    "mean_max_dd": 13.880200476570293,
+    "p95_max_dd": 21.0,
+    "p99_max_dd": 23.30768069313832,
+    "prob_profit": 100.0
+  }
+}

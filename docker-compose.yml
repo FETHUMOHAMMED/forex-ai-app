@@ -1,62 +1,66 @@
-version: '3.8'
+version: "3.8"
 
 services:
-  ai-service:
-    build:
-      context: ./ai-service
-      dockerfile: Dockerfile
-    volumes:
-      - ./ai-service:/app
-      - ./models:/app/models
-      - ./data:/app/data
-    environment:
-      - PYTHONUNBUFFERED=1
-      - AI_SERVICE_PORT=8001
+  v3-api:
+    build: .
+    command: python ai-service/v3_dashboard_api.py
     ports:
-      - "8001:8001"
-    networks:
-      - forex-network
+      - "8002:8002"
+    volumes:
+      - ./ai-service:/app/ai-service:ro
+      - v3-api-logs:/app/logs
+    environment:
+      - FOREX_API_KEY=${FOREX_API_KEY}
+      - MT5_PASSWORD=${MT5_PASSWORD}
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8002/v3/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+    image: node:18
+    working_dir: /app/backend
+    command: node server.js
     ports:
       - "3001:3001"
       - "8080:8080"
-    depends_on:
-      ai-service:
-        condition: service_healthy
-    environment:
-      - NODE_ENV=development
-      - PORT=3001
-      - WS_PORT=8080
     volumes:
-      - ./backend:/app
-      - /app/node_modules
-    networks:
-      - forex-network
+      - ./backend:/app/backend:ro
+      - ./ai-service:/app/ai-service:ro
+      - backend-logs:/app/logs
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    depends_on:
+      v3-api:
+        condition: service_healthy
 
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+    image: node:18
+    working_dir: /app/frontend
+    command: npm start
     ports:
       - "3000:3000"
-    depends_on:
-      - backend
-    environment:
-      - REACT_APP_API_URL=http://backend:3001
-      - REACT_APP_WS_URL=ws://backend:8080
     volumes:
-      - ./frontend:/app
-      - /app/node_modules
-    networks:
-      - forex-network
+      - ./frontend:/app/frontend:ro
+      - frontend-logs:/app/logs
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    depends_on:
+      backend:
+        condition: service_healthy
 
-networks:
-  forex-network:
-    driver: bridge
+volumes:
+  v3-api-logs:
+  backend-logs:
+  frontend-logs:

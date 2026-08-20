@@ -1,0 +1,8 @@
+{
+  "state": "HALT",
+  "consecutive_healthy": 0,
+  "consecutive_failures": 21,
+  "recovery_threshold": 3,
+  "last_scan": "2026-08-13T23:12:18.040771+00:00",
+  "updated_at": "2026-08-13T23:12:18.041994+00:00"
+}

@@ -1,0 +1,34 @@
+{
+  "strategy": "V2_HIGH_WIN_RATE",
+  "status": "REJECTED",
+  "metrics": {
+    "trades": 50,
+    "win_rate": 0.7,
+    "profit_factor": 0.95,
+    "expectancy_r": -0.05,
+    "max_drawdown_pct": 25.0,
+    "oos_pf": 0.85,
+    "walk_forward_pf": 0.9,
+    "mc_95_dd": 35.0,
+    "calibration_error": 0.25,
+    "robustness_score": 0.2,
+    "execution_feasible": false,
+    "risk_compliant": false,
+    "data_integrity": true
+  },
+  "checks": {
+    "data_integrity": true,
+    "min_trades": false,
+    "profit_factor": false,
+    "expectancy": false,
+    "max_drawdown": false,
+    "oos": false,
+    "walk_forward": false,
+    "monte_carlo": false,
+    "calibration": false,
+    "robustness": false,
+    "execution": false,
+    "risk": false
+  },
+  "timestamp": "20260819_035126"
+}

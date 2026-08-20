@@ -1,0 +1,40 @@
+{
+  "sample_requirements": {
+    "min_trades": 50,
+    "preferred_trades": 75,
+    "duration_days": 90,
+    "min_trades_per_month": 15
+  },
+  "performance_criteria": {
+    "min_expectancy_r": 0.0,
+    "min_profit_factor": 1.15,
+    "max_drawdown_r": 30.0,
+    "close_to_oos_expectation": true,
+    "oos_expectation_range": [
+      0.05,
+      0.25
+    ]
+  },
+  "operational_requirements": {
+    "unauthorized_mt5_executions": 0,
+    "cross_account_executions": 0,
+    "stale_signal_executions": 0,
+    "risk_gate_bypasses": 0,
+    "reconciliation_rate": 1.0,
+    "evidence_record_rate": 1.0
+  },
+  "consistency_requirements": {
+    "no_single_day_dominance": true,
+    "no_single_trade_dependence": true,
+    "multiple_regimes_tested": true,
+    "profitable_weeks_ratio": 0.5
+  },
+  "go_live_criteria": {
+    "all_sample_requirements_met": true,
+    "all_performance_criteria_met": true,
+    "all_operational_requirements_met": true,
+    "all_consistency_requirements_met": true,
+    "capital_available": 2000,
+    "risk_per_trade": 0.25
+  }
+}

@@ -1,0 +1,5 @@
+content = open('ai-service/auto_trader_exness.py', encoding='utf-8', errors='replace').read()
+content = content.replace('ORDER_TYPE_SELL_LIMIT_LIMIT', 'ORDER_TYPE_SELL_LIMIT')
+content = content.replace('ORDER_TYPE_BUY_LIMIT_LIMIT', 'ORDER_TYPE_BUY_LIMIT')
+open('ai-service/auto_trader_exness.py', 'w', encoding='utf-8').write(content)
+print('Fixed double LIMIT typo')

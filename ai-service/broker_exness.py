@@ -1,7 +1,7 @@
 """
 GENERIC MT5 BROKER WRAPPER – works with Exness, IC Markets, etc.
 Usage:
-    broker = MT5Broker(account=123456, password="xxx", server="ICMarkets-Demo")
+    broker = MT5Broker(account=123456, password=os.getenv("MT5_PASSWORD"), server="ICMarkets-Demo")
     broker.connect()
     broker.place_market_order(...)
 """
@@ -128,10 +128,10 @@ class MT5Broker:
                 continue
 
             if order_type == 'BUY':
-                request_type = mt5.ORDER_TYPE_BUY
+                request_type = mt5.ORDER_TYPE_BUY_LIMIT
                 price = tick.ask
             else:
-                request_type = mt5.ORDER_TYPE_SELL
+                request_type = mt5.ORDER_TYPE_SELL_LIMIT
                 price = tick.bid
 
             # ---- Margin check ----
@@ -139,23 +139,49 @@ class MT5Broker:
                 print(f"💰 {symbol} – insufficient margin (vol={volume})")
                 return None
 
+            # Normalize prices to symbol digits (fixes "Invalid stops" error)
+            digits = symbol_info.digits if symbol_info else 5
+            sl = round(sl, digits)
+            tp = round(tp, digits)
+            price = round(price, digits)
+
+            
             request = {
-                "action": mt5.TRADE_ACTION_DEAL,
+                "action": mt5.TRADE_ACTION_PENDING,
                 "symbol": symbol,
                 "volume": volume,
                 "type": request_type,
                 "price": price,
-                "sl": sl,
-                "tp": tp,
-                "deviation": deviation,          # <-- deviation now included
+                "deviation": deviation,
                 "magic": 234000,
                 "comment": f"AI_trade_conf{confidence:.2f}",
                 "type_time": mt5.ORDER_TIME_GTC,
                 "type_filling": fill_type,
             }
+            
+
+            # Check if symbol uses exchange mode (trade_mode=4)
+            trade_mode = symbol_info.trade_mode if symbol_info else 0
+            is_exchange = (trade_mode == 4)  # SYMBOL_TRADE_MODE_EXCHANGE
 
             result = mt5.order_send(request)
             print(f"[MT5 ORDER] {symbol} retcode={result.retcode if result else 'None'} comment={result.comment if result else 'N/A'} order={result.order if result else 'N/A'}")
+            
+            if is_exchange and result and result.retcode == mt5.TRADE_RETCODE_DONE:
+                positions = mt5.positions_get(symbol=symbol)
+                if positions:
+                    pos = max(positions, key=lambda p: p.ticket)
+                    modify_request = {
+                        "action": mt5.TRADE_ACTION_SLTP,
+                        "position": pos.ticket,
+                        "sl": sl,
+                        "tp": tp
+                    }
+                    modify_result = mt5.order_send(modify_request)
+                    if modify_result and modify_result.retcode == mt5.TRADE_RETCODE_DONE:
+                        print(f"[SLTP SET] {symbol} SL={sl:.5f} TP={tp:.5f}")
+                    else:
+                        print(f"[SLTP FAIL] {symbol} retcode={modify_result.retcode if modify_result else 'None'}")
             if result is None:
                 print(f"⚠️ {symbol} – order_send returned None (attempt {attempt})")
                 time.sleep(RETRY_DELAY)

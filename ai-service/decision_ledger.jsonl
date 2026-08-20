@@ -1,0 +1,1 @@
+{"signal_id": "EURUSD_20260810_100616_0001", "strategy_decision": "SELL", "strategy_confidence": 0.83, "control_decision": "REJECT", "rejection_codes": ["STALE_SIGNAL", "ENTRY_DEVIATION", "INVALID_SL"], "final_decision": "NO_TRADE", "timestamp_utc": "2026-08-12T20:43:43.556072+00:00"}

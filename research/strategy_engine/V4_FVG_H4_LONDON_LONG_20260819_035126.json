@@ -1,0 +1,34 @@
+{
+  "strategy": "V4_FVG_H4_LONDON_LONG",
+  "status": "CANDIDATE",
+  "metrics": {
+    "trades": 115,
+    "win_rate": 0.47,
+    "profit_factor": 1.994,
+    "expectancy_r": 0.527,
+    "max_drawdown_pct": 11.7,
+    "oos_pf": 1.51,
+    "walk_forward_pf": 1.423,
+    "mc_95_dd": 11.7,
+    "calibration_error": 0.037,
+    "robustness_score": 1.0,
+    "execution_feasible": true,
+    "risk_compliant": true,
+    "data_integrity": true
+  },
+  "checks": {
+    "data_integrity": true,
+    "min_trades": true,
+    "profit_factor": true,
+    "expectancy": true,
+    "max_drawdown": true,
+    "oos": true,
+    "walk_forward": true,
+    "monte_carlo": true,
+    "calibration": true,
+    "robustness": true,
+    "execution": true,
+    "risk": true
+  },
+  "timestamp": "20260819_035126"
+}

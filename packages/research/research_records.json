@@ -1,0 +1,38 @@
+{
+  "V3.0": {
+    "strategy_version": "V3.0",
+    "dataset": "EURUSD 2019-2024",
+    "train_period": "2019-2022",
+    "validation_period": "2023",
+    "oos_period": "2024",
+    "total_trades": 160,
+    "win_rate": 26.3,
+    "profit_factor": 0.65,
+    "expectancy": -13.41,
+    "sharpe": -0.85,
+    "sortino": -1.2,
+    "max_drawdown": 95.0,
+    "turnover": 0.0,
+    "slippage_sensitivity": 0.5,
+    "created_at": "2026-08-16T22:16:19.376608+00:00",
+    "phase": "BACKTEST"
+  },
+  "V3.1": {
+    "strategy_version": "V3.1",
+    "dataset": "EURUSD 2024-2026",
+    "train_period": "2024-2025",
+    "validation_period": "2025",
+    "oos_period": "2026",
+    "total_trades": 0,
+    "win_rate": 0.0,
+    "profit_factor": 0.0,
+    "expectancy": 0.0,
+    "sharpe": 0.0,
+    "sortino": 0.0,
+    "max_drawdown": 0.0,
+    "turnover": 0.0,
+    "slippage_sensitivity": 0.0,
+    "created_at": "2026-08-16T22:16:19.377684+00:00",
+    "phase": "BACKTEST"
+  }
+}

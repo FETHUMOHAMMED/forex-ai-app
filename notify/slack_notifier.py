@@ -43,7 +43,7 @@ class SlackNotifier:
             f"🎯 Entry: `{signal['entry']:.5f}`\n"
             f"🛑 Stop Loss: `{signal['stop_loss']:.5f}`\n"
             f"✅ Take Profit: `{signal['take_profit']:.5f}`\n"
-            f"📈 Confidence: {signal['confidence']:.0%} ({signal['strength']})\n"
+            f"📈 Confidence: {signal['confidence']:.0%} ({signal.get('strength', 'UNKNOWN')})\n"
             f"💰 Lot Size: {lot_size}\n"
             f"💵 Balance: ${balance:,.2f}\n"
             f"🕒 {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"

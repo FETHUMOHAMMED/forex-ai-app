@@ -1,0 +1,23 @@
+{
+  "strategy_version": "V4_CANONICAL_1.0",
+  "frozen_date": "2026-08-19",
+  "pair": "USDJPYm",
+  "direction": "BUY_ONLY",
+  "setup": "H4_BULLISH_FVG",
+  "fvg_definition": "candle_1_high < candle_3_low",
+  "bias": "BULLISH",
+  "bias_definition": "EMA50 > EMA200",
+  "session": "LONDON",
+  "session_start_utc": 7,
+  "session_end_utc": 11,
+  "sl_atr_mult": 2.0,
+  "tp_atr_mult": 4.0,
+  "rr_ratio": 2.0,
+  "risk_percent": 0.25,
+  "risk_fraction": 0.0025,
+  "risk_units": "PERCENT_OF_EQUITY",
+  "max_hold_bars": 50,
+  "entry_type": "MARKET",
+  "timezone": "UTC",
+  "all_timestamps_utc": true
+}

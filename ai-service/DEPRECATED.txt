@@ -1,0 +1,14 @@
+DEPRECATED FILES - Replaced by daemon_v2.py and core/signal_pipeline.py
+
+These files are kept for reference only. Do NOT use for trading:
+- real_ai_service.py  -> Replaced by core/signal_pipeline.py
+- ai_service_daemon.py -> Replaced by ai-service/daemon_v2.py
+- auto_trader_exness.py -> Replaced by execution/mt5_executor.py + execution/account_manager.py
+
+New architecture:
+  core/signal_pipeline.py     - ONE signal generation path
+  ai-service/daemon_v2.py     - HTTP daemon (LIVE on port 8001)
+  execution/mt5_executor.py   - MT5 order execution
+  execution/broker_interface.py - Abstract broker (PaperBroker for testing)
+  execution/account_manager.py - Isolated per-account state
+  shared/trade_signal.py      - Single data model

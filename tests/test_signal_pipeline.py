@@ -20,7 +20,7 @@ def test_config_loads():
         cfg = json.load(f)
     demo2 = [a for a in cfg['accounts'] if a['name'] == 'Demo2'][0]
     assert demo2['enabled'] == True, "Demo2 should be enabled"
-    assert len(demo2['pairs']) == 3, f"Expected 3 pairs, got {len(demo2['pairs'])}"
+    assert len(demo2['pairs']) == 1, f"Expected 3 pairs, got {len(demo2['pairs'])}"
     print(f"✅ Demo2 active with {demo2['pairs']}")
 
 def test_env_security():

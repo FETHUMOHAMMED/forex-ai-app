@@ -1,0 +1,14 @@
+{"timestamp": "2026-08-16T22:38:57.623164+00:00", "event_type": "USER_CREATED", "user": "SYSTEM", "action": "CREATE", "resource": "admin", "success": true, "details": ""}
+{"timestamp": "2026-08-16T22:38:57.624671+00:00", "event_type": "USER_CREATED", "user": "SYSTEM", "action": "CREATE", "resource": "trader", "success": true, "details": ""}
+{"timestamp": "2026-08-16T22:38:57.625545+00:00", "event_type": "USER_CREATED", "user": "SYSTEM", "action": "CREATE", "resource": "analyst", "success": true, "details": ""}
+{"timestamp": "2026-08-16T22:38:57.626501+00:00", "event_type": "USER_CREATED", "user": "SYSTEM", "action": "CREATE", "resource": "viewer", "success": true, "details": ""}
+{"timestamp": "2026-08-16T22:38:57.634324+00:00", "event_type": "AUTH", "user": "admin", "action": "MFA_REQUIRED", "resource": "auth", "success": true, "details": ""}
+{"timestamp": "2026-08-16T22:38:57.635227+00:00", "event_type": "AUTH", "user": "admin", "action": "LOGIN", "resource": "auth", "success": true, "details": ""}
+{"timestamp": "2026-08-16T22:40:45.995977+00:00", "event_type": "USER_CREATED", "user": "SYSTEM", "action": "CREATE", "resource": "test_user", "success": true, "details": ""}
+{"timestamp": "2026-08-16T22:40:45.997293+00:00", "event_type": "AUTH", "user": "test_user", "action": "LOGIN", "resource": "auth", "success": true, "details": ""}
+{"timestamp": "2026-08-16T22:40:45.998572+00:00", "event_type": "AUTH", "user": "test_user", "action": "LOGIN", "resource": "auth", "success": true, "details": ""}
+{"timestamp": "2026-08-16T22:40:46.014591+00:00", "event_type": "TEST", "user": "user", "action": "action", "resource": "resource", "success": true, "details": ""}
+{"timestamp": "2026-08-16T22:41:50.378831+00:00", "event_type": "USER_CREATED", "user": "SYSTEM", "action": "CREATE", "resource": "test_user", "success": true, "details": ""}
+{"timestamp": "2026-08-16T22:41:50.379877+00:00", "event_type": "AUTH", "user": "test_user", "action": "LOGIN", "resource": "auth", "success": true, "details": ""}
+{"timestamp": "2026-08-16T22:41:50.380788+00:00", "event_type": "AUTH", "user": "test_user", "action": "LOGIN", "resource": "auth", "success": false, "details": "Wrong password"}
+{"timestamp": "2026-08-16T22:41:50.381918+00:00", "event_type": "TEST", "user": "user", "action": "action", "resource": "resource", "success": true, "details": ""}

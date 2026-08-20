@@ -1,0 +1,49 @@
+{
+  "project": "FOREX-AI-APP",
+  "last_updated": "2026-08-19T14:05:44.441304",
+  "infrastructure": {
+    "status": "STRONG",
+    "tests_passing": 138,
+    "failure_scenarios": 43,
+    "fail_closed_rate": "100%",
+    "runtime_stages": 15,
+    "cross_account_isolation": "VERIFIED",
+    "risk_rejection_no_mt5": "VERIFIED"
+  },
+  "strategy": {
+    "status": "PROMISING_BUT_UNPROVEN",
+    "best_candidate": "USDJPY",
+    "validation_level": "WALK_FORWARD_MARGINAL"
+  },
+  "ai": {
+    "status": "NOT_PROVEN_PREDICTIVE",
+    "calibration": "UNDERCONFIDENT_AT_HIGH_PROB",
+    "brier_score": 0.1807,
+    "note": "83% confidence doesn't equal 83% win rate"
+  },
+  "live_trading": {
+    "status": "CONTROLLED_VALIDATION",
+    "production_capital": "NOT_DEPLOYED",
+    "correct_state": true
+  },
+  "milestones_completed": [
+    "? 138 safety tests",
+    "? 43/43 failure scenarios",
+    "? 8-year historical test",
+    "? Pair decomposition (USDJPY best)",
+    "? Regime decomposition (3 favorable)",
+    "? Session decomposition (3 optimal)",
+    "? Walk-forward OOS (4/4 windows)",
+    "? Monte Carlo (43R worst case)",
+    "? Execution-cost model",
+    "? Robustness testing (29/29)"
+  ],
+  "milestones_remaining": [
+    "? Paper trading (90 days)",
+    "? 50+ qualified trades (paper)",
+    "? Controlled live validation",
+    "? 100+ qualified live trades",
+    "? Capital allocation review",
+    "? Institutional deployment"
+  ]
+}

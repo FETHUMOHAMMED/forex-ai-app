@@ -1,11 +1,18 @@
+import { getV3Dashboard } from './api/dashboard';
 import React, { useState, useEffect } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import V3Performance from './components/V3Performance';
+import SafetyDominantCard from './components/SafetyDominantCard';
+import V3SignalCard from './components/V3SignalCard';
+import ResearchProgress from './components/ResearchProgress';
+import ArchiveCard from './components/ArchiveCard';
 
 function App() {
   const [signals, setSignals] = useState([]);
   const [connected, setConnected] = useState(false);
   const [lastUpdate, setLastUpdate] = useState('');
   const [stats, setStats] = useState(null);
+  const [v3Data, setV3Data] = useState(null);
   const [equityCurve, setEquityCurve] = useState([]);
 
   useEffect(() => {
@@ -55,7 +62,18 @@ function App() {
     }, 100);
 
     // Fetch real stats from backend
-    const fetchStats = async () => {
+    
+  // Fetch V3 Dashboard data from FastAPI
+  const fetchV3Dashboard = async () => {
+    try {
+      const data = await getV3Dashboard();
+      setV3Data(data);
+    } catch (error) {
+      console.error('V3 Dashboard fetch failed:', error);
+    }
+  };
+
+  const fetchStats = async () => {
       try {
         const response = await fetch('http://localhost:3001/api/stats');
         const data = await response.json();
@@ -77,6 +95,7 @@ function App() {
     };
 
     fetchStats();
+    fetchV3Dashboard();
     fetchEquityCurve();
     const statsInterval = setInterval(fetchStats, 30000);
     const equityInterval = setInterval(fetchEquityCurve, 60000); // every 60 sec
@@ -233,15 +252,15 @@ function App() {
             <div className="mt-4 grid grid-cols-3 gap-4">
               <div className="bg-gray-800/30 rounded-lg p-3 text-center">
                 <div className="text-xs text-gray-400">STRONG</div>
-                <div className="text-lg font-bold text-green-400">{signals.filter(s => s.strength === 'STRONG').length}</div>
+                <div className="text-lg font-bold text-green-400">{signals.filter(s => s.confidence >= 0.70).length}</div>
               </div>
               <div className="bg-gray-800/30 rounded-lg p-3 text-center">
                 <div className="text-xs text-gray-400">MEDIUM</div>
-                <div className="text-lg font-bold text-yellow-400">{signals.filter(s => s.strength === 'MEDIUM').length}</div>
+                <div className="text-lg font-bold text-yellow-400">{signals.filter(s => s.confidence >= 0.50 && s.confidence < 0.70).length}</div>
               </div>
               <div className="bg-gray-800/30 rounded-lg p-3 text-center">
                 <div className="text-xs text-gray-400">WEAK</div>
-                <div className="text-lg font-bold text-gray-400">{signals.filter(s => s.strength === 'WEAK').length}</div>
+                <div className="text-lg font-bold text-gray-400">{signals.filter(s => s.confidence < 0.50).length}</div>
               </div>
             </div>
           </div>
@@ -356,4 +375,26 @@ function App() {
   );
 }
 
+
+      {/* === V3_REGIME DASHBOARD === */}
+      {v3Data && (
+        <div className="mt-6 space-y-4">
+          <h2 className="text-white text-xl font-bold border-t border-gray-700 pt-4">V3_REGIME INSTITUTIONAL DASHBOARD</h2>
+      {/* SAFETY DOMINANT CARD */}
+      <SafetyDominantCard 
+        signal={{ direction: 'SELL', confidence: 83 }}
+        control={{ status: 'BLOCKED', reasons: ['STALE_SIGNAL (300s > 120s)', 'ENTRY_DEVIATION (41.9 pips > 5.0)', 'INVALID_SL (below entry for SELL)'] }}
+        execution={{ status: 'NOT SENT' }}
+      />
+          <V3Performance data={v3Data.performance} />
+          <div className="grid grid-cols-2 gap-4">
+            <ResearchProgress data={v3Data.research} />
+            <ArchiveCard data={v3Data.archive} />
+          </div>
+          <V3SignalCard signals={v3Data.signals} />
+        </div>
+      )}
+
 export default App;
+
+

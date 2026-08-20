@@ -1,0 +1,116 @@
+# FOREX-AI-APP Central Configuration
+# Single source of truth for ALL settings.
+# No hardcoded values anywhere else.
+
+# ============================================
+# TRADING STRATEGY
+# ============================================
+strategy:
+  name: "Institutional ICT + ML"
+  version: "10.0-refactored"
+
+# ============================================
+# SIGNAL FILTERS (from Rule Impact Analysis)
+# ============================================
+filters:
+  institutional:
+    min_score: 65          # Proven: +$1307 saved
+    require_dealer: true
+    blocked_dealers:
+      - "NEUTRAL"
+    allowed_dealers:
+      - "BUYING_PRESSURE"
+      - "SELLING_PRESSURE"
+      - "ACCUMULATING"
+      - "DISTRIBUTING"
+
+  confidence:
+    min_confidence: 0.60   # Proven: +$1172 saved
+
+  liquidity:
+    require_event: true
+    blocked_states:
+      - "NO_EVENT"
+      - "NO_LIQUIDITY_EVENT"
+      - "BALANCED_VOLUME"
+
+  trend:
+    block_counter_trend: true
+
+# ============================================
+# PAIRS & SESSIONS (from 129-trade evidence)
+# ============================================
+trading:
+  allowed_pairs:
+    - "EURUSD"             # 44% WR, +$458 (only profitable pair)
+    - "GBPUSD"             # Under review
+
+  blocked_pairs:
+    - "USDJPY"             # 31% WR, -$458
+    - "USDCAD"             # 35% WR, -$471
+    - "NZDUSD"             # 11% WR, -$310
+    - "USDCHF"             # 0% WR, -$335
+    - "USDSGD"             # 0% WR, -$110
+    - "AUDUSD"             # No edge proven
+    - "EURJPY"             # No ML model
+    - "GBPJPY"             # No ML model
+    - "EURGBP"             # No ML model
+    - "AUDJPY"             # No ML model
+
+  sessions:
+    allowed:
+      - "LONDON"           # 40% WR, +$122 (only profitable session)
+    blocked:
+      - "NY"               # 22% WR, -$522
+      - "OVERLAP"          # 31% WR, -$1180
+      - "ASIAN"            # 22% WR, -$240
+
+  session_hours:
+    LONDON: [[7, 17]]      # UTC
+
+# ============================================
+# RISK MANAGEMENT
+# ============================================
+risk:
+  per_trade: 0.05          # 0.05% per trade (research mode)
+  max_daily_trades: 20
+  max_daily_loss_pct: 5.0
+  max_consecutive_losses: 5
+  pause_hours: 24
+
+# ============================================
+# POSITION SIZING
+# ============================================
+position:
+  sl_atr_multiplier: 2.5   # Proven: avoids MT5 retcode 10016
+  tp_atr_multiplier: 4.0
+  atr_period: 14
+  atr_timeframe: "M15"
+
+# ============================================
+# EXECUTION
+# ============================================
+execution:
+  max_spread_pct: 0.15
+  tick_max_age_seconds: 300
+  order_deviation: 20
+  magic_number: 0
+
+# ============================================
+# DAEMON
+# ============================================
+daemon:
+  port: 8001
+  cycle_interval_seconds: 30
+  bars_to_fetch: 200
+  timeframe: "M15"
+
+# ============================================
+# ACCOUNTS
+# ============================================
+accounts:
+  - name: "Demo2"
+    account: REDACTED_DEMO_ACCOUNT
+    server: "Exness-MT5Trial9"
+    enabled: true
+    mode: "research"       # research | production

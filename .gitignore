@@ -34,3 +34,10 @@ analytics/reports/
 # Runtime trading data
 ai-service/signals_cache.json
 institutional/performance_history.json
+# Secrets and credentials
+*.key
+*.pem
+credentials*
+secrets*
+.env
+*.env

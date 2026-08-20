@@ -1,0 +1,1 @@
+{"timestamp": "2026-08-19T11:51:42.937125+00:00", "strategy_version": "V4_CANONICAL_1.0", "signal_decision": "NO_TRADE", "reason": "NO_FVG", "symbol": "USDJPYm", "direction": "BUY", "fvg_detected": false, "bullish_bias": true, "session": "LONDON", "atr_regime": "NORMAL", "spread": 1.2, "entry": null, "sl": null, "tp": null, "risk_percent": 0.25}

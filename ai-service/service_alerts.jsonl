@@ -1,0 +1,4 @@
+{"timestamp": "2026-08-07T15:25:54.611202+00:00", "service": "Trading Daemon", "old_status": "ONLINE", "new_status": "STALE", "severity": "WARNING"}
+{"timestamp": "2026-08-07T15:28:16.419127+00:00", "service": "Frontend Dashboard", "old_status": "ONLINE", "new_status": "OFFLINE", "severity": "CRITICAL"}
+{"timestamp": "2026-08-07T15:43:05.768319+00:00", "service": "Frontend Dashboard", "old_status": "OFFLINE", "new_status": "ONLINE", "severity": "INFO"}
+{"timestamp": "2026-08-07T15:45:12.203379+00:00", "service": "Trading Daemon", "old_status": "ONLINE", "new_status": "STALE", "severity": "WARNING"}

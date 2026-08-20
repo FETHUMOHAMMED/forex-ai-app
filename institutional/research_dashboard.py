@@ -82,7 +82,21 @@ def dashboard():
     print(f'   performance_memory: {perf} entries')
     print()
     
-    # Open positions
+    # Open positions - sync with MT5 first
+    try:
+        import MetaTrader5 as mt5
+        mt5.initialize()
+        live_positions = mt5.positions_get()
+        live_tickets = {p.ticket for p in live_positions} if live_positions else set()
+        c.execute('SELECT id, ticket FROM trades WHERE exit_price IS NULL')
+        for row in c.fetchall():
+            if row[1] and row[1] not in live_tickets:
+                c.execute("UPDATE trades SET exit_price=entry, exit_time=timestamp, pnl=0, result='UNKNOWN' WHERE id=?", (row[0],))
+        conn.commit()
+        mt5.shutdown()
+    except Exception:
+        pass
+    
     c.execute('SELECT COUNT(*) FROM trades WHERE exit_price IS NULL')
     open_t = c.fetchone()[0]
     print('6. OPEN POSITIONS')

@@ -1,0 +1,11 @@
+import sqlite3
+conn = sqlite3.connect('ai-service/trades.db')
+c = conn.cursor()
+# Fix: 10:06 local = 07:06 UTC (UTC+3 Ethiopia)
+c.execute("UPDATE trades SET timestamp = '2026-08-10T07:06:24+00:00' WHERE id = 163")
+c.execute("SELECT id, timestamp, exit_time FROM trades WHERE id = 163")
+r = c.fetchone()
+print(f"ID {r[0]}: Open={r[1][:19]} Close={r[2][:19]}")
+print(f"Open < Close: {r[1] < r[2]}")
+conn.commit()
+conn.close()

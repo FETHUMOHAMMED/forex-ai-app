@@ -1,0 +1,33 @@
+{
+  "parameter_count": {
+    "max_strategy_parameters": 5,
+    "current_parameters": 3,
+    "warning": "More than 5 parameters = overfitting risk"
+  },
+  "optimization_limits": {
+    "max_parameter_combinations": 30,
+    "tested_combinations": 29,
+    "warning": "Testing too many combinations = data mining"
+  },
+  "validation_requirements": {
+    "min_walk_forward_windows": 4,
+    "required_profitable_windows": 3,
+    "min_oos_trades": 200,
+    "warning": "Insufficient OOS validation"
+  },
+  "performance_limits": {
+    "max_acceptable_pf": 2.5,
+    "max_acceptable_expectancy": 0.5,
+    "warning": "PF > 2.5 or expectancy > 0.5 = suspicious, likely overfit"
+  },
+  "forbidden_practices": [
+    "Tuning parameters until PF > 3.0",
+    "Testing 100+ parameter combinations",
+    "Using 20+ indicators",
+    "Optimizing on test data",
+    "Curve-fitting to specific years",
+    "Adding parameters to improve backtest",
+    "Ignoring walk-forward results",
+    "Deploying without OOS validation"
+  ]
+}

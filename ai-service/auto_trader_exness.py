@@ -904,7 +904,7 @@ class AutoTrader:
 
         # Close the position
         request = {
-            "action": mt5.TRADE_ACTION_DEAL,
+            "action": mt5.TRADE_ACTION_PENDING,
             "position": ticket,
             "symbol": symbol,
             "volume": volume,
@@ -1292,7 +1292,12 @@ class AutoTrader:
                 continue
 
 # RULE 4: Removed - expanded pairs for data collection
-            regime = signal.get('regime', 'volatile')  # Default regime
+            # P0: Regime validation - default UNKNOWN to volatile (safe default)
+            regime = signal.get('regime', 'UNKNOWN')
+            if regime == 'UNKNOWN' or regime is None:
+                regime = 'volatile'
+                signal['regime'] = 'volatile'
+                print(f"[REGIME DEFAULT] {pair}: UNKNOWN -> volatile (safe default)")
 
             if acc.hedge.active and not acc.hedge.allow_signal(direction):
                 continue

@@ -1,0 +1,84 @@
+{
+  "timestamp": "2026-08-19T13:34:58.357507",
+  "two_separate_questions": {
+    "risk_gate_question": "Can this trade be safely executed?",
+    "strategy_question": "Should this strategy receive capital?",
+    "answer_risk_gate": "YES - $3,520 supports 0.25% risk",
+    "answer_strategy": "NOT YET - insufficient live validation"
+  },
+  "current_evidence": {
+    "backtest": {
+      "usdjpy_pf": 1.852,
+      "usdjpy_p_value": 0.0049,
+      "status": "STRONG in backtest"
+    },
+    "full_sample": {
+      "pf": 1.14,
+      "p_value": 0.226,
+      "status": "WEAK aggregate"
+    },
+    "walk_forward": {
+      "pf": 1.248,
+      "expectancy": 0.151,
+      "p_value": 0.132,
+      "status": "MARGINAL"
+    },
+    "monte_carlo": {
+      "worst_dd": 43.3,
+      "worst_streak": 26,
+      "recovery_months": 52,
+      "status": "HIGH RISK"
+    },
+    "live_validation": {
+      "qualified_trades": 0,
+      "paper_trades": 0,
+      "status": "INSUFFICIENT"
+    }
+  },
+  "capital_deployment_decision": {
+    "should_fund_now": false,
+    "reason": "Strategy validation incomplete",
+    "required_before_funding": [
+      "90+ days paper trading",
+      "20+ paper trades documented",
+      "Paper trading matches walk-forward (PF > 1.2)",
+      "Paper trading shows positive expectancy",
+      "Psychological readiness confirmed"
+    ]
+  },
+  "recommended_path": {
+    "phase_1": {
+      "duration": "90 days",
+      "action": "Paper trade extensively",
+      "capital": "$0 (no real money)",
+      "goal": "20+ paper trades"
+    },
+    "phase_2": {
+      "duration": "After paper validation",
+      "action": "Controlled live with MINIMUM capital",
+      "capital": "$2,000 (NOT $3,520)",
+      "goal": "Validate execution, not make money"
+    },
+    "phase_3": {
+      "duration": "After 3 months live",
+      "action": "If edge confirmed, consider scaling",
+      "capital": "$3,520+ only if justified",
+      "goal": "Gradual capital deployment"
+    }
+  },
+  "risk_management": {
+    "initial_risk": "0.25% per trade",
+    "max_risk": "0.25% until 100+ live trades",
+    "position_sizing": "Based on 43R worst case",
+    "daily_loss_limit": "-1%",
+    "weekly_loss_limit": "-2%",
+    "monthly_loss_limit": "-4%"
+  },
+  "what_not_to_do": [
+    "Do NOT deposit $3,520 yet",
+    "Do NOT skip paper trading",
+    "Do NOT risk more than 0.25%",
+    "Do NOT expect backtest-level returns",
+    "Do NOT trade without 20+ paper trades"
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "state": "DEGRADED",
+  "checked_at": "2026-08-13T23:12:03.740252+00:00",
+  "results": [
+    {
+      "name": "DATABASE",
+      "passed": true,
+      "critical": true,
+      "detail": "165 trades, integrity=ok"
+    },
+    {
+      "name": "MT5",
+      "passed": true,
+      "critical": true,
+      "detail": "Account REDACTED_LIVE_ACCOUNT balance=$20.8"
+    },
+    {
+      "name": "API",
+      "passed": false,
+      "critical": false,
+      "detail": "V3 API not reachable: <urlopen error [WinError 10061] No connection could be made because the target machine actively refused it>"
+    },
+    {
+      "name": "FRONTEND",
+      "passed": false,
+      "critical": false,
+      "detail": "Dashboard not reachable"
+    },
+    {
+      "name": "AI_MODELS",
+      "passed": true,
+      "critical": true,
+      "detail": "9 models loaded"
+    },
+    {
+      "name": "RISK_GATE",
+      "passed": true,
+      "critical": true,
+      "detail": "Max vol=0.01, risk=0.0005"
+    },
+    {
+      "name": "RECONCILIATION",
+      "passed": true,
+      "critical": true,
+      "detail": "Daemon importable"
+    },
+    {
+      "name": "DATA_INTEGRITY",
+      "passed": true,
+      "critical": true,
+      "detail": "No active contamination"
+    },
+    {
+      "name": "HEARTBEAT",
+      "passed": false,
+      "critical": false,
+      "detail": "STALE: 27130s"
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "USDJPYm": {
+    "tier": "TRADE",
+    "reason": "Statistically significant edge (p=0.0049), PF 1.852, +0.466R expectancy",
+    "metrics": {
+      "trades": 106,
+      "win_rate": 0.453,
+      "profit_factor": 1.852,
+      "expectancy_r": 0.466,
+      "p_value": 0.0049,
+      "confidence": "99%"
+    }
+  },
+  "USDCADm": {
+    "tier": "CONDITIONAL",
+    "reason": "Positive but not significant (p=0.153), PF 1.431, +0.264R expectancy",
+    "metrics": {
+      "trades": 82,
+      "win_rate": 0.378,
+      "profit_factor": 1.431,
+      "expectancy_r": 0.264,
+      "p_value": 0.153,
+      "confidence": "85%"
+    }
+  },
+  "EURUSDm": {
+    "tier": "NO_TRADE",
+    "reason": "Negative expectancy (p=0.599), PF 0.880, -0.083R expectancy",
+    "metrics": {
+      "trades": 86,
+      "win_rate": 0.302,
+      "profit_factor": 0.88,
+      "expectancy_r": -0.083,
+      "p_value": 0.599,
+      "confidence": "N/A"
+    }
+  },
+  "GBPUSDm": {
+    "tier": "NO_TRADE",
+    "reason": "Negative expectancy (p=0.470), PF 0.850, -0.098R expectancy",
+    "metrics": {
+      "trades": 101,
+      "win_rate": 0.327,
+      "profit_factor": 0.85,
+      "expectancy_r": -0.098,
+      "p_value": 0.47,
+      "confidence": "N/A"
+    }
+  },
+  "AUDUSDm": {
+    "tier": "NO_TRADE",
+    "reason": "Negative expectancy (p=0.538), PF 0.844, -0.105R expectancy",
+    "metrics": {
+      "trades": 67,
+      "win_rate": 0.299,
+      "profit_factor": 0.844,
+      "expectancy_r": -0.105,
+      "p_value": 0.538,
+      "confidence": "N/A"
+    }
+  },
+  "USDCHFm": {
+    "tier": "NO_TRADE",
+    "reason": "Negative expectancy (p=0.406), PF 0.794, -0.137R expectancy",
+    "metrics": {
+      "trades": 66,
+      "win_rate": 0.333,
+      "profit_factor": 0.794,
+      "expectancy_r": -0.137,
+      "p_value": 0.406,
+      "confidence": "N/A"
+    }
+  }
+}

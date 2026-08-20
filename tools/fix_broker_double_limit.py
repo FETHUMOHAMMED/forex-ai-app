@@ -1,0 +1,6 @@
+content = open('ai-service/broker_exness.py', encoding='utf-8', errors='replace').read()
+content = content.replace('ORDER_TYPE_BUY_LIMIT_LIMIT', 'ORDER_TYPE_BUY_LIMIT')
+content = content.replace('ORDER_TYPE_SELL_LIMIT_LIMIT', 'ORDER_TYPE_SELL_LIMIT')
+open('ai-service/broker_exness.py', 'w', encoding='utf-8').write(content)
+print('Fixed broker_exness.py: ORDER_TYPE_BUY_LIMIT_LIMIT -> ORDER_TYPE_BUY_LIMIT')
+print('Fixed broker_exness.py: ORDER_TYPE_SELL_LIMIT_LIMIT -> ORDER_TYPE_SELL_LIMIT')

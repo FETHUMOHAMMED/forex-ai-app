@@ -1,0 +1,27 @@
+{
+  "system": "FOREX-AI-APP",
+  "timestamp": "2026-08-13T22:12:31.311775+00:00",
+  "overall": "HALT",
+  "trading_allowed": false,
+  "domains": {
+    "api": "PASS",
+    "database": "PASS",
+    "mt5": "PASS",
+    "ai": "PASS",
+    "risk": "FAIL",
+    "frontend": "PASS",
+    "observability": "PASS"
+  },
+  "critical_errors": [
+    {
+      "code": "RISK_POSITION_SIZE",
+      "severity": "CRITICAL",
+      "detail": "Minimum volume 0.01 requires $1.76 risk, but budget is only $0.0104. Need $3520 equity."
+    },
+    {
+      "code": "RISK_WITHIN_BUDGET",
+      "severity": "CRITICAL",
+      "detail": "Risk ratio 169.2x - HALT"
+    }
+  ]
+}

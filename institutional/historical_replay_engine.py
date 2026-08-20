@@ -195,23 +195,24 @@ class HistoricalReplayEngine:
         now = datetime.now(timezone.utc).isoformat()
 
         for t in trades:
-            c.execute('''INSERT INTO shadow_trades
+            c.execute("""INSERT INTO shadow_trades
                 (timestamp, pair, signal, confidence, entry, stop_loss, take_profit,
                  decision, grade, regime, opportunity_score,
-                 institutional_bias, dealer_pressure, liquidity_state, continuation_prob,
+                 institutional_bias, institutional_score, dealer_pressure, liquidity_state, continuation_prob,
                  simulated_pnl, simulated_result, session)
                 VALUES (?, ?, ?, ?, 0, 0, 0, 'SIMULATED', ?, ?, ?,
-                        ?, ?, ?, ?, ?, ?, 'REPLAY')''',
+                        ?, ?, ?, ?, ?, ?, ?, 'REPLAY')""",
                 (now, t['pair'], t['signal'], t['confidence'],
                  t['grade'], t['regime'], t['score'],
                  t.get('institutional_bias', 'UNKNOWN'),
+                 t.get('institutional_score', 0),
                  t.get('dealer_pressure', 'UNKNOWN'),
                  t.get('liquidity_state', 'UNKNOWN'),
                  t.get('continuation_prob', 0.5),
                  t['pnl_pct'], t['result']))
 
         conn.commit()
-        count = c.execute('SELECT COUNT(*) FROM shadow_trades WHERE decision="SIMULATED"').fetchone()[0]
+        count = c.execute("SELECT COUNT(*) FROM shadow_trades WHERE decision='SIMULATED'").fetchone()[0]
         print(f'Saved {count} simulated trades to shadow_trades')
         conn.close()
 

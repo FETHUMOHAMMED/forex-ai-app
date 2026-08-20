@@ -1,0 +1,74 @@
+[
+  {
+    "window": {
+      "train_start": "2020",
+      "train_end": "2022",
+      "test_year": "2023"
+    },
+    "params": {
+      "sl_mult": 2.0,
+      "rr": 2.5
+    },
+    "test_stats": {
+      "trades": 20,
+      "win_rate": 0.4,
+      "pf": 1.415622326669454,
+      "expectancy": 0.2493733960016724,
+      "total_r": 4.987467920033448
+    }
+  },
+  {
+    "window": {
+      "train_start": "2021",
+      "train_end": "2023",
+      "test_year": "2024"
+    },
+    "params": {
+      "sl_mult": 2.0,
+      "rr": 2.5
+    },
+    "test_stats": {
+      "trades": 34,
+      "win_rate": 0.5294117647058824,
+      "pf": 2.5483100271611634,
+      "expectancy": 0.6927872551691265,
+      "total_r": 23.5547666757503
+    }
+  },
+  {
+    "window": {
+      "train_start": "2022",
+      "train_end": "2024",
+      "test_year": "2025"
+    },
+    "params": {
+      "sl_mult": 2.0,
+      "rr": 2.5
+    },
+    "test_stats": {
+      "trades": 20,
+      "win_rate": 0.2,
+      "pf": 0.47880928383419263,
+      "expectancy": -0.41695257293264587,
+      "total_r": -8.339051458652918
+    }
+  },
+  {
+    "window": {
+      "train_start": "2023",
+      "train_end": "2025",
+      "test_year": "2026"
+    },
+    "params": {
+      "sl_mult": 1.5,
+      "rr": 2.5
+    },
+    "test_stats": {
+      "trades": 12,
+      "win_rate": 0.3333333333333333,
+      "pf": 1.25,
+      "expectancy": 0.16666666666666666,
+      "total_r": 2.0
+    }
+  }
+]

@@ -1,0 +1,136 @@
+{
+  "strategy": "V4_FVG_H4_MULTI_SESSION",
+  "status": "PAPER_READY",
+  "metrics": {
+    "backtest": {
+      "trades": 448,
+      "win_rate": 0.45535714285714285,
+      "pf": 1.545963324274934,
+      "expectancy": 0.29403054424941144,
+      "total_r": 131.7256838237363
+    },
+    "pair": {
+      "pair": "USDJPYm",
+      "status": "TESTED"
+    },
+    "regime": {
+      "RANGING": {
+        "trades": 73,
+        "win_rate": 0.4520547945205479,
+        "pf": 1.4752031026654246,
+        "expectancy": 0.26038526173447935,
+        "total_r": 19.008124106616993
+      },
+      "TRENDING_BULL": {
+        "trades": 337,
+        "win_rate": 0.456973293768546,
+        "pf": 1.5572326516637138,
+        "expectancy": 0.2980815004635635,
+        "total_r": 100.45346565622091
+      },
+      "LOW_VOLATILITY": {
+        "trades": 33,
+        "win_rate": 0.5151515151515151,
+        "pf": 2.079005878806151,
+        "expectancy": 0.5231543654817701,
+        "total_r": 17.26409406089841
+      },
+      "HIGH_VOLATILITY": {
+        "trades": 5,
+        "win_rate": 0.0,
+        "pf": 0.0,
+        "expectancy": -1.0,
+        "total_r": -5.0
+      }
+    },
+    "session": {
+      "ASIAN": {
+        "trades": 265,
+        "win_rate": 0.4339622641509434,
+        "pf": 1.393424351329582,
+        "expectancy": 0.21864304131697238,
+        "total_r": 57.940405948997686
+      },
+      "LONDON": {
+        "trades": 115,
+        "win_rate": 0.5130434782608696,
+        "pf": 1.970422333367308,
+        "expectancy": 0.47255348407451525,
+        "total_r": 54.34365066856925
+      },
+      "LATE_NY": {
+        "trades": 68,
+        "win_rate": 0.4411764705882353,
+        "pf": 1.511621768583405,
+        "expectancy": 0.2859062824436675,
+        "total_r": 19.44162720616939
+      }
+    },
+    "walk_forward": {
+      "profitable_windows": 4,
+      "total_windows": 4,
+      "mean_expectancy": 0.151,
+      "mean_pf": 1.248,
+      "p_value": 0.132
+    },
+    "monte_carlo": {
+      "worst_dd": 43.3,
+      "p95_dd": 39.2,
+      "p99_dd": 43.3,
+      "max_streak": 26,
+      "prob_profit": 0.924
+    },
+    "costs": {
+      "typical_cost_impact": 0.001,
+      "extreme_cost_survivable": true,
+      "id_163_survivable": true
+    },
+    "robustness": {
+      "atr_robust": true,
+      "rr_robust": true,
+      "session_robust": true,
+      "profitable_combinations": 29,
+      "total_combinations": 29
+    },
+    "assessment": {
+      "passed": true,
+      "passed_checks": 8,
+      "total_checks": 8,
+      "checks": [
+        [
+          "Backtest PF > 1.2",
+          "True"
+        ],
+        [
+          "Backtest expectancy > 0.1",
+          "True"
+        ],
+        [
+          "Sample > 100",
+          true
+        ],
+        [
+          "Walk-forward PF > 1.2",
+          true
+        ],
+        [
+          "Walk-forward positive",
+          true
+        ],
+        [
+          "Monte Carlo DD < 50R",
+          true
+        ],
+        [
+          "Costs survivable",
+          true
+        ],
+        [
+          "Robust (29/29)",
+          true
+        ]
+      ]
+    }
+  },
+  "timestamp": "20260819_134956"
+}

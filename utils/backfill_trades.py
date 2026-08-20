@@ -7,7 +7,7 @@ if not mt5.initialize():
     exit()
 
 # Connect to the active demo account (Demo2)
-mt5.login(REDACTED_DEMO_ACCOUNT, password="REDACTED_DEMO2_PASSWORD", server="Exness-MT5Trial9")
+mt5.login(REDACTED_DEMO_ACCOUNT, password=os.getenv("MT5_PASSWORD"), server="Exness-MT5Trial9")
 
 db = sqlite3.connect("trades.db")
 cursor = db.cursor()

@@ -1,0 +1,114 @@
+[
+  {
+    "hypothesis": "FVG_H4_2R_London",
+    "trades": 138,
+    "win_rate": 0.427536231884058,
+    "profit_factor": 1.4582992163550013,
+    "expectancy": 0.26235969631916745,
+    "total_r": 36.205638092045106
+  },
+  {
+    "hypothesis": "FVG_H1_2R_London",
+    "trades": 146,
+    "win_rate": 0.4246575342465753,
+    "profit_factor": 1.4475598949267232,
+    "expectancy": 0.2552812640208418,
+    "total_r": 37.2710645470429
+  },
+  {
+    "hypothesis": "FVG_H4H1_2R_London",
+    "trades": 140,
+    "win_rate": 0.40714285714285714,
+    "profit_factor": 1.3398269649643988,
+    "expectancy": 0.2014688435146079,
+    "total_r": 28.205638092045106
+  },
+  {
+    "hypothesis": "OB_H4_2R_London",
+    "trades": 498,
+    "win_rate": 0.3293172690763052,
+    "profit_factor": 0.9561471211793844,
+    "expectancy": -0.029275049388791736,
+    "total_r": -14.578974595618284
+  },
+  {
+    "hypothesis": "OB_H1_2R_London",
+    "trades": 489,
+    "win_rate": 0.3149284253578732,
+    "profit_factor": 0.8962303313624724,
+    "expectancy": -0.07062262860663722,
+    "total_r": -34.5344653886456
+  },
+  {
+    "hypothesis": "OB_H4H1_2R_London",
+    "trades": 513,
+    "win_rate": 0.3255360623781676,
+    "profit_factor": 0.9414117149437768,
+    "expectancy": -0.0392643412199812,
+    "total_r": -20.142607045850355
+  },
+  {
+    "hypothesis": "SWEEP_MSS_H4_2R_London",
+    "trades": 1,
+    "win_rate": 1.0,
+    "profit_factor": Infinity,
+    "expectancy": 2.0,
+    "total_r": 2.0
+  },
+  {
+    "hypothesis": "SWEEP_FVG_H4_2R_London",
+    "trades": 0
+  },
+  {
+    "hypothesis": "SWEEP_MSS_FVG_H4_2R_London",
+    "trades": 0
+  },
+  {
+    "hypothesis": "FVG_H4_15R_London",
+    "trades": 138,
+    "win_rate": 0.4420289855072464,
+    "profit_factor": 1.1778287997301893,
+    "expectancy": 0.09922331579148244,
+    "total_r": 13.692817579224577
+  },
+  {
+    "hypothesis": "FVG_H4_25R_London",
+    "trades": 138,
+    "win_rate": 0.4057971014492754,
+    "profit_factor": 1.6365912135561702,
+    "expectancy": 0.37826434428699957,
+    "total_r": 52.20047951160594
+  },
+  {
+    "hypothesis": "FVG_H4_2R_NY",
+    "trades": 399,
+    "win_rate": 0.3634085213032581,
+    "profit_factor": 1.1269768559090014,
+    "expectancy": 0.08057036811114174,
+    "total_r": 32.14757687634555
+  },
+  {
+    "hypothesis": "FVG_H4_2R_Overlap",
+    "trades": 115,
+    "win_rate": 0.3391304347826087,
+    "profit_factor": 1.0114804592183688,
+    "expectancy": 0.007587086092139349,
+    "total_r": 0.8725149005960251
+  },
+  {
+    "hypothesis": "FVG_H4_2R_London_ATR",
+    "trades": 138,
+    "win_rate": 0.427536231884058,
+    "profit_factor": 1.4582992163550013,
+    "expectancy": 0.26235969631916745,
+    "total_r": 36.205638092045106
+  },
+  {
+    "hypothesis": "FVG_H4_2R_London_LowVolExcl",
+    "trades": 138,
+    "win_rate": 0.427536231884058,
+    "profit_factor": 1.4582992163550013,
+    "expectancy": 0.26235969631916745,
+    "total_r": 36.205638092045106
+  }
+]

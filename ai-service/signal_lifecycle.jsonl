@@ -1,0 +1,6 @@
+{"signal_id": "EURUSD_20260810_100616_0001", "state": "GENERATED", "timestamp_utc": "2026-08-12T20:40:56.629156+00:00", "detail": "AI signal: SELL EURUSD confidence=83%"}
+{"signal_id": "EURUSD_20260810_100616_0001", "state": "STRATEGY_APPROVED", "timestamp_utc": "2026-08-12T20:40:56.630813+00:00", "detail": "Passed regime/ICT/SMC checks"}
+{"signal_id": "EURUSD_20260810_100616_0001", "state": "CONTROL_CHECK", "timestamp_utc": "2026-08-12T20:40:56.632000+00:00", "detail": "Entering control plane"}
+{"signal_id": "EURUSD_20260810_100616_0001", "state": "REJECTED_STALE", "timestamp_utc": "2026-08-12T20:40:56.633065+00:00", "detail": "Signal age=300s > max=120s"}
+{"signal_id": "EURUSD_20260810_100616_0001", "state": "REJECTED_DEVIATION", "timestamp_utc": "2026-08-12T20:40:56.634511+00:00", "detail": "Entry deviation=41.9 pips > max=5.0"}
+{"signal_id": "EURUSD_20260810_100616_0001", "state": "REJECTED_INVALID_SLTP", "timestamp_utc": "2026-08-12T20:40:56.635473+00:00", "detail": "SL(1.15299) below entry(1.15542) for SELL"}

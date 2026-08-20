@@ -11,13 +11,21 @@ const PORT = process.env.PORT || 3001;
 const WS_PORT = process.env.WS_PORT || 8080;
 
 // Configuration (from .env or defaults)
-const STARTING_BALANCE = parseFloat(process.env.STARTING_BALANCE) || 500000;
+const STARTING_BALANCE = parseFloat(process.env.STARTING_BALANCE) || 19.06;
 const MIN_TRADING_DAYS_FOR_SHARPE = parseInt(process.env.MIN_DAYS_SHARPE) || 30;
 const SIGNAL_REFRESH_INTERVAL = parseInt(process.env.SIGNAL_REFRESH_MS) || 15000;
 const MAX_CONSECUTIVE_ERRORS = parseInt(process.env.MAX_CONSEC_ERRORS) || 2;
 
 app.use(cors({ origin: 'http://localhost:3000' }));
 app.use(express.json());
+app.get('/api/dashboard', (req, res) => {
+  const { spawn } = require('child_process');
+  const py = spawn('python', [require('path').join(__dirname, 'services', 'dashboard_service.py')]);
+  let data = '';
+  py.stdout.on('data', (chunk) => data += chunk);
+  py.stdout.on('end', () => { try { res.json(JSON.parse(data)); } catch(e) { res.json({error: 'error'}); } });
+});
+
 app.use('/api', (req, res, next) => {
     // Allow localhost dashboard without API key
     const key = req.headers['x-api-key'] || req.headers['referer'] || '';
@@ -113,7 +121,7 @@ app.get('/api/stats', (req, res) => {
     db.all(`
         SELECT pnl, confidence, result, timestamp 
         FROM trades 
-        WHERE exit_price IS NOT NULL AND pnl IS NOT NULL
+        WHERE exit_price IS NOT NULL AND pnl IS NOT NULL AND strategy_version='V3_REGIME' AND account='Live_Micro' AND result NOT LIKE 'LEGACY%' AND result != 'EXECUTION_EXCEPTION'
         ORDER BY timestamp ASC
     `, (err, rows) => {
         if (err) {
@@ -198,14 +206,14 @@ app.get('/api/stats', (req, res) => {
         }
 
         // Count open positions
-        db.get(`SELECT COUNT(*) as open_positions FROM trades WHERE exit_price IS NULL`, (err2, row2) => {
+        db.get(`SELECT COUNT(*) as open_positions FROM trades WHERE exit_price IS NULL AND strategy_version='V3_REGIME' AND account='Live_Micro'`, (err2, row2) => {
             if (!err2 && row2) {
                 stats.open_positions = row2.open_positions || 0;
             }
 
             // Get today's P&L
             const today = new Date().toISOString().split('T')[0];
-            db.get(`SELECT SUM(pnl) as today_pnl FROM trades WHERE date(timestamp) = ?`, [today], (err3, row3) => {
+            db.get(`SELECT SUM(pnl) as today_pnl FROM trades WHERE date(timestamp) = ? AND strategy_version='V3_REGIME' AND account='Live_Micro' AND result NOT LIKE 'LEGACY%'`, [today], (err3, row3) => {
                 if (!err3 && row3) {
                     stats.today_pnl = row3.today_pnl || 0;
                 }
@@ -229,7 +237,7 @@ app.get('/api/equity-curve', (req, res) => {
     db.all(`
         SELECT timestamp, pnl 
         FROM trades 
-        WHERE exit_price IS NOT NULL AND pnl IS NOT NULL
+        WHERE exit_price IS NOT NULL AND pnl IS NOT NULL AND strategy_version='V3_REGIME' AND account='Live_Micro' AND result NOT LIKE 'LEGACY%' AND result != 'EXECUTION_EXCEPTION'
         ORDER BY timestamp ASC
     `, (err, rows) => {
         if (err) {
@@ -465,3 +473,4 @@ process.on('SIGTERM', () => {
     wss.close();
     process.exit(0);
 });
+

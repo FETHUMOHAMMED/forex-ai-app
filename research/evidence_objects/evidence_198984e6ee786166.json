@@ -1,0 +1,50 @@
+{
+  "pair": "USDJPYm",
+  "direction": "BUY",
+  "strategy_version": "V4_FVG_H4_MULTI_SESSION",
+  "model_version": "1.0.0",
+  "regime": "TRENDING_BULL",
+  "session": "LONDON",
+  "expected_edge_r": 0.151,
+  "research_evidence": {
+    "sample_size": 251,
+    "profit_factor": 1.248,
+    "expectancy_r": 0.151,
+    "oos_profit_factor": 1.248,
+    "walk_forward_validated": true,
+    "walk_forward_pf": 1.248,
+    "walk_forward_p_value": 0.132,
+    "monte_carlo_validated": true,
+    "monte_carlo_worst_dd": 43.3,
+    "monte_carlo_95_dd": 39.2,
+    "monte_carlo_prob_profit": 0.924,
+    "pair_analysis": {
+      "usdjpy_trades": 106,
+      "usdjpy_pf": 1.852,
+      "usdjpy_expectancy": 0.466,
+      "usdjpy_p_value": 0.0049
+    },
+    "session_analysis": {
+      "london_pf": 1.852,
+      "asian_pf": 1.315,
+      "late_ny_pf": 1.442,
+      "overlap_pf": 0.984
+    },
+    "regime_analysis": {
+      "trending_bull_pf": 1.782,
+      "low_volatility_pf": 2.55,
+      "ranging_pf": 0.785,
+      "breakout_pf": 0.742
+    }
+  },
+  "execution": {
+    "entry": "current_close",
+    "stop_loss": "2.0x_ATR_below_entry",
+    "take_profit": "4.0x_ATR_above_entry",
+    "rr_ratio": 2.0,
+    "risk_per_trade": 0.25,
+    "max_position_size": "calculated_at_execution"
+  },
+  "decision": "BUY",
+  "timestamp": "2026-08-19T10:46:06.063407+00:00"
+}

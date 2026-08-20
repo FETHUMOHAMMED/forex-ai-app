@@ -1,0 +1,14 @@
+{
+  "Live_Micro": {
+    "account_id": REDACTED_LIVE_ACCOUNT,
+    "server": "Exness-MT5Real10",
+    "risk_percent": 0.0005,
+    "environment": "LIVE_MICRO_VALIDATION"
+  },
+  "Demo2": {
+    "account_id": REDACTED_DEMO_ACCOUNT,
+    "server": "Exness-MT5Trial9",
+    "risk_percent": 0.01,
+    "environment": "DEMO"
+  }
+}

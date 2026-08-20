@@ -1,0 +1,16 @@
+{
+  "risk_per_trade": 0.0005,
+  "max_daily_trades": 5,
+  "max_daily_loss_pct": 0.05,
+  "max_open_positions": 3,
+  "session_hours": {
+    "EURUSD": [
+      [
+        7,
+        11
+      ]
+    ]
+  },
+  "signal_max_age_seconds": 120,
+  "max_entry_deviation_pips": 5.0
+}

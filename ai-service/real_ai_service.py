@@ -62,9 +62,9 @@ class RealAITrader:
     def __init__(self):
         self.models = {}
         # Volume 9.5 blocked pairs
-        self.blocked_pairs = {'AUDUSD'}
-        self.pairs = CONFIG.get('pairs', ['EURUSD', 'GBPUSD', 'USDJPY', 'AUDUSD', 'USDCAD',
-                                          'USDCHF', 'NZDUSD', 'USDSGD'])
+        self.blocked_pairs = {'USDJPY','USDCAD','NZDUSD','USDCHF','USDSGD','AUDUSD','EURJPY','GBPJPY','EURGBP','AUDJPY'}
+        demo2_pairs = ['EURUSD','GBPUSD','USDJPY','USDCAD','NZDUSD','AUDUSD','EURJPY','GBPJPY','EURGBP','AUDJPY']
+        self.pairs = CONFIG.get('pairs', demo2_pairs)
         self.yahoo_symbols = {
             'EURUSD': 'EURUSD=X', 'GBPUSD': 'GBPUSD=X', 'USDJPY': 'USDJPY=X',
             'AUDUSD': 'AUDUSD=X', 'USDCAD': 'USDCAD=X', 'USDCHF': 'USDCHF=X',
@@ -327,8 +327,9 @@ class RealAITrader:
                       latest.get('fvg_sell', 0) * 2 + latest.get('bb_sell', 0) * 2 +
                       latest.get('lv_sell', 0) * 1)
         
-        ict_buy = buy_score >= 3  # lowered for data collection
-        ict_sell = sell_score >= 3  # lowered for data collection
+        ict_buy = buy_score >= 5  # lowered for data collection
+        logger.info(f"[ICT DEBUG] {pair}: buy_score={buy_score} sell_score={sell_score} MSS_b={latest.get('mss_buy',0)} OB_b={latest.get('ob_buy',0)} FVG_b={latest.get('fvg_buy',0)} MSS_s={latest.get('mss_sell',0)} OB_s={latest.get('ob_sell',0)}")
+        ict_sell = sell_score >= 5  # lowered for data collection
         
         # Same ensemble as live
         if ict_buy and ml_signal == 'BUY':
@@ -517,8 +518,8 @@ class RealAITrader:
                       prev.get('bb_sell', 0) * 1 + prev.get('lv_sell', 0) * 1 +
                       prev.get('mss_sell', 0) * 2)
         
-        ict_buy = buy_score >= 3
-        ict_sell = sell_score >= 3
+        ict_buy = buy_score >= 5
+        ict_sell = sell_score >= 5
         
         if ict_buy and ict_sell:
             if buy_score > sell_score:
@@ -611,7 +612,7 @@ class RealAITrader:
             return None
 
         # ---- Simple SL/TP ----
-        sl_mult, tp_mult = 1.5, 3.0
+        sl_mult, tp_mult = 2.5, 4.0
 
         if signal == 'BUY':
             sl = current_price - atr * sl_mult
@@ -644,12 +645,18 @@ class RealAITrader:
         
         # RULE: Reject if institutional score < 55
         inst_score_check = inst_data.get('institutional_score', 0) if inst_data else 0
-        if inst_score_check and inst_score_check < 55:
+        if inst_score_check is not None and inst_score_check < 55:
+            return None
+        # Reject RANGE_COMPRESSION
+        if inst_data and inst_data.get('structure_bias') == 'RANGE_COMPRESSION':
             return None
 
         # RULE: Reject if institutional score < 55
         inst_score_check = inst_data.get('institutional_score', 0) if inst_data else 0
-        if inst_score_check and inst_score_check < 55:
+        if inst_score_check is not None and inst_score_check < 55:
+            return None
+        # Reject RANGE_COMPRESSION
+        if inst_data and inst_data.get('structure_bias') == 'RANGE_COMPRESSION':
             return None
 
         return {
