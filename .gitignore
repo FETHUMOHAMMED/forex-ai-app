@@ -82,3 +82,4 @@ build/
 .coverage
 .pytest_cache/
 %AppData%/
+filter-replacements.txt
