@@ -1,29 +1,28 @@
-# ARCHITECTURE FREEZE NOTICE
-Date: 2026-08-18
-Status: FROZEN for Live Validation Phase
+# FOREX-AI-APP — FEATURE FREEZE
+Effective: 2026-09-14
+Status: RESEARCH / VALIDATION MODE
 
-## What is frozen:
-- All 45 advisor sections
-- All safety gates
-- All risk controls
-- All execution logic
-- All test files (138 tests)
+## ALLOWED WORK
+- Research evidence collection
+- Bugs that invalidate evidence
+- Execution safety fixes
+- Genuine V4 setup handling
+- Research reporting
 
-## What is NOT frozen:
-- Evidence collection
-- Market data recording
-- Performance analytics
-- Qualification counting
+## BACKLOG (do not touch)
+- New AI models
+- New indicators
+- New pairs
+- SELL mode
+- Optimization
+- Dashboards
+- Feature requests
 
-## Why:
-The system has proven fail-closed safety behavior.
-The next phase requires MARKET EVIDENCE, not more code.
+## RULE
+No new feature unless:
+1. Required for research integrity, OR
+2. Required for execution safety, OR
+3. Required for evidence collection, OR
+4. Fixes a demonstrated production failure.
 
-## Duration:
-30 days minimum, or until 50 qualified trades, whichever is longer.
-
-## Exception process:
-Any code change requires:
-1. Documented market evidence showing the change is necessary
-2. Full regression test suite passing
-3. Explicit advisory review
+Everything else waits.

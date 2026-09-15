@@ -41,3 +41,44 @@ credentials*
 secrets*
 .env
 *.env
+
+# === SECRETS - NEVER COMMIT ===
+.env
+.env.*
+!.env.template
+ai-service/config.json
+research/forward_test/config.json
+*.key
+*.pem
+*.p12
+secrets.json
+
+# === RUNTIME DATA / EVIDENCE ===
+trades.db
+*.db
+*.log
+logs/
+research/kill_switch_state.json
+research/recovery_state.json
+research/reconciliation_log.jsonl
+research/paper/**/*.jsonl
+research/paper/**/runner_state.json
+research/paper/**/orchestrator_heartbeat.jsonl
+
+# === BACKUPS / DISABLED ===
+*.BAK
+*.DISABLED
+*.OLD
+*.OLD_DANGEROUS
+
+# === ENV / BUILD ===
+.venv/
+ai-service/venv/
+__pycache__/
+*.pyc
+node_modules/
+dist/
+build/
+.coverage
+.pytest_cache/
+%AppData%/

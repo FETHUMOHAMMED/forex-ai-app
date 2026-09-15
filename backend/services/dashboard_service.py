@@ -31,15 +31,22 @@ def get_dashboard():
     elif t < 300: stat_conf = "HIGH"
     else: stat_conf = "INSTITUTIONAL"
     
-    # MT5 positions
+        # MT5 positions
     try:
+        import os
         import MetaTrader5 as mt5
         mt5.initialize()
-        mt5.login(REDACTED_LIVE_ACCOUNT, password='REDACTED_OLD_LIVE_PASSWORD', server='Exness-MT5Real10')
+        live_account = int(os.getenv("EXNESS_LIVE_ACCOUNT"))
+        live_password = os.getenv("EXNESS_LIVE_PASSWORD")
+        live_server = os.getenv("EXNESS_LIVE_SERVER", "Exness-MT5Real10")
+        if not live_account or not live_password:
+            raise RuntimeError("EXNESS_LIVE_ACCOUNT and EXNESS_LIVE_PASSWORD must be set")
+        if not mt5.login(live_account, password=live_password, server=live_server):
+            raise RuntimeError(f"MT5 login failed: {mt5.last_error()}")
         pos = mt5.positions_get()
         open_positions = len(pos) if pos else 0
         mt5.shutdown()
-    except:
+    except Exception:
         open_positions = 0
     
     conn.close()

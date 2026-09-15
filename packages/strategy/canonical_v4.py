@@ -22,7 +22,7 @@ class CanonicalV4Strategy:
         "sl_atr_mult": 2.0,
         "rr_ratio": 2.0,
         "max_hold_bars": 50,
-        "sessions": [(0, 7), (7, 11), (17, 21)],  # Asian, London, Late NY
+        "sessions": [(7, 11)],  # London session: 07:00-11:00 UTC
         "risk_percent": 0.25,  # EXPLICIT: 0.25%, NOT 25%
         "risk_fraction": 0.0025  # Explicit fraction
     }
@@ -219,3 +219,5 @@ if __name__ == "__main__":
     print(f"\n  Checking current signal...")
     signal = strategy.check_current_signal()
     print(f"    Signal: {signal}")
+
+

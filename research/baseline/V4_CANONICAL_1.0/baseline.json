@@ -1,0 +1,26 @@
+{
+  "strategy_version": "V4_CANONICAL_1.0",
+  "date_generated": "2026-08-26",
+  "engine": "canonical_replay_v2.py",
+  "pair": "USDJPYm",
+  "direction": "BUY_ONLY",
+  "session": "London 07:00-11:00 UTC",
+  "risk_percent": 0.25,
+  "sl_atr": 2.0,
+  "tp_atr": 4.0,
+  "position_limit": 1,
+  "transaction_costs": {
+    "spread_pips": 1.2,
+    "slippage_pips": 0.8,
+    "commission_usd": 0.35,
+    "commission_r_per_trade": 0.070
+  },
+  "results": {
+    "trades": 115,
+    "win_rate": 0.513,
+    "profit_factor": 1.772,
+    "expectancy_r": 0.402,
+    "total_r": 46.3
+  },
+  "status": "AUTHORITATIVE_BASELINE_V2_CORRECTED"
+}

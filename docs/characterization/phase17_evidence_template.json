@@ -1,0 +1,294 @@
+{
+  "manifest": {
+    "capture_id": "SANITIZED_CAPTURE_001",
+    "source_class": "TEMPLATE_ONLY_NOT_EVIDENCE",
+    "collector_tool_version": "SANITIZED_COLLECTOR_0.0",
+    "source_system": "SANITIZED_SOURCE_SYSTEM",
+    "broker": "SANITIZED_BROKER_01",
+    "account_scope": "SANITIZED_SCOPE_01",
+    "server_scope": "SANITIZED_SERVER_01",
+    "environment": "SANITIZED_ENVIRONMENT_01",
+    "capture_start_utc": "1970-01-01T00:00:00Z",
+    "capture_end_utc": "1970-01-01T00:00:00Z",
+    "retrieval_windows": [],
+    "pagination_information": "SANITIZED_PAGINATION_PLACEHOLDER",
+    "completeness_declaration": "TEMPLATE_ONLY_NO_EVIDENCE",
+    "sanitization_method": "TEMPLATE_PLACEHOLDER_RELATION_PRESERVING",
+    "credential_secret_removal_confirmed": true,
+    "historical_export_vs_recorded_response_vs_synthetic_replay": "TEMPLATE_ONLY_NOT_EVIDENCE",
+    "immutable_after_collection": false,
+    "provenance_reference": "SANITIZED_PROVENANCE_001",
+    "reviewer_status": "TEMPLATE_ONLY"
+  },
+  "account_snapshots": [
+    {
+      "broker": "SANITIZED_BROKER_01",
+      "login_account_alias": "SANITIZED_ACCOUNT_01",
+      "server": "SANITIZED_SERVER_01",
+      "environment": "SANITIZED_ENVIRONMENT_01",
+      "margin_account_mode": "SANITIZED_MODE_UNAVAILABLE",
+      "currency": "SANITIZED_CURRENCY",
+      "leverage": "SANITIZED_LEVERAGE",
+      "snapshot_timestamp_utc": "1970-01-01T00:00:00Z",
+      "provenance": "SANITIZED_PROVENANCE_001",
+      "account_scope_id": "SANITIZED_SCOPE_01",
+      "source_class": "TEMPLATE_ONLY_NOT_EVIDENCE",
+      "completeness": "TEMPLATE_ONLY"
+    }
+  ],
+  "requests": [
+    {
+      "request_correlation_id": "SANITIZED_REQUEST_001",
+      "application_order_id": "SANITIZED_APP_ORDER_001",
+      "account_scope": "SANITIZED_SCOPE_01",
+      "symbol": "SANITIZED_SYMBOL_01",
+      "side": "SANITIZED_SIDE",
+      "requested_volume": "SANITIZED_VOLUME",
+      "order_type": "SANITIZED_ORDER_TYPE",
+      "request_price": "SANITIZED_PRICE",
+      "requested_sl": "SANITIZED_SL",
+      "requested_tp": "SANITIZED_TP",
+      "magic": "SANITIZED_MAGIC",
+      "comment": "SANITIZED_COMMENT",
+      "request_timestamp_utc": "1970-01-01T00:00:00Z",
+      "source_class": "TEMPLATE_ONLY_NOT_EVIDENCE",
+      "source_sequence": "SANITIZED_SEQUENCE_001"
+    }
+  ],
+  "broker_results": [
+    {
+      "request_correlation_id": "SANITIZED_REQUEST_001",
+      "retcode": "SANITIZED_RETCODE",
+      "result": {
+        "order": "SANITIZED_ORDER_001",
+        "deal": "SANITIZED_DEAL_001",
+        "volume": "SANITIZED_VOLUME_FILLED",
+        "price": "SANITIZED_PRICE_FILLED"
+      },
+      "bid": "SANITIZED_BID",
+      "ask": "SANITIZED_ASK",
+      "comment": "SANITIZED_RESULT_COMMENT",
+      "request_id": "SANITIZED_REQUEST_ID_001",
+      "result_timestamp_utc": "1970-01-01T00:00:00Z",
+      "account_scope": "SANITIZED_SCOPE_01",
+      "source_class": "TEMPLATE_ONLY_NOT_EVIDENCE",
+      "source_sequence": "SANITIZED_SEQUENCE_002"
+    }
+  ],
+  "position_snapshots_before": [
+    {
+      "snapshot_id": "SANITIZED_SNAPSHOT_BEFORE_001",
+      "request_correlation_id": "SANITIZED_REQUEST_001",
+      "position_ticket": "SANITIZED_POSITION_PREEXISTING_001",
+      "symbol": "SANITIZED_SYMBOL_01",
+      "type": "SANITIZED_POSITION_TYPE",
+      "volume": "SANITIZED_PREEXISTING_VOLUME",
+      "price_open": "SANITIZED_PREEXISTING_PRICE",
+      "sl": "SANITIZED_PREEXISTING_SL",
+      "tp": "SANITIZED_PREEXISTING_TP",
+      "open_time_utc": "1970-01-01T00:00:00Z",
+      "magic": "SANITIZED_PREEXISTING_MAGIC",
+      "comment": "SANITIZED_PREEXISTING_COMMENT",
+      "account_scope": "SANITIZED_SCOPE_01",
+      "snapshot_timestamp_utc": "1970-01-01T00:00:00Z",
+      "source_sequence": "SANITIZED_SEQUENCE_BEFORE",
+      "source_class": "TEMPLATE_ONLY_NOT_EVIDENCE"
+    }
+  ],
+  "position_snapshots_after": [
+    {
+      "snapshot_id": "SANITIZED_SNAPSHOT_AFTER_001",
+      "request_correlation_id": "SANITIZED_REQUEST_001",
+      "position_ticket": "SANITIZED_POSITION_001",
+      "symbol": "SANITIZED_SYMBOL_01",
+      "type": "SANITIZED_POSITION_TYPE",
+      "volume": "SANITIZED_POSITION_VOLUME",
+      "price_open": "SANITIZED_POSITION_PRICE",
+      "sl": "SANITIZED_POSITION_SL",
+      "tp": "SANITIZED_POSITION_TP",
+      "open_time_utc": "1970-01-01T00:00:00Z",
+      "magic": "SANITIZED_MAGIC",
+      "comment": "SANITIZED_COMMENT",
+      "account_scope": "SANITIZED_SCOPE_01",
+      "snapshot_timestamp_utc": "1970-01-01T00:00:00Z",
+      "source_sequence": "SANITIZED_SEQUENCE_AFTER",
+      "source_class": "TEMPLATE_ONLY_NOT_EVIDENCE"
+    }
+  ],
+  "history_orders": [
+    {
+      "order_ticket": "SANITIZED_ORDER_001",
+      "position_id": "SANITIZED_POSITION_001",
+      "symbol": "SANITIZED_SYMBOL_01",
+      "type": "SANITIZED_ORDER_TYPE",
+      "state": "SANITIZED_ORDER_STATE",
+      "volume_initial": "SANITIZED_VOLUME_INITIAL",
+      "volume_current": "SANITIZED_VOLUME_CURRENT",
+      "time_setup_utc": "1970-01-01T00:00:00Z",
+      "time_done_utc": "1970-01-01T00:00:00Z",
+      "request_correlation_id": "SANITIZED_REQUEST_001",
+      "application_order_id": "SANITIZED_APP_ORDER_001",
+      "magic": "SANITIZED_MAGIC",
+      "comment": "SANITIZED_COMMENT",
+      "account_scope": "SANITIZED_SCOPE_01",
+      "source_sequence": "SANITIZED_SEQUENCE_ORDER_001",
+      "retrieval_batch_id": "SANITIZED_BATCH_001",
+      "source_class": "TEMPLATE_ONLY_NOT_EVIDENCE"
+    }
+  ],
+  "history_deals": [
+    {
+      "deal_ticket": "SANITIZED_DEAL_001",
+      "order_ticket": "SANITIZED_ORDER_001",
+      "position_id": "SANITIZED_POSITION_001",
+      "entry_exit": "SANITIZED_ENTRY",
+      "symbol": "SANITIZED_SYMBOL_01",
+      "volume": "SANITIZED_DEAL_VOLUME_001",
+      "price": "SANITIZED_DEAL_PRICE_001",
+      "profit": "SANITIZED_PROFIT_001",
+      "commission": "SANITIZED_COMMISSION_001",
+      "swap": "SANITIZED_SWAP_001",
+      "fee": "SANITIZED_FEE_001",
+      "timestamp_utc": "1970-01-01T00:00:00Z",
+      "magic": "SANITIZED_MAGIC",
+      "comment": "SANITIZED_COMMENT",
+      "account_scope": "SANITIZED_SCOPE_01",
+      "source_sequence": "SANITIZED_SEQUENCE_DEAL_001",
+      "retrieval_batch_id": "SANITIZED_BATCH_001",
+      "source_class": "TEMPLATE_ONLY_NOT_EVIDENCE",
+      "source_event_id": "SANITIZED_EVENT_001"
+    },
+    {
+      "deal_ticket": "SANITIZED_DEAL_002",
+      "order_ticket": "SANITIZED_ORDER_001",
+      "position_id": "SANITIZED_POSITION_001",
+      "entry_exit": "SANITIZED_EXIT",
+      "symbol": "SANITIZED_SYMBOL_01",
+      "volume": "SANITIZED_DEAL_VOLUME_002",
+      "price": "SANITIZED_DEAL_PRICE_002",
+      "profit": "SANITIZED_PROFIT_002",
+      "commission": "SANITIZED_COMMISSION_002",
+      "swap": "SANITIZED_SWAP_002",
+      "fee": "SANITIZED_FEE_002",
+      "timestamp_utc": "1970-01-01T00:00:00Z",
+      "magic": "SANITIZED_MAGIC",
+      "comment": "SANITIZED_COMMENT",
+      "account_scope": "SANITIZED_SCOPE_01",
+      "source_sequence": "SANITIZED_SEQUENCE_DEAL_002",
+      "retrieval_batch_id": "SANITIZED_BATCH_001",
+      "source_class": "TEMPLATE_ONLY_NOT_EVIDENCE",
+      "source_event_id": "SANITIZED_EVENT_002"
+    }
+  ],
+  "retrieval_batches": [
+    {
+      "capture_id": "SANITIZED_CAPTURE_001",
+      "query_id": "SANITIZED_QUERY_001",
+      "query_type": "SANITIZED_HISTORY_DEALS",
+      "account_scope": "SANITIZED_SCOPE_01",
+      "query_start_utc": "1970-01-01T00:00:00Z",
+      "query_end_utc": "1970-01-01T00:00:00Z",
+      "retrieval_timestamp_utc": "1970-01-01T00:00:00Z",
+      "retrieval_sequence": "SANITIZED_RETRIEVAL_001",
+      "pagination_or_cursor": "SANITIZED_CURSOR_NONE",
+      "returned_event_ids_in_returned_order": [
+        "SANITIZED_EVENT_001",
+        "SANITIZED_EVENT_002"
+      ],
+      "returned_event_timestamps_in_returned_order": [
+        "1970-01-01T00:00:00Z",
+        "1970-01-01T00:00:00Z"
+      ],
+      "event_payload_digests": [
+        "SANITIZED_DIGEST_001",
+        "SANITIZED_DIGEST_002"
+      ],
+      "complete_response_digest": "SANITIZED_RESPONSE_DIGEST_001",
+      "overlap_with_previous_retrieval": false,
+      "already_observed_flags": [
+        false,
+        false
+      ],
+      "source_class": "TEMPLATE_ONLY_NOT_EVIDENCE",
+      "completeness": "TEMPLATE_ONLY"
+    }
+  ],
+  "case_matrix": [
+    {
+      "case_id": "CASE_01_ONE_ORDER_ONE_DEAL_ONE_POSITION",
+      "status": "UNAVAILABLE",
+      "evidence_refs": []
+    },
+    {
+      "case_id": "CASE_02_ONE_ORDER_MULTIPLE_ENTRY_DEALS",
+      "status": "UNAVAILABLE",
+      "evidence_refs": []
+    },
+    {
+      "case_id": "CASE_03_PARTIAL_FILL",
+      "status": "UNAVAILABLE",
+      "evidence_refs": []
+    },
+    {
+      "case_id": "CASE_04_PARTIAL_CLOSE",
+      "status": "UNAVAILABLE",
+      "evidence_refs": []
+    },
+    {
+      "case_id": "CASE_05_FULL_CLOSE",
+      "status": "UNAVAILABLE",
+      "evidence_refs": []
+    },
+    {
+      "case_id": "CASE_06_CLOSE_REOPEN",
+      "status": "UNAVAILABLE",
+      "evidence_refs": []
+    },
+    {
+      "case_id": "CASE_07_MULTIPLE_SAME_SYMBOL_POSITIONS",
+      "status": "UNAVAILABLE",
+      "evidence_refs": []
+    },
+    {
+      "case_id": "CASE_08_TWO_ACCOUNT_SERVER_SCOPES",
+      "status": "UNAVAILABLE",
+      "evidence_refs": []
+    },
+    {
+      "case_id": "CASE_09_REPEATED_HISTORY_RETRIEVAL",
+      "status": "UNAVAILABLE",
+      "evidence_refs": []
+    },
+    {
+      "case_id": "CASE_10_DUPLICATE_REPLAYED_EVENT",
+      "status": "UNAVAILABLE",
+      "evidence_refs": []
+    }
+  ],
+  "collision_analysis": [
+    {
+      "relation_id": "SANITIZED_RELATION_001",
+      "identity_type": "SANITIZED_IDENTITY_TYPE",
+      "account_scope": "SANITIZED_SCOPE_01",
+      "lifecycle_interval": "SANITIZED_INTERVAL_001",
+      "numeric_relation_token": "SANITIZED_NUMERIC_RELATION_001",
+      "observed_equal_to": [],
+      "observed_not_equal_to": [],
+      "source_event_refs": [],
+      "confidence": "UNKNOWN"
+    }
+  ],
+  "activation_evidence": [
+    {
+      "module": "SANITIZED_MODULE_01",
+      "expected_role": "SANITIZED_ROLE",
+      "activation_status": "UNKNOWN",
+      "launcher_or_process_source": "SANITIZED_LAUNCHER_REFERENCE",
+      "startup_reference": "SANITIZED_STARTUP_REFERENCE",
+      "runtime_evidence_reference": "SANITIZED_RUNTIME_REFERENCE",
+      "source_class": "TEMPLATE_ONLY_NOT_EVIDENCE",
+      "confidence": "UNKNOWN",
+      "notes": "TEMPLATE ONLY; NOT PRODUCTION ACTIVATION EVIDENCE"
+    }
+  ]
+}

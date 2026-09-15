@@ -1,0 +1,57 @@
+{
+  "timestamp": "2026-08-23T20:46:17.930036+00:00",
+  "strategies": {
+    "V4_CANONICAL_1.0": {
+      "status": "PAPER_ONLY",
+      "pair": "USDJPYm",
+      "direction": "BUY_ONLY",
+      "session": "London (7-11 UTC)",
+      "risk": "0.25%",
+      "can_trade_live": false,
+      "can_trade_paper": true,
+      "files": [
+        "packages/strategy/canonical_v4.py",
+        "research/paper/V4_CANONICAL_1.0/continuous_runner.py"
+      ]
+    },
+    "V3_REGIME": {
+      "status": "DISABLED",
+      "pair": "MULTIPLE",
+      "direction": "BOTH",
+      "session": "VARIABLE",
+      "risk": "UNKNOWN",
+      "can_trade_live": false,
+      "can_trade_paper": false,
+      "files": [
+        "ai-service/auto_trader_exness.py.DISABLED",
+        "ai-service/real_ai_service.py"
+      ]
+    },
+    "EURUSD_PPO": {
+      "status": "DISABLED",
+      "pair": "EURUSDm",
+      "direction": "BOTH",
+      "session": "VARIABLE",
+      "risk": "UNKNOWN",
+      "can_trade_live": false,
+      "can_trade_paper": false,
+      "files": [
+        "ai-service/models/EURUSD_ppo_trader.zip.DISABLED"
+      ]
+    },
+    "LEGACY_MANUAL": {
+      "status": "ARCHIVED",
+      "pair": "MULTIPLE",
+      "direction": "BOTH",
+      "session": "VARIABLE",
+      "risk": "UNKNOWN",
+      "can_trade_live": false,
+      "can_trade_paper": false,
+      "files": [
+        "execution/broker_interface.py.DISABLED",
+        "execution/mt5_executor.py.DISABLED"
+      ]
+    }
+  },
+  "production": "NONE_YET"
+}

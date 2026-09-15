@@ -1,9 +1,0 @@
-{"timestamp": "2026-08-19T12:02:48.883903+00:00", "strategy_version": "V4_CANONICAL_1.0", "criteria_version": "2026-08-19", "signal_decision": "NO_TRADE", "reason": "SYSTEM_TEST", "symbol": "USDJPYm"}
-{"timestamp": "2026-08-19T12:49:21.444220+00:00", "strategy_version": "V4_CANONICAL_1.0", "criteria_version": "2026-08-19", "signal": false, "reason": "NO_FVG"}
-{"timestamp": "2026-08-19T12:51:38.953849+00:00", "strategy_version": "V4_CANONICAL_1.0", "criteria_version": "2026-08-19", "signal": false, "reason": "NO_FVG"}
-{"timestamp": "2026-08-19T12:52:50.225651+00:00", "strategy_version": "V4_CANONICAL_1.0", "criteria_version": "2026-08-19", "signal": false, "reason": "NO_FVG"}
-{"timestamp": "2026-08-19T12:55:39.317806+00:00", "strategy_version": "V4_CANONICAL_1.0", "criteria_version": "2026-08-19", "signal": false, "reason": "NO_FVG"}
-{"timestamp": "2026-08-19T12:55:52.442174+00:00", "strategy_version": "V4_CANONICAL_1.0", "criteria_version": "2026-08-19", "signal": false, "reason": "NO_FVG"}
-{"timestamp": "2026-08-19T12:59:26.025901+00:00", "strategy_version": "V4_CANONICAL_1.0", "criteria_version": "2026-08-19", "signal": false, "reason": "NO_FVG"}
-{"timestamp": "2026-08-19T13:55:17.714786+00:00", "strategy_version": "V4_CANONICAL_1.0", "criteria_version": "2026-08-19", "signal": false, "reason": "NO_FVG"}
-{"timestamp": "2026-08-19T13:56:50.526858+00:00", "strategy_version": "V4_CANONICAL_1.0", "criteria_version": "2026-08-19", "signal": false, "reason": "NO_FVG"}

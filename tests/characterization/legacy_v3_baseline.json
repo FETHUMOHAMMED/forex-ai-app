@@ -1,0 +1,327 @@
+{
+  "baseline_id": "legacy-v3-characterization-2026-08-21",
+  "schema_version": 1,
+  "status": "characterization_only",
+  "reference_path": [
+    "ai-service/ai_service_daemon.py",
+    "ai-service/real_ai_service.py::RealAITrader",
+    "localhost:8001/signals/{pair}",
+    "ai-service/auto_trader_exness.py",
+    "ai-service/broker_exness.py::MT5Broker",
+    "MetaTrader5"
+  ],
+  "test_execution": {
+    "interpreter": "ai-service/venv/Scripts/python.exe",
+    "characterization_command": "python -m unittest discover -s tests/characterization -p 'test_*.py' -q",
+    "characterization_tests": 29,
+    "characterization_passed": 29,
+    "characterization_failed": 0,
+    "existing_relevant_tests": 47,
+    "existing_relevant_passed": 47,
+    "live_mt5_used": false,
+    "real_order_submitted": false,
+    "external_network_used": false
+  },
+  "signal_generation": {
+    "fixture": {
+      "pair": "EURUSD",
+      "timeframe": "M15",
+      "rows": 120,
+      "latest_ohlcv": {
+        "open": 1.0995,
+        "high": 1.101,
+        "low": 1.099,
+        "close": 1.1,
+        "volume": 1000.0
+      },
+      "latest_atr": 0.001,
+      "previous_ict": {
+        "mss_buy": 1,
+        "ob_buy": 1,
+        "fvg_buy": 0,
+        "bb_buy": 0,
+        "lv_buy": 0,
+        "mss_sell": 0,
+        "ob_sell": 0,
+        "fvg_sell": 0,
+        "bb_sell": 0,
+        "lv_sell": 0
+      },
+      "feature_vector_columns": [
+        "rsi", "macd", "macd_signal", "atr", "volume_ratio",
+        "fvg_buy", "fvg_sell", "ob_buy", "ob_sell", "mss_buy",
+        "mss_sell", "dist_from_h4_ema", "london", "newyork", "vol_high",
+        "returns", "high_low_ratio"
+      ],
+      "model": {
+        "type": "fake_characterization_model",
+        "buy_probability": 0.8,
+        "sell_probability": 0.2,
+        "prediction": "BUY"
+      },
+      "h1_trend": "BULLISH",
+      "h4_alignment": "aligned",
+      "institutional": {
+        "bias": "BREAKOUT",
+        "score": 81.85,
+        "dealer_pressure": "SELLING_PRESSURE",
+        "liquidity_state": "SWEEP_SELL",
+        "continuation_probability": 0.5
+      }
+    },
+    "live_signal_cases": {
+      "normal_buy": {
+        "signal": "BUY",
+        "confidence": 0.8,
+        "strength": "STRONG",
+        "entry": 1.1,
+        "stop_loss": 1.0975,
+        "take_profit": 1.104,
+        "risk_reward": 1.6,
+        "regime": "volatile",
+        "timestamp_present": true,
+        "valid": true
+      },
+      "normal_sell": {
+        "signal": "SELL",
+        "confidence": 0.8,
+        "strength": "STRONG",
+        "entry": 1.1,
+        "stop_loss": 1.1025,
+        "take_profit": 1.096,
+        "regime": "volatile",
+        "valid": true
+      },
+      "low_confidence_after_h1_h4_penalties": {
+        "result": null,
+        "model_confidence": 0.55,
+        "h1_trend": "BULLISH",
+        "direction": "SELL",
+        "reason_observed": "confidence falls below 0.50",
+        "rejection_reason_field_present": false
+      },
+      "ml_ict_disagreement": {
+        "result": null,
+        "reason_observed": "no valid ensemble agreement"
+      },
+      "atr_rejection": {
+        "result": null,
+        "atr": 0.0001,
+        "reason_observed": "ATR outside helper range"
+      },
+      "institutional_score_rejection": {
+        "result": null,
+        "institutional_score": 54,
+        "reason_observed": "institutional score below 55"
+      },
+      "missing_market_data": {
+        "result": null
+      },
+      "model_failure": {
+        "result": null,
+        "fallback_ml_signal": null,
+        "fallback_ml_confidence": 0.5
+      }
+    },
+    "backtest_helper_buy": {
+      "pair": "EURUSD",
+      "signal": "BUY",
+      "confidence": 0.8,
+      "entry": 1.1,
+      "stop_loss": 1.0985,
+      "take_profit": 1.1025,
+      "metadata_fields_present": ["pair", "signal", "confidence", "entry", "stop_loss", "take_profit"]
+    },
+    "backtest_helper_sell": {
+      "pair": "EURUSD",
+      "signal": "SELL",
+      "confidence": 0.8,
+      "entry": 1.1,
+      "stop_loss": 1.1015,
+      "take_profit": 1.0975
+    },
+    "legacy_signal_fields_absent": [
+      "session", "expires_at", "model_version", "strategy_version",
+      "filter_version", "rejection_reason"
+    ],
+    "producer_session_spread_regime_notes": {
+      "session_gate": "not implemented in RealAITrader signal output",
+      "spread_gate": "not implemented in RealAITrader signal output",
+      "accepted_regime": "volatile",
+      "expiry": "no expiry timestamp emitted"
+    },
+    "mock_fallback": {
+      "default_enabled": false,
+      "enabled_behavior": "calls get_mock_signal after real signal is absent",
+      "direction": ["BUY", "SELL"],
+      "confidence_range": [0.65, 0.85],
+      "EURUSD_no_data_entry": 1.0925,
+      "deterministic_exact_output": false,
+      "reason": "seed uses Python hash and current minute"
+    }
+  },
+  "signal_cache": {
+    "schema_keys": ["signals", "version", "last_update", "saved_at"],
+    "per_pair_fields_observed": [
+      "pair", "signal", "confidence", "entry", "stop_loss", "take_profit",
+      "institutional_score", "institutional_bias", "dealer_pressure",
+      "liquidity_state", "regime", "timestamp"
+    ],
+    "cached_pair_response": {
+      "keys": ["signal", "cached"],
+      "cached": true
+    },
+    "missing_pair_response": {
+      "keys": ["signal", "cached"],
+      "cached": false,
+      "behavior": "fresh pair analysis"
+    },
+    "empty_refresh": "previous cached signals retained",
+    "refresh_failure": "previous cached signals retained",
+    "stale_signal": "returned as cached when pair exists; no expiry rejection",
+    "last_update": "updated on refresh attempt",
+    "saved_at": "written by legacy cache writer",
+    "observed_duplicate_total_updates_increment": true
+  },
+  "auto_trader_consumption": {
+    "http_path": "http://localhost:8001/signals/{pair}",
+    "accepted_fixture": {
+      "pair": "EURUSD",
+      "broker_symbol": "EURUSDm",
+      "direction": "BUY",
+      "signal_entry": 1.15123,
+      "derived_stop_loss": 1.14973,
+      "derived_take_profit": 1.15473,
+      "confidence": 0.8,
+      "final_volume": 0.8,
+      "regime": "volatile"
+    },
+    "rejection_boundaries_characterized": [
+      "session",
+      "confidence",
+      "regime/counter-trend",
+      "duplicate position",
+      "opposite position exact-symbol helper",
+      "USD exposure",
+      "correlation",
+      "ATR",
+      "spread",
+      "quality",
+      "news",
+      "daily loss",
+      "drawdown",
+      "daily trade limit",
+      "portfolio risk cap"
+    ],
+    "opposite_suffix_observation": {
+      "signal_pair": "EURUSD",
+      "existing_position": "EURUSDm",
+      "existing_direction": "SELL",
+      "observed_result": "order proceeds",
+      "cause": "has_opposite compares exact symbol and does not strip m suffix"
+    },
+    "risk_sizing_notes": {
+      "base_risk_percent_fixture": 0.01,
+      "confidence_0.80_multiplier": 1.2,
+      "tick_value_position_size_fixture": 0.67,
+      "full_pipeline_volume_after_confidence_multiplier": 0.8
+    }
+  },
+  "broker_requests": {
+    "buy": {
+      "action": "TRADE_ACTION_PENDING",
+      "symbol": "EURUSDm",
+      "volume": 0.12,
+      "type": "ORDER_TYPE_BUY_LIMIT",
+      "price": 1.10007,
+      "deviation": 30,
+      "magic": 234000,
+      "comment": "AI_trade_conf0.83",
+      "type_time": "ORDER_TIME_GTC",
+      "type_filling": "ORDER_FILLING_FOK",
+      "sl_present": false,
+      "tp_present": false,
+      "expiration_present": false
+    },
+    "sell": {
+      "action": "TRADE_ACTION_PENDING",
+      "symbol": "EURUSDm",
+      "volume": 0.01,
+      "type": "ORDER_TYPE_SELL_LIMIT",
+      "price": 1.09997,
+      "sl_present": false,
+      "tp_present": false
+    },
+    "retry_codes": [10004, 10006, 10013],
+    "permanent_stop_codes": [10019, 10018, 10016],
+    "margin_failure": "no order_send request",
+    "ticket_response": "latest position ticket, otherwise result.order",
+    "volume_normalization": "not performed by place_market_order"
+  },
+  "position_management": {
+    "trailing_stop": {
+      "trigger": "profit move greater than one ATR and improved stop",
+      "request_action": "TRADE_ACTION_SLTP",
+      "position": 55,
+      "sl": 1.1,
+      "tp_preserved": 1.11
+    },
+    "time_exit": {
+      "trigger": "old losing position",
+      "request_action": "TRADE_ACTION_PENDING",
+      "position": 56,
+      "type": "ORDER_TYPE_SELL",
+      "comment": "time_exit_loss",
+      "profitable_position_behavior": "left open"
+    }
+  },
+  "persistence": {
+    "implementation": "risk/trade_logger.py::TradeLogger",
+    "entry_fields": [
+      "timestamp", "pair", "signal", "confidence", "entry", "stop_loss",
+      "take_profit", "volume", "ticket", "regime", "account",
+      "institutional_bias", "institutional_score", "dealer_pressure",
+      "liquidity_state", "continuation_prob"
+    ],
+    "exit_fields": ["exit_price", "exit_time", "pnl", "pnl_percent", "result", "reason"],
+    "result_mapping": {"positive_pnl": "WIN", "negative_pnl": "LOSS", "zero_pnl": ""},
+    "production_database_used": false
+  },
+  "configuration": {
+    "startup_files": ["ai-service/config.json", ".env"],
+    "daemon_environment_values": [
+      "AI_REFRESH_INTERVAL", "AI_MAX_WORKERS", "AI_SERVICE_PORT", "AI_PAIR_TIMEOUT", "AI_CACHE_FILE", "AI_API_KEY"
+    ],
+    "runtime_file": "runtime_config.json",
+    "startup_consumption": [
+      "real_ai_service imports ai-service/config.json",
+      "auto_trader_exness imports ai-service/config.json",
+      "account states are constructed at AutoTrader startup"
+    ],
+    "dynamic_consumption": [
+      "auto_trader reloads session_hours from ai-service/config.json each loop",
+      "auto_trader reads runtime_config.json active_accounts each loop",
+      "missing runtime_config.json defaults to all constructed accounts"
+    ],
+    "historical_snapshot_exact": false,
+    "configuration_files_modified": false
+  },
+  "limitations": [
+    "Exact historical OHLCV, model binaries, and complete historical configuration snapshot are unavailable.",
+    "Signal timestamp is validated for presence, not exact historical wall-clock equality.",
+    "No live HTTP server was started; endpoint function and serialization boundary were exercised directly.",
+    "No real MT5, account, broker, network, production database, or runtime cache write was used."
+  ],
+  "discrepancies": [
+    {
+      "id": "OPPOSITE_POSITION_SUFFIX_MISMATCH",
+      "source": "ai-service/auto_trader_exness.py::has_opposite",
+      "input": "signal EURUSD BUY with EURUSDm SELL position",
+      "observed": "order proceeds",
+      "expected_safety_rule": "opposite position rejected",
+      "cause": "exact symbol comparison does not remove broker suffix",
+      "production_impact": "opposite-position protection may not apply to suffixed symbols",
+      "changed": false
+    }
+  ]
+}
