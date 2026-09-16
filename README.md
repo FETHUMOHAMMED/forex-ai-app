@@ -22,3 +22,48 @@ A production-grade Python system for developing, testing, and — in controlled 
 - **138 automated tests** covering safety, parity, failure injection, and reconciliation.
 
 ## Architecture
+Strategy (frozen, versioned)
+↓
+Orchestrator (live_micro_runner)
+↓
+Hard Safety Boundary (14+ checks, immutable limits)
+↓
+Single Execution Path (only file allowed to call MT5)
+↓
+MetaTrader 5 / Broker
+
+text
+
+## Stack
+
+- Python
+- MetaTrader 5 Python API
+- FastAPI (backend)
+- React (frontend)
+- SQLite / PostgreSQL
+- pytest
+- Docker
+
+## Project Structure
+packages/
+strategy/ Frozen strategy definitions
+execution/ Safety boundary, single path, orchestrator
+research/ Backtesting, replay, parity tests
+integrity/ Failure injection, runtime gates
+risk/ Risk management
+persistence/ Schema + evidence storage
+
+tools/ 60+ validation and research scripts
+tests/ 138 tests (safety, parity, integration)
+research/ Experiment evidence and reports
+
+text
+
+## Current Focus
+
+Forward-testing the V4 strategy. Question under investigation: does V4 survive paper trading well enough to justify controlled real-money testing?
+
+## Contact
+
+**Fethu Mohammed** — Python / FastAPI / React Developer
+GitHub: [@FETHUMOHAMMED](https://github.com/FETHUMOHAMMED)
