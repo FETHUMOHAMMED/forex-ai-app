@@ -8,7 +8,7 @@
 
 ## What This Is
 
-A production-grade Python system for developing, testing, and — in controlled mode — executing automated forex strategies.
+A production-grade Python system for developing, testing, and - in controlled mode - executing automated forex strategies.
 
 **This is not a "get rich" trading bot.** It is a research platform that enforces reproducibility, safety, and auditability before any strategy is allowed near real capital.
 
@@ -22,21 +22,22 @@ A production-grade Python system for developing, testing, and — in controlled 
 - **138 automated tests** covering safety, parity, failure injection, and reconciliation.
 
 ## Architecture
-Strategy (frozen, versioned)
-↓
-Orchestrator (live_micro_runner)
-↓
-Hard Safety Boundary (14+ checks, immutable limits)
-↓
-Single Execution Path (only file allowed to call MT5)
-↓
-MetaTrader 5 / Broker
 
-text
+```
+Strategy (frozen, versioned)
+        ↓
+Orchestrator (live_micro_runner)
+        ↓
+Hard Safety Boundary (14+ checks, immutable limits)
+        ↓
+Single Execution Path (only file allowed to call MT5)
+        ↓
+MetaTrader 5 / Broker
+```
 
 ## Stack
 
-- Python
+- Python 3.x
 - MetaTrader 5 Python API
 - FastAPI (backend)
 - React (frontend)
@@ -45,19 +46,30 @@ text
 - Docker
 
 ## Project Structure
+
+```
 packages/
-strategy/ Frozen strategy definitions
-execution/ Safety boundary, single path, orchestrator
-research/ Backtesting, replay, parity tests
-integrity/ Failure injection, runtime gates
-risk/ Risk management
-persistence/ Schema + evidence storage
+  strategy/       Frozen strategy definitions
+  execution/      Safety boundary, single path, orchestrator
+  research/       Backtesting, replay, parity tests
+  integrity/      Failure injection, runtime gates
+  risk/           Risk management
+  persistence/    Schema + evidence storage
 
-tools/ 60+ validation and research scripts
-tests/ 138 tests (safety, parity, integration)
-research/ Experiment evidence and reports
+tools/            60+ validation and research scripts
+tests/            138 tests (safety, parity, integration)
+research/         Experiment evidence and reports
+```
 
-text
+## What This Project Demonstrates
+
+This is not a "trading bot" - it is a research platform that enforces:
+
+1. **Reproducibility** - same code produces same results (verified)
+2. **Safety** - no bad order reaches the broker (verified)
+3. **Auditability** - every decision is recorded with evidence
+4. **Separation of concerns** - strategy, execution, and risk are isolated
+5. **Statistical rigor** - no look-ahead bias, honest validation
 
 ## Current Focus
 
@@ -65,5 +77,5 @@ Forward-testing the V4 strategy. Question under investigation: does V4 survive p
 
 ## Contact
 
-**Fethu Mohammed** — Python / FastAPI / React Developer
+**Fethu Mohammed** - Python / FastAPI / React Developer
 GitHub: [@FETHUMOHAMMED](https://github.com/FETHUMOHAMMED)
