@@ -3,8 +3,23 @@ import sys
 import time
 import json
 import os
+import concurrent.futures
 from pathlib import Path
 from datetime import datetime, timezone, timedelta
+
+
+def with_timeout(fn, timeout_sec=15, default=None):
+    """Run fn() with a hard timeout. Returns default on timeout."""
+    with concurrent.futures.ThreadPoolExecutor(max_workers=1) as ex:
+        future = ex.submit(fn)
+        try:
+            return future.result(timeout=timeout_sec)
+        except concurrent.futures.TimeoutError:
+            print(f"[TIMEOUT] {fn} exceeded {timeout_sec}s")
+            return default
+        except Exception as e:
+            print(f"[TIMEOUT_WRAPPER] exception: {e}")
+            return default
 
 class ContinuousPaperRunner:
     def __init__(self):
@@ -62,11 +77,17 @@ class ContinuousPaperRunner:
         import MetaTrader5 as mt5
         import pandas as pd
 
-        if not mt5.initialize():
-            return {"signal": False, "reason": "MT5_INIT_FAILED"}
+        init_ok = with_timeout(mt5.initialize, timeout_sec=10, default=False)
+        if not init_ok:
+            return {"signal": False, "reason": "MT5_INIT_FAILED_OR_TIMEOUT"}
 
-        rates = mt5.copy_rates_from_pos("USDJPYm", mt5.TIMEFRAME_H4, 0, 200)
-        mt5.shutdown()
+        rates = with_timeout(
+            lambda: mt5.copy_rates_from_pos("USDJPYm", mt5.TIMEFRAME_H4, 0, 200),
+            timeout_sec=15,
+            default=None,
+        )
+
+        with_timeout(mt5.shutdown, timeout_sec=5, default=None)
 
         if rates is None or len(rates) < 50:
             return {"signal": False, "reason": "INSUFFICIENT_DATA"}
@@ -159,22 +180,40 @@ class ContinuousPaperRunner:
         try:
             while True:
                 should_eval, candle_id = self.should_evaluate()
-                
+
                 if should_eval and candle_id:
                     candle_time = self.get_current_h4_candle_time()
                     self.evaluation_count += 1
                     self.evaluated_candles.add(candle_id)
-                    
+
                     self.log_operational(f"Evaluation #{self.evaluation_count} (candle: {candle_time})")
-                    
-                    result = self.evaluate_signal(candle_id, candle_time)
-                    
-                    self.write_signal_log(result)
-                    self.write_evidence(result)
-                    self.save_state()
-                    
-                    self.log_operational(f"Decision: {result['decision']}")
-                    self.log_operational(f"Reason: {result['reason']}")
+
+                    try:
+                        result = self.evaluate_signal(candle_id, candle_time)
+                    except Exception as e:
+                        self.log_operational(f"Exception in evaluate_signal: {e}")
+                        result = {
+                            "signal": False,
+                            "reason": f"EVAL_ERROR: {e}",
+                            "evaluation_id": candle_id,
+                            "fvg_detected": False,
+                            "bias": "UNKNOWN",
+                            "decision": "ERROR",
+                            "timestamp_utc": candle_time.isoformat(),
+                        }
+
+                    try:
+                        self.write_signal_log(result)
+                        self.write_evidence(result)
+                        self.save_state()
+                    except Exception as e:
+                        self.log_operational(f"Exception in write: {e}")
+
+                    self.log_operational(f"Decision: {result.get('decision', 'ERROR')}")
+                    self.log_operational(f"Reason: {result.get('reason', 'UNKNOWN')}")
+
+                # Heartbeat every loop (every 60s) — proves process is alive
+                self.log_operational("HEARTBEAT")
 
                 time.sleep(60)
 

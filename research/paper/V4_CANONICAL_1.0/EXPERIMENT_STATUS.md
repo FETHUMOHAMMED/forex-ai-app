@@ -1,39 +1,21 @@
 # V4 CANONICAL EXPERIMENT - OFFICIAL STATUS
 
 ## PHASE: CONTROLLED EVIDENCE COLLECTION
-## DAY: 1 of 90
+## DAY: 29 of 90
 ## START DATE: 2026-08-23
 
-## GATES:
-Gate 1 - Engineering Readiness: ? PASS (21/21)
-Gate 2 - Strategy Validity: ?? IN PROGRESS (Day 1/90)
-Gate 3 - Live Execution: ?? NOT STARTED
-Gate 4 - Production Capital: ?? NOT STARTED
+## ⚠️ Evidence quality note (2026-09-20)
 
-## FROZEN STRATEGY (READ-ONLY):
-- Pair: USDJPYm
-- Direction: BUY_ONLY
-- Session: London 07:00-11:00 UTC
-- Setup: H4 Bullish FVG
-- Bias: EMA50 > EMA200
-- SL: 2.0x ATR
-- TP: 4.0x ATR (2R)
-- Risk: 0.25%
+The runner experienced a hang bug from Sep 2 to Sep 20:
+- MT5 calls could block indefinitely
+- Heartbeats and signal logs stopped updating for up to 18 days
+- Root cause: no timeout on mt5.initialize / copy_rates_from_pos, plus two runners competing for MT5
 
-## FORBIDDEN ACTIONS:
-- Change strategy
-- Add pairs
-- Add SELL
-- Loosen filters
-- Add ML/AI
-- Trade live
-- Deposit money
+Fixed on 2026-09-20:
+- Timeout wrappers added to all MT5 calls
+- Heartbeat every 60s to prove liveness
+- Error guards around signal evaluation and file writes
+- Single runner enforced
 
-## DAILY ROUTINE:
-1. Run daily report (new terminal, close after)
-2. Check heartbeat
-3. Record in daily log
-4. Close terminal
-
-## NEXT MILESTONE: Day 7 Evidence Checkpoint
-## FINAL EVALUATION: Day 90
+**Evidence collected before 2026-09-20 should be considered suspect.**
+Only evaluations from 2026-09-20 onward are trusted under the new runner.
