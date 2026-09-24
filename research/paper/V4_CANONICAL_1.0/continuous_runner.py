@@ -79,7 +79,15 @@ class ContinuousPaperRunner:
 
         init_ok = with_timeout(mt5.initialize, timeout_sec=10, default=False)
         if not init_ok:
-            return {"signal": False, "reason": "MT5_INIT_FAILED_OR_TIMEOUT"}
+            return {
+                "signal": False,
+                "reason": "MT5_INIT_FAILED_OR_TIMEOUT",
+                "timestamp_utc": candle_time.isoformat(),
+                "evaluation_id": candle_id,
+                "fvg_detected": False,
+                "bias": "UNKNOWN",
+                "decision": "ERROR",
+            }
 
         rates = with_timeout(
             lambda: mt5.copy_rates_from_pos("USDJPYm", mt5.TIMEFRAME_H4, 0, 200),
@@ -90,7 +98,15 @@ class ContinuousPaperRunner:
         with_timeout(mt5.shutdown, timeout_sec=5, default=None)
 
         if rates is None or len(rates) < 50:
-            return {"signal": False, "reason": "INSUFFICIENT_DATA"}
+            return {
+                "signal": False,
+                "reason": "INSUFFICIENT_DATA",
+                "timestamp_utc": candle_time.isoformat(),
+                "evaluation_id": candle_id,
+                "fvg_detected": False,
+                "bias": "UNKNOWN",
+                "decision": "ERROR",
+            }
 
         data = pd.DataFrame(rates)
         data['timestamp'] = pd.to_datetime(data['time'], unit='s')
