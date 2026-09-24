@@ -19,3 +19,19 @@ Fixed on 2026-09-20:
 
 **Evidence collected before 2026-09-20 should be considered suspect.**
 Only evaluations from 2026-09-20 onward are trusted under the new runner.
+
+## ⚠️ Coverage note (2026-09-24)
+
+Sep 20 16:00 → Sep 22 13:20 UTC: 45-hour gap, ~10 H4 candles missed.
+Reason: PC shut down and MT5 closed.
+
+The runner does not backfill missed candles — that's intentional. Forward test
+measures performance when the system is running, not hypotheticals.
+
+**Realistic uptime estimate:**
+- Total time since Sep 20 fix: 4 days = ~96 hours
+- Downtime: 45 hours
+- Actual uptime: ~53%
+
+**Trusted evaluations: #75 onward (Sep 20)** — 18 evaluations to date.
+**Missing: #1-74 (before fix), plus ~10 candles during the outage.**
